@@ -17,7 +17,7 @@ import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
  *  As the middle layer, the DataController child classes perform any data validation required
  *  on data received from the database or data received from the GUI layer,
  *  before a transaction is sent to the database.  This layer also transforms data objects into
- *  the right data type for either the GUI or Database layers.  The GUI layer requires ViewData child
+ *  the right data type for either the GUI or Database layers.  The GUI layer requires ViewObservableData child
  *  classes that contain Observable type properties for use with controls.  Meanwhile, the database
  *  layer works with DBData objects that do not require observable properties and are instead
  *  plain java objects.

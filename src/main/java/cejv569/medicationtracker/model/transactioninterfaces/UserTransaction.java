@@ -1,7 +1,8 @@
 package cejv569.medicationtracker.model.transactioninterfaces;
 
 import cejv569.medicationtracker.exceptions.OperationFailureException;
-import cejv569.medicationtracker.model.dataobjects.UsersData;
+import cejv569.medicationtracker.model.datainterfaces.User;
+import cejv569.medicationtracker.model.dataobjects.UserData;
 
 /**
  * UserTransaction is an interface subclass of DataTransaction.  It is implemented by the UserTransactions
@@ -34,13 +35,13 @@ public interface UserTransaction extends DataTransaction{
    /**
     * getUserPassword is implemented by UserTransactions to return user and password information
     * from the users table to the model layer, given a user name entered by the user at login.
-    * The function returns a UsersData object which contains the userid, the user name and the
+    * The function returns a UserData object which contains the userid, the user name and the
     * password for that user name retrieved by the prepared statement( if a record is found).
-    * The model layer uses this UsersData to verify if the user name exists and if so, if the
+    * The model layer uses this UserData to verify if the user name exists and if so, if the
     * password entered at login matches the one stored in the database for that user.
     * @param userName - String type - is the user name entered by the user at login, in the login
     *                                  form.
-    * @return           UsersData type -   is a subclass of DBData and is used to return all
+    * @return           UserData type -   is a subclass of DBData and is used to return all
     *                                       user data that is requested from the database, users
     *                                       table.  If null is returned instead of a data object,
     *                                       no record was found in the database for that user name.
@@ -49,31 +50,31 @@ public interface UserTransaction extends DataTransaction{
     *                                     transactions/requests throw an error at the database
     *                                     layer, errors which require the application to shut down
     */
-   UsersData getUserAndPassword(String userName) throws OperationFailureException;
+   User getUserAndPassword(String userName) throws OperationFailureException;
 
    /**
     * getData is called by the LoginDataController to obtain the user account data from the database
     * to be able to initialize the profile form, account section.  The information for the
-    * account is returned via a UsersData object.
+    * account is returned via a UserData object.
     * @param userId  - int type -  represents the user id / user record primary key from the users
     *                table obtained by an earlier call to getUserandPassword.  It is used by UserTransactions
     *                to run a prepared statement which retrieves the full user record information.
-    * @return  UsersData type - subclass of DBData.  Used to transfer all the user information in the
+    * @return  UserData type - subclass of DBData.  Used to transfer all the user information in the
     *                                                 record for this user id from the users table.
     * @throws OperationFailureException - Exception thrown if either there is a runtime
     *                                     error that occurs or either getUserName or createData
     *                                     transactions/requests throw an error at the database
     *                                     layer, errors which require the application to shut down
     */
-   UsersData getData(int userId) throws OperationFailureException;
+   User getData(int userId) throws OperationFailureException;
 
    /**
     * createData is called by the SignupDataController to create a user record with
     * the information that the user entered in the sign up for.  This method is called if no prior
     * user name record is found for the user name entered.  SignupDataController passes the information
-    * to be inserted into the users table via a UsersData object.
+    * to be inserted into the users table via a UserData object.
     * signup form
-    * @param data - UsersData type - subclass of DBData.  Used to transfer all the user information in the
+    * @param data - UserData type - subclass of DBData.  Used to transfer all the user information in the
     *                                                   record for this user id from the users table.
     *
     * @throws OperationFailureException - Exception thrown if either there is a runtime
@@ -81,6 +82,6 @@ public interface UserTransaction extends DataTransaction{
     *                                       transactions/requests throw an error at the database
     *                                     layer, errors which require the application to shut down
     */
-   void createData(UsersData data) throws OperationFailureException;
+   void createData(User data) throws OperationFailureException;
 
 }

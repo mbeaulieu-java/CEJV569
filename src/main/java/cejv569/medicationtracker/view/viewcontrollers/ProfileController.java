@@ -2,7 +2,7 @@ package cejv569.medicationtracker.view.viewcontrollers;
 
 
 import cejv569.medicationtracker.utility.GUIUtility;
-import cejv569.medicationtracker.view.viewdata.AccountData;
+import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +26,7 @@ public class ProfileController {
     private LogMedicationEffectController logMedicationEffectController;
     private LogMedicationPurchaseController logMedicationPurchaseController;
 
-    private AccountData accountData;
+    private AccountObservableData accountObservableData;
 
     @FXML
     private BorderPane profileBorderPane;
@@ -282,12 +282,12 @@ public class ProfileController {
 
     //Getters and Setters
 
-    private AccountData getAccountData() {
-        return accountData;
+    private AccountObservableData getAccountData() {
+        return accountObservableData;
     }
 
-    public void setAccountData (AccountData data) {
-        this.accountData = data;
+    public void setAccountData (AccountObservableData data) {
+        this.accountObservableData = data;
     }
 
     /**
@@ -301,7 +301,7 @@ public class ProfileController {
         createSubControllers();
     }
 
-    public void initializeAccountData(AccountData data) {
+    public void initializeAccountData(AccountObservableData data) {
         this.setAccountData(data);
         accountController.initializeAccountData(data);
     }

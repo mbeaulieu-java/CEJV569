@@ -2,13 +2,14 @@ package cejv569.medicationtracker.view.viewcontrollers;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
+import cejv569.medicationtracker.model.datainterfaces.Contact;
 import cejv569.medicationtracker.model.operationinterfaces.ContactOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.DataValidator;
 import cejv569.medicationtracker.utility.GUIUtility;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.utility.UserMessages;
-import cejv569.medicationtracker.view.viewdata.ContactData;
+import cejv569.medicationtracker.view.viewdata.ContactObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -125,14 +126,14 @@ public class ContactController extends ViewController{
     }
 
     /**
-     * Save creates a new ContactData object required to pass the contact email information
+     * Save creates a new ContactObservableData object required to pass the contact email information
      * to the model layer, so that it, in turn can pass the insertion request to the database
      * layer.  The method passes on the information to the model layer via getOperation().postData().
      * Any exceptions that are generated are handled by the LogError class.
      */
     private void save() {
 
-        ContactData contactData = new ContactData(
+        Contact contactData = new ContactObservableData(
                 0,
                 nameTextField.getText().trim(),
                 messageTextArea.getText().trim(),

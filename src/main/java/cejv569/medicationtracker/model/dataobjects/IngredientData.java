@@ -1,6 +1,8 @@
 package cejv569.medicationtracker.model.dataobjects;
 
-public class IngredientsData extends DBData {
+import cejv569.medicationtracker.model.datainterfaces.Ingredient;
+
+public class IngredientData extends DBData implements Ingredient {
 
     private int id;
     private String commonName;
@@ -8,7 +10,7 @@ public class IngredientsData extends DBData {
     private boolean medicinal;
 
     //Constructor
-    public IngredientsData(int id, String commonName, String scientificName, boolean medicinal) {
+    public IngredientData(int id, String commonName, String scientificName, boolean medicinal) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
@@ -16,35 +18,35 @@ public class IngredientsData extends DBData {
     }
 
     // Setters and Getters
-
+    @Override
     public int getId() {
         return id;
     }
-
+    @Override
     public void setId(int id) {
         this.id = id;
     }
-
+    @Override
     public String getCommonName() {
         return commonName;
     }
-
+    @Override
     public void setCommonName(String commonName) {
         this.commonName = commonName;
     }
-
+    @Override
     public String getScientificName() {
         return scientificName;
     }
-
+    @Override
     public void setScientificName(String scientificName) {
         this.scientificName = scientificName;
     }
-
+    @Override
     public boolean isMedicinal() {
         return medicinal;
     }
-
+    @Override
     public void setMedicinal(boolean medicinal) {
         this.medicinal = medicinal;
     }

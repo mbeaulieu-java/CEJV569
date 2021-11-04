@@ -52,7 +52,7 @@ import java.io.IOException;
  *
  *      Data is transmitted via two different types of data objects.
  *
- *          A) View Data - all sub classes of the class ViewData.  This comprises all data
+ *          A) View Data - all sub classes of the class ViewObservableData.  This comprises all data
  *          retrieved from the user via the gui, which needs to be transmitted to the model layer.
  *          These objects possess observable properties.  View Data gets transmitted between
  *          the view and model layers. (viewdata package)

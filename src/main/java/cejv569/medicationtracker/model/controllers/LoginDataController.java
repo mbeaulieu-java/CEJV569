@@ -4,11 +4,12 @@ import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.NoSuchUserNameException;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.WrongPasswordException;
-import cejv569.medicationtracker.model.dataobjects.UsersData;
+import cejv569.medicationtracker.model.datainterfaces.User;
+import cejv569.medicationtracker.model.dataobjects.UserData;
 import cejv569.medicationtracker.model.operationinterfaces.LoginOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
 import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
-import cejv569.medicationtracker.view.viewdata.AccountData;
+import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
  *  LoginDataController is a model level controller (a sort of middle) layer and coordinates requests
@@ -69,7 +70,7 @@ public class LoginDataController extends DataController implements LoginOperatio
      *  userandPasswordExists receives the user name and password entered at login by the user
      *  from the view controller and first validates if the user name can be found in the database by
      *  sending a request for the information to the data layer via the UserTransaction interface.
-     *  If the database layer returns a null UsersData instance, then no record was found for
+     *  If the database layer returns a null UserData instance, then no record was found for
      *  this username so the function throws a NoSuchUserNameException.
      *  If the user name and password is obtained from the database layer, the retrieved password
      *  is validated against the password received as an argument.  If the two don't match,
@@ -99,7 +100,7 @@ public class LoginDataController extends DataController implements LoginOperatio
             throws NoSuchUserNameException, WrongPasswordException,
             OperationFailureException {
         int userId = 0;
-        UsersData userData;
+        User userData;
 
         try {
             //request user and password information for the username
@@ -132,7 +133,7 @@ public class LoginDataController extends DataController implements LoginOperatio
      * getAccountData
      * @param userID - int - represents the userid obtained from the prior Login Validation
      *               operation.  It is used to retrieve the user's account information.
-     * @return - AccountData type - contains the user account information.  Has Observable properties
+     * @return - AccountObservableData type - contains the user account information.  Has Observable properties
      *                              to be used to display the information via GUI controls.
      * @throws OperationFailureException - custom error thrown if a runtime error occurs or
      *                                      - information required for the proper functioning
@@ -140,9 +141,8 @@ public class LoginDataController extends DataController implements LoginOperatio
      *                                      to shut down.
      */
     @Override
-    public AccountData getAccountData(int userID) throws OperationFailureException {
-        UsersData userData;
-        AccountData accountData = null;
+    public User getAccountData(int userID) throws OperationFailureException {
+        User userData = null;
 
         try {
 
@@ -151,27 +151,16 @@ public class LoginDataController extends DataController implements LoginOperatio
             if (userID == 0){throw new OperationFailureException("UserID was not initialized and is 0");}
 
             //use the UserTransaction interface to request from the database layer the recordset
-            //corresponding to the userid, via a UsersData object.
+            //corresponding to the userid, via a UserData object.
             userData = getTransaction().getData(userID);
             //if the userData is null, then the record couldn't be found, so throw an exception.
             if (userData == null) { throw new OperationFailureException("No user data record found in " +
                     "the database.");}
-            //if the data was successfully retrieved create a AccountData object that has
-            //observable properties and transfer the data to it.
-            accountData = new AccountData(
-                    userData.getId(),
-                    userData.getFirstName(),
-                    userData.getLastName(),
-                    userData.getUserName(),
-                    userData.getPassword(),
-                    userData.getEmail(),
-                    userData.getTelephone());
-
         } catch (OperationFailureException e) {
             throw e;
         }
-        //return the AccountData instance to the Login View Controller
-        return accountData;
+        //return the AccountObservableData instance to the Login View Controller
+        return userData;
     }
 
 

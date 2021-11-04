@@ -3,7 +3,7 @@ package cejv569.medicationtracker.view.viewcontrollers;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
-import cejv569.medicationtracker.view.viewdata.AccountData;
+import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 public class AccountController extends ViewController{
 
     public Pane rootPane;
-    private AccountData accountData;
+    private AccountObservableData accountObservableData;
 
     @FXML
     private BorderPane profileBorderPane;
@@ -62,12 +62,12 @@ public class AccountController extends ViewController{
     //Getter and Setters
 
 
-    private AccountData getAccountData() {
-        return accountData;
+    private AccountObservableData getAccountData() {
+        return accountObservableData;
     }
 
-    public void setAccountData(AccountData accountData) {
-        this.accountData = accountData;
+    public void setAccountData(AccountObservableData accountObservableData) {
+        this.accountObservableData = accountObservableData;
     }
 
     public ViewOperation getOperation() {
@@ -83,18 +83,18 @@ public class AccountController extends ViewController{
         return rootPane;
     }
 
-    public void initializeAccountData(AccountData accountData) {
-        setAccountData(accountData);
+    public void initializeAccountData(AccountObservableData accountObservableData) {
+        this.setAccountData(accountObservableData);
         Scene accountScene = new Scene(getRootPane());
 //        //TRY to FIGURE oUT WAY TO GET IT ON SEPERATE FORM
 //        getRootPane().getParent().getParent().
 //
-//        firstNameTextField.setText(accountData.getFirstName());
+//        firstNameTextField.setText(accountObservableData.getFirstName());
         System.out.println(
-                accountData.getUserName() + "\n " +
-                        accountData.getPassword() + "\n" +
-                        accountData.getLastName() + "\n" +
-                accountData.getEmail() + "\n" +
-                        accountData.getTelephone());
+                accountObservableData.getUserName() + "\n " +
+                        accountObservableData.getPassword() + "\n" +
+                        accountObservableData.getLastName() + "\n" +
+                accountObservableData.getEmail() + "\n" +
+                        accountObservableData.getTelephone());
     }
 }

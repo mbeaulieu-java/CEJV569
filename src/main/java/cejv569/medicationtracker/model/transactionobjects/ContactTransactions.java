@@ -3,7 +3,10 @@ package cejv569.medicationtracker.model.transactionobjects;
 import cejv569.medicationtracker.database.MedTrackDatasource;
 import cejv569.medicationtracker.database.SQLPropertiesTransactionKeys;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
-import cejv569.medicationtracker.model.dataobjects.ContactsData;
+import cejv569.medicationtracker.model.datainterfaces.Contact;
+import cejv569.medicationtracker.model.datainterfaces.User;
+import cejv569.medicationtracker.model.dataobjects.ContactData;
+import cejv569.medicationtracker.model.dataobjects.UserData;
 import cejv569.medicationtracker.model.transactioninterfaces.ContactTransaction;
 
 import java.sql.PreparedStatement;
@@ -35,13 +38,13 @@ public class ContactTransactions extends DataTransactions implements ContactTran
     }
 
     /**
-     *      createData receives a ContactsData object with the information from the email
+     *      createData receives a ContactObservableData object with the information from the email
      *      sent by a user, to be inserted into the contacts table in the database. The method
      *      first retrieves the prepared statement from the MedTrackDatasource instance using the
      *      associated SQLTransactionKey.  If the prepared statement is retrieved successfully by
      *      the datasource instance, then the prepared statement is executed to perform the insert
      *      in the database contacts table.  If any exception occurs, a OperationFailure is thrown.
-     * @param data ContactsData type - data object containing the contact email information for the record
+     * @param data ContactObservableData type - data object containing the contact email information for the record
      *                                  to be inserted into the database.
      * @throws OperationFailureException  - Exception thrown if either there is a runtime
      *                                  error that occurs or either getUserName or createData
@@ -49,7 +52,7 @@ public class ContactTransactions extends DataTransactions implements ContactTran
      *                                  layer, errors which require the application to shut down
      */
     @Override
-    public void createData(ContactsData data) throws OperationFailureException {
+    public void createData(Contact data) throws OperationFailureException {
 
         PreparedStatement theStatement;
         //retrieve the insert user query using the proper SQLTransactionKey

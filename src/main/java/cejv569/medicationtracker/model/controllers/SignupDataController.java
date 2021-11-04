@@ -3,11 +3,12 @@ package cejv569.medicationtracker.model.controllers;
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.UserAlreadyExistsException;
-import cejv569.medicationtracker.model.dataobjects.UsersData;
+import cejv569.medicationtracker.model.datainterfaces.User;
+import cejv569.medicationtracker.model.dataobjects.UserData;
 import cejv569.medicationtracker.model.operationinterfaces.SignupOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
 import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
-import cejv569.medicationtracker.view.viewdata.AccountData;
+import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
  *  SignupDataController implements the SignupOperation interface through which it receives
@@ -50,9 +51,9 @@ public class SignupDataController extends DataController implements SignupOperat
      *  validates if the user name already exists in the database (as each user name must
      *  be unique for login security logic).  If it does, it throws a UserAlreadyExistsException
      *  to be caught by the Signup view controller.  If the user name doesn't already exist
-     *  in the database, then it sends the post request to the database layer via a UsersData instance
+     *  in the database, then it sends the post request to the database layer via a UserData instance
      *  object.  It returns whether the operation was successful.
-     * @param data - AccountData type - represents the data in an observable format, obtained
+     * @param data - AccountObservableData type - represents the data in an observable format, obtained
      *             from the data input by the user into the view.
      * @return - boolean type - returns true if the postData request completed successfully or
      *                          not.
@@ -65,7 +66,7 @@ public class SignupDataController extends DataController implements SignupOperat
      *                                      layer, errors which require the application to shut down.
      */
     @Override
-    public boolean postData(AccountData data) throws UserAlreadyExistsException, OperationFailureException {
+    public boolean postData(User data) throws UserAlreadyExistsException, OperationFailureException {
 
         //set the post to unsuccessful by default
         boolean successful = false;
@@ -77,10 +78,10 @@ public class SignupDataController extends DataController implements SignupOperat
             throw new UserAlreadyExistsException("username already exists.");
         } else {
             //if the username doesn't already exist, then transfer the data to the
-            //data object of type UsersData and send it via createData to the database layer
+            //data object of type UserData and send it via createData to the database layer
             //so that a new user record can be created in the database.
 
-            getTransaction().createData(new UsersData(
+            getTransaction().createData(new UserData(
                     data.getId(),
                     data.getFirstName(),
                     data.getLastName(),

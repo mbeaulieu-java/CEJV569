@@ -1,11 +1,12 @@
 package cejv569.medicationtracker.view.viewdata;
 
+import cejv569.medicationtracker.model.datainterfaces.User;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
-        *  AccountData is a ViewData subclass.  It is used to transfer user data back and forth
+        *  AccountObservableData is a ViewObservableData subclass.  It is used to transfer user data back and forth
         * between the view layer and the model layer.
         *  This data object can be used by any of the view controller classes to transmit or display
         *  user data.
@@ -13,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
         *  properties to bind/initialize javafx controls.
         */
 
-public class AccountData extends ViewData {
+public class AccountObservableData extends ViewObservableData implements User {
 
     //properties
     private final static String ID_PROP_NAME = "id";
@@ -50,11 +51,11 @@ public class AccountData extends ViewData {
      * @param email     - String - user's email address (may or may not be the same as the user name)
      * @param telephone - String - the user's telephone number
      */
-    public AccountData(int id, String firstName, String lastName,
-                       String userName, String password,String email,
-                       String telephone) {
+    public AccountObservableData(int id, String firstName, String lastName,
+                                 String userName, String password, String email,
+                                 String telephone) {
 
-        //create and initialize AccountData values
+        //create and initialize AccountObservableData values
         this.id = new ReadOnlyIntegerWrapper(this,ID_PROP_NAME,id);
         this.firstName = new SimpleStringProperty(this,FIRSTNAME_PROP_NAME,firstName);
         this.lastName = new SimpleStringProperty(this,LASTNAME_PROP_NAME,lastName);
@@ -66,7 +67,7 @@ public class AccountData extends ViewData {
 
 
     //getters and setters
-
+    @Override
     public int getId() {
         return id.get();
     }
@@ -74,11 +75,11 @@ public class AccountData extends ViewData {
     public ReadOnlyIntegerProperty idProperty() {
         return id.getReadOnlyProperty();
     }
-
+    @Override
     public void setId(int id) {
         this.id.set(id);
     }
-
+    @Override
     public String getFirstName() {
         return firstName.get();
     }
@@ -86,11 +87,11 @@ public class AccountData extends ViewData {
     public SimpleStringProperty firstNameProperty() {
         return firstName;
     }
-
+    @Override
     public void setFirstName(String firstName) {
         this.firstName.set(firstName);
     }
-
+    @Override
     public String getLastName() {
         return lastName.get();
     }
@@ -98,11 +99,11 @@ public class AccountData extends ViewData {
     public SimpleStringProperty lastNameProperty() {
         return lastName;
     }
-
+    @Override
     public void setLastName(String lastName) {
         this.lastName.set(lastName);
     }
-
+    @Override
     public String getUserName() {
         return userName.get();
     }
@@ -110,11 +111,11 @@ public class AccountData extends ViewData {
     public SimpleStringProperty userNameProperty() {
         return userName;
     }
-
+    @Override
     public void setUserName(String userName) {
         this.userName.set(userName);
     }
-
+    @Override
     public String getPassword() {
         return password.get();
     }
@@ -122,11 +123,11 @@ public class AccountData extends ViewData {
     public SimpleStringProperty passwordProperty() {
         return password;
     }
-
+    @Override
     public void setPassword(String password) {
         this.password.set(password);
     }
-
+    @Override
     public String getEmail() {
         return email.get();
     }
@@ -134,11 +135,11 @@ public class AccountData extends ViewData {
     public SimpleStringProperty emailProperty() {
         return email;
     }
-
+    @Override
     public void setEmail(String email) {
         this.email.set(email);
     }
-
+    @Override
     public String getTelephone() {
         return telephone.get();
     }
@@ -146,7 +147,7 @@ public class AccountData extends ViewData {
     public SimpleStringProperty telephoneProperty() {
         return telephone;
     }
-
+    @Override
     public void setTelephone(String telephone) {
         this.telephone.set(telephone);
     }

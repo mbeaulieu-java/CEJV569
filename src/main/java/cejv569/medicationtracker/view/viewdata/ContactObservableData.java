@@ -1,5 +1,6 @@
 package cejv569.medicationtracker.view.viewdata;
 
+import cejv569.medicationtracker.model.datainterfaces.Contact;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,13 +8,13 @@ import javafx.beans.property.SimpleStringProperty;
 import java.sql.Timestamp;
 
 /**
- *  ContactData is a ViewData subclass.  It is used to return contact email information obtained
+ *  ContactObservableData is a ViewObservableData subclass.  It is used to return contact email information obtained
  *  in the contacts form and sent to the model layer by ContacController.  This data object
  *  is initialized with regular java data types but also contains Observable object
  *  properties to bind/initialize javafx controls.
  */
 
-public class ContactData extends ViewData {
+public class ContactObservableData extends ViewObservableData implements Contact {
 
     private final static String ID_PROP_NAME = "id";
     private ReadOnlyIntegerWrapper id;
@@ -42,9 +43,9 @@ public class ContactData extends ViewData {
      *                  by the app.
      */
 
-    public ContactData(int id, String fullName, String email, String message, Timestamp date) {
+    public ContactObservableData(int id, String fullName, String email, String message, Timestamp date) {
 
-        //create and initialize AccountData values
+        //create and initialize AccountObservableData values
         this.id = new ReadOnlyIntegerWrapper(this,ID_PROP_NAME,id);
         this.fullName = new SimpleStringProperty(this,FULLNAME_PROP_NAME,fullName);
         this.message = new SimpleStringProperty(this,MESSAGE_PROP_NAME,message);
@@ -54,7 +55,7 @@ public class ContactData extends ViewData {
 
     //getters and setters
 
-
+    @Override
     public int getId() {
         return id.get();
     }
@@ -63,10 +64,12 @@ public class ContactData extends ViewData {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id.set(id);
     }
 
+    @Override
     public Timestamp getDate() {
         return date.get();
     }
@@ -75,10 +78,12 @@ public class ContactData extends ViewData {
         return date;
     }
 
+    @Override
     public void setDate(Timestamp date) {
         this.date.set(date);
     }
 
+    @Override
     public String getFullName() {
         return fullName.get();
     }
@@ -87,10 +92,12 @@ public class ContactData extends ViewData {
         return fullName;
     }
 
+    @Override
     public void setFullName(String fullName) {
         this.fullName.set(fullName);
     }
 
+    @Override
     public String getMessage() {
         return message.get();
     }
@@ -99,10 +106,12 @@ public class ContactData extends ViewData {
         return message;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message.set(message);
     }
 
+    @Override
     public String getEmail() {
         return email.get();
     }
@@ -111,6 +120,7 @@ public class ContactData extends ViewData {
         return email;
     }
 
+    @Override
     public void setEmail(String email) {
         this.email.set(email);
     }

@@ -9,7 +9,7 @@ import cejv569.medicationtracker.utility.DataValidator;
 import cejv569.medicationtracker.utility.GUIUtility;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.utility.UserMessages;
-import cejv569.medicationtracker.view.viewdata.AccountData;
+import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -182,7 +182,7 @@ public class SignupController extends ViewController {
          */
         private void save() {
 
-            AccountData accountData = new AccountData(
+            AccountObservableData accountObservableData = new AccountObservableData(
                     0,
                     firstNameTextField.getText().trim(),
                     lastNameTextField.getText().trim(),
@@ -194,7 +194,7 @@ public class SignupController extends ViewController {
                 //this will generate a UserAlreadyExistsException if the username already
                 //exists in the database.  If no error is generated, then the postData
                 //was successful, so we can show a success message to the user.
-                getOperation().postData(accountData);
+                getOperation().postData(accountObservableData);
 
                 //display a message to the user that their information was successfully saved.
                 messageLabel.setText(UserMessages.Messages.SAVED_MESSAGE.message);

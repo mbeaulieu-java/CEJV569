@@ -4,7 +4,8 @@ import cejv569.medicationtracker.database.MedTrackDatasource;
 import cejv569.medicationtracker.database.ResultSetColumnNamesByTransactionKey;
 import cejv569.medicationtracker.database.SQLPropertiesTransactionKeys;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
-import cejv569.medicationtracker.model.dataobjects.UsersData;
+import cejv569.medicationtracker.model.datainterfaces.User;
+import cejv569.medicationtracker.model.dataobjects.UserData;
 import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
 
 import java.sql.PreparedStatement;
@@ -74,11 +75,11 @@ public class UserTransactions extends DataTransactions implements UserTransactio
     /**
      *  createData processes requests to create user records in the users table.  These are created
      *  at sign up in the application.  The method receives the data to be inserted via a
-     *  UsersData instance.  First, it uses it's datasource instance to obtain the prepared statement
+     *  UserData instance.  First, it uses it's datasource instance to obtain the prepared statement
      *  for the given SQLTransaction key.  It then initializes the insert query with the parameters
      *  containing the data to be inserted into the users table.  It then executes the prepared statement.
      *  If any exception occurs during the process a OperationFailureException is thrown.
-     * @param data - UsersData type - subclass of DBData.  Used to transfer all the user information in the
+     * @param data - UserData type - subclass of DBData.  Used to transfer all the user information in the
      *                                                   record for this user id from the users table.
      *
      * @throws OperationFailureException - Exception thrown if either there is a runtime
@@ -87,7 +88,7 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      *                                      layer, errors which require the application to shut down
      */
     @Override
-    public void createData(UsersData data) throws OperationFailureException{
+    public void createData(User data) throws OperationFailureException{
         PreparedStatement theStatement;
         //retrieve the insert user query using the proper SQLTransactionKey
         try {
@@ -122,12 +123,12 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      *  retrieve the appropriate prepared statement select query, executes the query to obtain the record.
      *  If a record is found, it returns the primary key (user id) for the record in the users table
      *  along with the user name and the password.  If no record is found the function returns null,
-     *  else a new UsersData object is created, it's intialized with the information and returned to the
+     *  else a new UserData object is created, it's intialized with the information and returned to the
      *  calling model layer.  Any exceptions that occur cause a OperationFailureException to be
      *  thrown.
      * @param userName - String type - is the user name entered by the user at login, in the login
      *                                  form.
-     * @return - UsersData type - subclass of DBData - is used to return user information, retrieved
+     * @return - UserData type - subclass of DBData - is used to return user information, retrieved
      * from the users table by the prepared statement, to the calling model layer.
      * @throws OperationFailureException - Exception thrown if either there is a runtime
      *                                      error that occurs or either getUserName or createData
@@ -136,8 +137,8 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      */
 
     @Override
-    public UsersData getUserAndPassword(String userName) throws OperationFailureException {
-        UsersData userData = null;
+    public User getUserAndPassword(String userName) throws OperationFailureException {
+        User userData = null;
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName,userColName, passwordColName;
@@ -164,11 +165,11 @@ public class UserTransactions extends DataTransactions implements UserTransactio
                 userColName = ResultSetColumnNamesByTransactionKey.Validate_UserName.USER_NAME.columnName;
                 passwordColName = ResultSetColumnNamesByTransactionKey.Validate_UserName.USER_PASSWORD.columnName;
 
-                //create a new UsersData instance to return the data retrieved by the prepared
+                //create a new UserData instance to return the data retrieved by the prepared
                 //statement.  Initialize the data object by retrieving the field values from
                 //the resultset.
                 userData =
-                        new UsersData (
+                        new UserData(
                         resultSet.getInt(idColName),
                                 "",
                                 "",
@@ -189,13 +190,13 @@ public class UserTransactions extends DataTransactions implements UserTransactio
     /**
      *  getData executes a select statement via the prepared statement retrieved using it's datasource
      *  instance.  It retrieves the users table data for the provided primary key for that uesr record
-     *  in the table.  If a record is retrieved, it creates a new UsersData object to return the
+     *  in the table.  If a record is retrieved, it creates a new UserData object to return the
      *  requested data.  If no record is retrieved, a null value is returned.  Any exceptions cause a
      *  OperationFailureException to be thrown.
      * @param userId  - int type -  represents the user id / user record primary key from the users
      *                table obtained by an earlier call to getUserandPassword.  It is used by UserTransactions
      *                to run a prepared statement which retrieves the full user record information.
-     * @return        UsersData type - subclass of DBData.  Is used to return user data retrieved by the
+     * @return        UserData type - subclass of DBData.  Is used to return user data retrieved by the
      * executed prepared statement from the users table.  Returns null if no data can be retrieved for the given
      * userid, which is the record primary key in the users table.
      * @throws OperationFailureException - Exception thrown if either there is a runtime
@@ -204,8 +205,8 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      *                                     layer, errors which require the application to shut down
      */
     @Override
-    public UsersData getData(int userId) throws OperationFailureException {
-       UsersData data = null;
+    public UserData getData(int userId) throws OperationFailureException {
+       UserData data = null;
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, fNameColName,lNameColName, userColName, passwordColName,
@@ -235,9 +236,9 @@ public class UserTransactions extends DataTransactions implements UserTransactio
                 emailColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.EMAIL.columnName;
                 phoneColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.TELEPHONE.columnName;
 
-                //create the UsersData object instance to return the data retrieved
+                //create the UserData object instance to return the data retrieved
                 //from the resultset returned by the prepared statement.
-                data = new UsersData (
+                data = new UserData(
                                 resultSet.getInt(idColName),
                                 resultSet.getString(fNameColName),
                                 resultSet.getString(lNameColName),

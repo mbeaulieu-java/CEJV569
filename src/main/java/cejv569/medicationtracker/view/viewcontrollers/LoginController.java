@@ -5,13 +5,14 @@ import cejv569.medicationtracker.MedTrack;
 import cejv569.medicationtracker.exceptions.NoSuchUserNameException;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.WrongPasswordException;
+import cejv569.medicationtracker.model.datainterfaces.User;
 import cejv569.medicationtracker.model.operationinterfaces.LoginOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.DataValidator;
 import cejv569.medicationtracker.utility.GUIUtility;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.utility.UserMessages;
-import cejv569.medicationtracker.view.viewdata.AccountData;
+import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,19 +75,19 @@ public class LoginController extends ViewController{
 
     //Attributes
     private LoginOperation loginOperation;
-    private AccountData accountData;
+    private AccountObservableData accountObservableData;
 
     //Setters & Getters
 
-    /* Setter and getter for an AccountData type property which stores
+    /* Setter and getter for an AccountObservableData type property which stores
     * any data retreived from the database upon login prior to displaying the profileform.
     * It is used to initialize the fields in the Account subpanel in the profileform. */
-    public AccountData getAccountData() {
-        return accountData;
+    public User getAccountData() {
+        return accountObservableData;
     }
 
-    public void setAccountData(AccountData accountData) {
-        this.accountData = accountData;
+    public void setAccountData(AccountObservableData accountObservableData) {
+        this.accountObservableData = accountObservableData;
     }
 
 
@@ -151,7 +152,8 @@ public class LoginController extends ViewController{
     public boolean isValidLogin(){
 
         int userId = 0;
-        accountData = null;
+        accountObservableData = null;
+        User userData = null;
 
         //call the function that signals to the user that the field is empty and
         //is a required field.  Need to check before login validation of user and
@@ -175,7 +177,11 @@ public class LoginController extends ViewController{
 
                     if (userId != 0) {
                         GUIUtility.undoDisplayFieldError(getRequiredFields(),messageLabel);
-                        accountData = getOperation().getAccountData(userId);
+                        userData = getOperation().getAccountData(userId);
+                        accountObservableData = new AccountObservableData(userData.getId(),userData.getFirstName(),
+                                userData.getLastName(),userData.getUserName(),userData.getPassword(),
+                                userData.getEmail(),userData.getTelephone());
+
                     }
 
                 } catch (NoSuchUserNameException e) {
@@ -195,19 +201,19 @@ public class LoginController extends ViewController{
                     LogError.logUnrecoverableError(e);
                 }
 
-                if(accountData != null ) {
+                if(accountObservableData != null ) {
 
                     messageLabel.setVisible(false);
                     try {
                         Stage stage = new Stage();
 
                         //pass in account data to Profile Controller
-                        //This allows the scene to pass the accountData to the AccountController instance
+                        //This allows the scene to pass the accountObservableData to the AccountController instance
                         //so it can initialize it's controls with the user account data.
 
                         FXMLLoader fxmlLoader = new FXMLLoader(MedTrack.class.getResource(PROFILE_FILE_PATH));
                         Scene scene = new Scene(fxmlLoader.load());
-                        ((ProfileController)fxmlLoader.getController()).initializeAccountData(accountData);
+                        ((ProfileController)fxmlLoader.getController()).initializeAccountData(accountObservableData);
                         stage.setTitle("MedTrack");
                         stage.setScene(scene);
                         stage.centerOnScreen();
@@ -215,7 +221,7 @@ public class LoginController extends ViewController{
 
                         //re-set account data to null for next login attempt if user comes back to
                         //login screen.
-                        accountData = null;
+                        accountObservableData = null;
                         //call function to clear login user name and password in text fields
                         GUIUtility.clearAllInputTextFields((Pane)userTextField.getParent());
                         //re-initialize styling to signal empty fields to the user
