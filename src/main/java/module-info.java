@@ -42,4 +42,8 @@ module cejv569.medicationtracker {
     opens cejv569.medicationtracker.model.transactionobjects to javafx.fxml;
     exports cejv569.medicationtracker.model.transactionobjects;
 
+    opens cejv569.medicationtracker.model.datainterfaces to javafx.fxml;
+    exports cejv569.medicationtracker.model.datainterfaces;
+
+
 }
