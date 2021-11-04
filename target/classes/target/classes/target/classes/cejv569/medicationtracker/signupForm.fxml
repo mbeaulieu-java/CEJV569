@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cejv569.medicationtracker.view.viewcontrollers.SignupController">
+   <children>
+      <Label fx:id="messageLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="300.0" layoutY="25.0" lineSpacing="1.2" prefHeight="85.0" prefWidth="400.0" text="Password and Password Confirmation don't match." textFill="#eb0b0b" visible="false" wrapText="true">
+         <font>
+            <Font name="Garamond Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </Label>
+      <AnchorPane focusTraversable="true" layoutX="300.0" layoutY="120.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="400.0" style="-fx-background-color: #28d0ff;">
+         <children>
+            <VBox fx:id="signupVBox" fillWidth="false" prefHeight="420.0" prefWidth="400.0" spacing="7.0">
+               <children>
+                  <Label text="First Name">
+                     <font>
+                        <Font name="Garamond Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="firstNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="320.0" promptText="Enter your first name">
+                     <font>
+                        <Font name="Garamond" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Label text="Last Name">
+                     <font>
+                        <Font name="Garamond Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="lastNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="320.0" promptText="Enter your last name">
+                     <font>
+                        <Font name="Garamond" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Label text="User">
+                     <font>
+                        <Font name="Garamond Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="320.0" promptText="Enter your email">
+                     <font>
+                        <Font name="Garamond" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Label text="Password">
+                     <font>
+                        <Font name="Garamond Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="320.0" promptText="Enter your password">
+                     <font>
+                        <Font name="Garamond" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </PasswordField>
+                  <Label layoutX="50.0" layoutY="275.0" text="Confirm Password">
+                     <font>
+                        <Font name="Garamond Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="confirmPasswordTextField" layoutX="50.0" layoutY="310.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="320.0" promptText="Confirm your password">
+                     <font>
+                        <Font name="Garamond" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </PasswordField>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="40.0" right="40.0" top="15.0" />
+               </padding>
+            </VBox>
+         </children>
+         <effect>
+            <DropShadow height="48.32" radius="25.177500000000002" spread="0.24" width="54.39" />
+         </effect>
+      </AnchorPane>
+      <Button fx:id="saveButton" accessibleText="Save" contentDisplay="GRAPHIC_ONLY" defaultButton="true" layoutX="450.0" layoutY="565.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0">
+         <font>
+            <Font name="Garamond Bold" size="19.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="72.0" layoutY="40.0" text="Sign Up">
+         <font>
+            <Font name="Garamond Bold" size="40.0" />
+         </font>
+      </Label>
+      <ImageView blendMode="DIFFERENCE" fitHeight="150.0" fitWidth="200.0" layoutX="35.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/signup_img.jpg" />
+         </image>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </ImageView>
+      <Label blendMode="MULTIPLY" layoutX="30.0" layoutY="550.0" prefWidth="200.0" text="MedTrack">
+         <font>
+            <Font name="Garamond Bold" size="43.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Label>
+   </children>
+</AnchorPane>

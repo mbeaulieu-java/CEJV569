@@ -1,0 +1,2 @@
+insert into medication_ingredients(medication_id,ingredient_id)
+values (?,?);

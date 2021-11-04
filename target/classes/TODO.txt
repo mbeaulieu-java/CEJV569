@@ -1,0 +1,5 @@
+- Use LoginDataController to validate the user and password and generate the
+appropriate exceptions if they are wrong.  If right, return userid.
+- In LoginController - catch the errors and show the appropriate user error messages.
+
+- In the GUI utility, in the red box function could assign all the controls a onaction based on keypress or keyreleased.

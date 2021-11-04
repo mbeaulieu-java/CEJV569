@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cejv569.medicationtracker.view.viewcontrollers.LoginController">
+   <children>
+      <ImageView fitHeight="300.0" fitWidth="900.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.71" pickOnBounds="true">
+         <viewport>
+            <Rectangle2D height="800.0" width="1280.0" />
+         </viewport>
+         <image>
+            <Image url="@assets/login_img.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane focusTraversable="true" layoutX="218.0" layoutY="390.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="460.0" style="-fx-background-color: #28d0ff;">
+         <children>
+            <TextField fx:id="userTextField" layoutX="60.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="370.0" promptText="Enter your email">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <PasswordField fx:id="passwordTextField" layoutX="60.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="370.0" promptText="Enter your password">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </PasswordField>
+            <ImageView fitHeight="27.0" fitWidth="27.0" layoutX="20.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/password.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="27.0" layoutX="20.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/user.png" />
+               </image>
+            </ImageView>
+         </children>
+         <effect>
+            <DropShadow height="48.32" radius="25.177500000000002" spread="0.24" width="54.39" />
+         </effect>
+      </AnchorPane>
+      <Label fx:id="messageLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="130.0" layoutY="524.0" lineSpacing="1.2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="650.0" textFill="#d61515" visible="false" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </Label>
+      <Label layoutX="380.0" layoutY="310.0" text="Sign In">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
+      <ButtonBar buttonMinWidth="100.0" layoutX="1.0" layoutY="585.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="900.0">
+        <buttons>
+            <HBox layoutY="630.0" prefHeight="60.0" prefWidth="890.0" spacing="20.0">
+               <children>
+                  <Button fx:id="signupButton" accessibleText="Sign up" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Button">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor></Button>
+                <Button fx:id="loginButton" accessibleText="Log in" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" defaultButton="true" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Button">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor></Button>
+                  <Button fx:id="contactButton" accessibleText="Contact" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0">
+                     <font>
+                        <Font name="Garamond Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="120.0" right="120.0" />
+               </padding>
+            </HBox>
+        </buttons>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </ButtonBar>
+      <Label layoutX="48.0" layoutY="53.0" text="MedTrack">
+         <font>
+            <Font name="Garamond Bold" size="65.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

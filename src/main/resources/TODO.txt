@@ -1,0 +1,10 @@
+- Display a message to the effect that the fields in red are required instead of saying
+the fields are blank.
+
+- load the background images in the fxml instead of dynamically.
+
+- create seperate .fxml files for each panel in the accordion, then either assign the controllers
+dynamically or in SceneBuilder...should work as long as am not referring to any components that
+haven't been initialized yet.
+
+- integrate more functionality in the interface....

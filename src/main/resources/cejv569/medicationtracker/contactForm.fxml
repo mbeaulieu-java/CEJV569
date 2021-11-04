@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cejv569.medicationtracker.view.viewcontrollers.ContactController">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="242.0" prefHeight="429.0" prefWidth="800.0" style="-fx-background-color: #28d0ff;">
+         <children>
+            <TextField fx:id="nameTextField" layoutX="65.0" layoutY="41.0" prefHeight="30.0" prefWidth="270.0" promptText="Enter your full name">
+               <font>
+                  <Font name="Garamond" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <TextField fx:id="emailTextField" layoutX="65.0" layoutY="117.0" prefHeight="30.0" prefWidth="270.0" promptText="Enter your email address">
+               <font>
+                  <Font name="Garamond" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <TextArea fx:id="messageTextArea" layoutX="30.0" layoutY="176.0" prefHeight="240.0" prefWidth="744.0" promptText="Let us know what you're thinking...">
+               <font>
+                  <Font name="Garamond" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextArea>
+            <Button fx:id="submitButton" accessibleText="Submit" layoutX="450.0" layoutY="113.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="127.0">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </Button>
+            <Label blendMode="SRC_ATOP" layoutX="65.0" layoutY="17.0" text="Name:">
+               <font>
+                  <Font name="Garamond Bold" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+            <Label blendMode="SRC_ATOP" layoutX="65.0" layoutY="92.0" text="Email:">
+               <font>
+                  <Font name="Garamond Bold" size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label blendMode="SRC_ATOP" layoutX="715.0" layoutY="30.0" prefHeight="100.0" prefWidth="153.0" text="56 Anonymous Blvd Anonymous, QC A4N 4M3" wrapText="true">
+         <font>
+            <Font name="Garamond Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label blendMode="SRC_ATOP" layoutX="715.0" layoutY="122.0" text="+1 (777) - 7777">
+         <font>
+            <Font name="Garamond Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="messageLabel" alignment="TOP_LEFT" layoutX="150.0" layoutY="155.0" prefHeight="79.0" prefWidth="454.0" text="This name is invalid. Please enter another value" textFill="RED" visible="false" wrapText="true">
+         <font>
+            <Font name="Garamond" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="30.0" text="MedTrack">
+         <font>
+            <Font name="Garamond Bold" size="52.0" />
+         </font>
+      </Label>
+      <Label layoutX="648.0" layoutY="201.0" text="Need Help?">
+         <font>
+            <Font name="Garamond Bold" size="25.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="45.0" fitWidth="43.0" layoutX="792.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+         <image>
+            <Image url="@assets/contacthand.png" />
+         </image>
+      </ImageView>
+      <ImageView blendMode="SRC_ATOP" fitHeight="400.0" fitWidth="80.0" layoutX="51.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" rotate="1.0">
+         <image>
+            <Image url="@assets/contactus.jpg" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+   </children>
+</AnchorPane>
