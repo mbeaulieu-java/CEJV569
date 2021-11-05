@@ -10,7 +10,7 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
  * LoginOperation is a subclass of ViewOperation.  It interfaces the data requests between the
  * LoginController (view layer) and the LoginDataController(model layer), the later being the
  * class which implements it.  It is used to decouple the view and model layer.  The interface
- * is used to transfer AccountObservableData type instances containing the data to be validated by with
+ * is used to transfer User interface type instances containing the data to be validated by with
  * user name and password information contained in the database.
  */
 
@@ -52,7 +52,7 @@ public interface LoginOperation extends ViewOperation{
      *  This method is implemented by LoginDataController to retrieve the user account information
      *  using the id retrieved from the user and password authorization process at login.
      * @param userID - int type - the userid/ primary key from the database for that user record
-     * @return - AccountObservableData type - ViewObservableData sub class used to initialize the view controls with
+     * @return - User interface type -  it is used to initialize the view controls with
      * user account data retrieved from the database layer.
      * @throws OperationFailureException Custom Exception thrown if either there is a runtime
      *                                    error that occurs or either getUserName or createData

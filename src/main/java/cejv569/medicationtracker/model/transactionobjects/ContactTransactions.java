@@ -38,13 +38,13 @@ public class ContactTransactions extends DataTransactions implements ContactTran
     }
 
     /**
-     *      createData receives a ContactObservableData object with the information from the email
+     *      createData receives a Contact interface type object with the information from the email
      *      sent by a user, to be inserted into the contacts table in the database. The method
      *      first retrieves the prepared statement from the MedTrackDatasource instance using the
      *      associated SQLTransactionKey.  If the prepared statement is retrieved successfully by
      *      the datasource instance, then the prepared statement is executed to perform the insert
      *      in the database contacts table.  If any exception occurs, a OperationFailure is thrown.
-     * @param data ContactObservableData type - data object containing the contact email information for the record
+     * @param data Contact interface type - data object containing the contact email information for the record
      *                                  to be inserted into the database.
      * @throws OperationFailureException  - Exception thrown if either there is a runtime
      *                                  error that occurs or either getUserName or createData

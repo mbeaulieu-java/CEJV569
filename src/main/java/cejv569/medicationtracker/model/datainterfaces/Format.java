@@ -1,6 +1,6 @@
 package cejv569.medicationtracker.model.datainterfaces;
 
-public interface Format {
+public interface Format extends Data{
 
   int getId();
 

@@ -70,7 +70,7 @@ public class LoginDataController extends DataController implements LoginOperatio
      *  userandPasswordExists receives the user name and password entered at login by the user
      *  from the view controller and first validates if the user name can be found in the database by
      *  sending a request for the information to the data layer via the UserTransaction interface.
-     *  If the database layer returns a null UserData instance, then no record was found for
+     *  If the database layer returns a null User (userData) instance, then no record was found for
      *  this username so the function throws a NoSuchUserNameException.
      *  If the user name and password is obtained from the database layer, the retrieved password
      *  is validated against the password received as an argument.  If the two don't match,
@@ -133,8 +133,8 @@ public class LoginDataController extends DataController implements LoginOperatio
      * getAccountData
      * @param userID - int - represents the userid obtained from the prior Login Validation
      *               operation.  It is used to retrieve the user's account information.
-     * @return - AccountObservableData type - contains the user account information.  Has Observable properties
-     *                              to be used to display the information via GUI controls.
+     * @return - User interface type can receive any object which supports the User interface
+     * - contains the user account information.
      * @throws OperationFailureException - custom error thrown if a runtime error occurs or
      *                                      - information required for the proper functioning
      *                                      of the app can't be retrieved, requiring the app
@@ -151,7 +151,7 @@ public class LoginDataController extends DataController implements LoginOperatio
             if (userID == 0){throw new OperationFailureException("UserID was not initialized and is 0");}
 
             //use the UserTransaction interface to request from the database layer the recordset
-            //corresponding to the userid, via a UserData object.
+            //corresponding to the userid, via an object that support the User interface.
             userData = getTransaction().getData(userID);
             //if the userData is null, then the record couldn't be found, so throw an exception.
             if (userData == null) { throw new OperationFailureException("No user data record found in " +
@@ -159,7 +159,7 @@ public class LoginDataController extends DataController implements LoginOperatio
         } catch (OperationFailureException e) {
             throw e;
         }
-        //return the AccountObservableData instance to the Login View Controller
+        //return the User instance to the calling LoginController subclass.
         return userData;
     }
 

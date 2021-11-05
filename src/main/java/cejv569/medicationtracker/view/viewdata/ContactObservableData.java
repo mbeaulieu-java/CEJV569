@@ -8,7 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import java.sql.Timestamp;
 
 /**
- *  ContactObservableData is a ViewObservableData subclass.  It is used to return contact email information obtained
+ *  ContactObservableData is a ViewObservableData subclass and implements the data interface class Contact.
+ *  It is used to return contact email information obtained
  *  in the contacts form and sent to the model layer by ContacController.  This data object
  *  is initialized with regular java data types but also contains Observable object
  *  properties to bind/initialize javafx controls.

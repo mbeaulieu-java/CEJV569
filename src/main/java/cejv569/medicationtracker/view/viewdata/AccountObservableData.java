@@ -6,7 +6,8 @@ import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
-        *  AccountObservableData is a ViewObservableData subclass.  It is used to transfer user data back and forth
+        *  AccountObservableData is a ViewObservableData subclass and implements the User data interface.
+ *      It is used to transfer user data back and forth
         * between the view layer and the model layer.
         *  This data object can be used by any of the view controller classes to transmit or display
         *  user data.

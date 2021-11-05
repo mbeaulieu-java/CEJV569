@@ -1,6 +1,6 @@
 package cejv569.medicationtracker.model.datainterfaces;
 
-public interface Effect {
+public interface Effect extends Data{
     int getId();
 
    void setId(int id);

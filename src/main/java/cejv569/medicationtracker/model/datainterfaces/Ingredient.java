@@ -1,6 +1,6 @@
 package cejv569.medicationtracker.model.datainterfaces;
 
-public interface Ingredient {
+public interface Ingredient extends Data{
 
     int getId();
 

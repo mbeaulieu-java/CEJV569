@@ -18,11 +18,11 @@ public interface SignupOperation extends ViewOperation {
 
     /**
      * postData is implemented by SignupDataController and transfers the signup user data
-     * to the database layer via an AccountObservableData ViewObservableData subclass data object, to be saved to
+     * to the database layer via a User interface type, a Data interface subclass, to be saved to
      * the database.  The SignupDataController validates if the user name already exists in the database
      * before the data is saved to the database layer because the user name must be unique in the database.
      * If the user name already exists in the database, a UserAlreadyExistsException is thrown.
-     * @param data AccountObservableData type - data object containing the user account information entered
+     * @param data User interface type - contains the user account information entered
      *             at Sign up by the user.
      * @return boolean type - returns true if the postData request was successfully completed
      *                          by both the SignupDataController and the database layer.

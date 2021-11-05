@@ -5,8 +5,9 @@ import cejv569.medicationtracker.model.datainterfaces.Contact;
 import java.sql.Timestamp;
 
 /**
- *  ContactObservableData is a subclass of DBData and is a data structure used to process
- *  information from email communications from users or people who are not users
+ *  ContactData is a subclass of DBData and implements the interface Contact.
+ *  It is a data structure used to process information from email communications from users or
+ *  people who are not users
  *  but sent a communication to the company (which is completely fictional with a name that
  *  is hopefully not trademarked).  This object is used to transfer the data between the
  *  model layer and the database layer.

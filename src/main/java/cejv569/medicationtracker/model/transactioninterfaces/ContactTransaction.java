@@ -12,10 +12,10 @@ import cejv569.medicationtracker.model.dataobjects.ContactData;
 public interface ContactTransaction extends DataTransaction{
 
     /**
-     *  createData is called from the model layer and passed a ContactObservableData object containing
+     *  createData is called from the model layer and passed a Contact interface type object containing
      *  the contacts information to be stored in the database.  The record is then created
      *  by the ContactTransactions class via the insert prepared statement query.
-     * @param data ContactObservableData type - data object containing the contact email information for the record
+     * @param data Contact interface type - data object containing the contact email information for the record
      *                                  to be inserted into the database.
      * @throws OperationFailureException                 Exception thrown if either there is a runtime
      *                                                   error that occurs or either getUserName or createData

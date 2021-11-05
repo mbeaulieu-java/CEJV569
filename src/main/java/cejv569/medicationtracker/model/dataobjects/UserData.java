@@ -3,7 +3,8 @@ package cejv569.medicationtracker.model.dataobjects;
 import cejv569.medicationtracker.model.datainterfaces.User;
 
 /**
- *  UserData is a subclass of DBData and is used to process user data between the model layer
+ *  UserData is a subclass of DBData and implements the data interface User. It is used to
+ *  process user data between the model layer
  *  and the database layer.
  */
 

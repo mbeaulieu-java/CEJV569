@@ -2,7 +2,7 @@ package cejv569.medicationtracker.model.datainterfaces;
 
 import java.sql.Timestamp;
 
-public interface Contact {
+public interface Contact extends Data{
     int getId();
 
     void setId(int id);

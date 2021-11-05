@@ -75,11 +75,11 @@ public class UserTransactions extends DataTransactions implements UserTransactio
     /**
      *  createData processes requests to create user records in the users table.  These are created
      *  at sign up in the application.  The method receives the data to be inserted via a
-     *  UserData instance.  First, it uses it's datasource instance to obtain the prepared statement
+     *  User interface type object.  First, it uses it's datasource instance to obtain the prepared statement
      *  for the given SQLTransaction key.  It then initializes the insert query with the parameters
-     *  containing the data to be inserted into the users table.  It then executes the prepared statement.
+     *  containing the data to be inserted into the users table.  After it executes the prepared statement.
      *  If any exception occurs during the process a OperationFailureException is thrown.
-     * @param data - UserData type - subclass of DBData.  Used to transfer all the user information in the
+     * @param data - User interface type - Used to transfer all the user information in the
      *                                                   record for this user id from the users table.
      *
      * @throws OperationFailureException - Exception thrown if either there is a runtime
@@ -123,12 +123,13 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      *  retrieve the appropriate prepared statement select query, executes the query to obtain the record.
      *  If a record is found, it returns the primary key (user id) for the record in the users table
      *  along with the user name and the password.  If no record is found the function returns null,
-     *  else a new UserData object is created, it's intialized with the information and returned to the
+     *  or else a new UserData object (which implements the User interface) is created,
+     *  it's initialized with the information and returned to the
      *  calling model layer.  Any exceptions that occur cause a OperationFailureException to be
      *  thrown.
      * @param userName - String type - is the user name entered by the user at login, in the login
      *                                  form.
-     * @return - UserData type - subclass of DBData - is used to return user information, retrieved
+     * @return - User interface type  - is used to return user information, retrieved
      * from the users table by the prepared statement, to the calling model layer.
      * @throws OperationFailureException - Exception thrown if either there is a runtime
      *                                      error that occurs or either getUserName or createData
@@ -189,14 +190,15 @@ public class UserTransactions extends DataTransactions implements UserTransactio
 
     /**
      *  getData executes a select statement via the prepared statement retrieved using it's datasource
-     *  instance.  It retrieves the users table data for the provided primary key for that uesr record
-     *  in the table.  If a record is retrieved, it creates a new UserData object to return the
+     *  instance.  It retrieves the users table data for the provided primary key for that user record
+     *  in the table.  If a record is retrieved, it creates a new UserData object (which implements the User interface)
+     *  to return the
      *  requested data.  If no record is retrieved, a null value is returned.  Any exceptions cause a
      *  OperationFailureException to be thrown.
      * @param userId  - int type -  represents the user id / user record primary key from the users
      *                table obtained by an earlier call to getUserandPassword.  It is used by UserTransactions
      *                to run a prepared statement which retrieves the full user record information.
-     * @return        UserData type - subclass of DBData.  Is used to return user data retrieved by the
+     * @return        User interface type - is used to return user data retrieved by the
      * executed prepared statement from the users table.  Returns null if no data can be retrieved for the given
      * userid, which is the record primary key in the users table.
      * @throws OperationFailureException - Exception thrown if either there is a runtime
@@ -205,8 +207,8 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      *                                     layer, errors which require the application to shut down
      */
     @Override
-    public UserData getData(int userId) throws OperationFailureException {
-       UserData data = null;
+    public User getData(int userId) throws OperationFailureException {
+       User data = null;
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, fNameColName,lNameColName, userColName, passwordColName,

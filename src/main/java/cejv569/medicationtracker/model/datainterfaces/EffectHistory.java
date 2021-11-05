@@ -2,7 +2,7 @@ package cejv569.medicationtracker.model.datainterfaces;
 
 import java.sql.Timestamp;
 
-public interface EffectHistory{
+public interface EffectHistory extends Data{
 
     int getId();
 

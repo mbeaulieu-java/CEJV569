@@ -51,8 +51,8 @@ public class ContactDataController extends DataController implements ContactOper
      *  sends the data via a transaction request (createData()) to the database layer so that the data
      *  gets created in the database.
      *
-     * @param data - ContactObservableData type - represents a ViewObservableData subclass used to transfer email contact
-     *                                  info obtained from the user via the contact view.
+     * @param data - Contact type - represents an object that supports the Contact data interface and is used to
+     *             transfer email contact info obtained from the user via the contact view.
      * @return boolean type - returns true if the postData method and the createData requests
      *                          complete successfully, or false if they don't.
      * @throws OperationFailureException -         Custom Exception thrown if either there is a runtime
@@ -66,7 +66,7 @@ public class ContactDataController extends DataController implements ContactOper
         //set the post to unsuccessful by default
         boolean successful = false;
 
-        //create the data object and transfer the data from the view object to it, then send
+        //create a ContactData object and transfer the data from the view object to it, then send
         //the information to the database layer via the transaction request createData().
         try {
             getTransaction().createData(new ContactData(

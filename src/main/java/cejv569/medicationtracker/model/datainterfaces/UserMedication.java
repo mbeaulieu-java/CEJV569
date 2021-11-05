@@ -2,7 +2,7 @@ package cejv569.medicationtracker.model.datainterfaces;
 
 import java.sql.Date;
 
-public interface UserMedication {
+public interface UserMedication extends Data{
     int getId();
 
     void setId(int id);

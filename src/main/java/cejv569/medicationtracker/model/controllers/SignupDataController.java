@@ -51,9 +51,9 @@ public class SignupDataController extends DataController implements SignupOperat
      *  validates if the user name already exists in the database (as each user name must
      *  be unique for login security logic).  If it does, it throws a UserAlreadyExistsException
      *  to be caught by the Signup view controller.  If the user name doesn't already exist
-     *  in the database, then it sends the post request to the database layer via a UserData instance
-     *  object.  It returns whether the operation was successful.
-     * @param data - AccountObservableData type - represents the data in an observable format, obtained
+     *  in the database, then it sends the post request to the database layer via a UserData instance which supports
+     *  the User interface. It returns whether the operation was successful.
+     * @param data - User interface type - represents the data obtained
      *             from the data input by the user into the view.
      * @return - boolean type - returns true if the postData request completed successfully or
      *                          not.
@@ -77,8 +77,8 @@ public class SignupDataController extends DataController implements SignupOperat
             //throw an error that the user already exists
             throw new UserAlreadyExistsException("username already exists.");
         } else {
-            //if the username doesn't already exist, then transfer the data to the
-            //data object of type UserData and send it via createData to the database layer
+            //if the username doesn't already exist, then transfer the received data to the
+            //UserData type object and send it via createData to the database layer
             //so that a new user record can be created in the database.
 
             getTransaction().createData(new UserData(
