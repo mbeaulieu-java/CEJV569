@@ -32,9 +32,6 @@ import java.util.stream.Stream;
 
 public class SignupController extends ViewController {
 
-        //Constants for graphics files for buttons
-        private final String SAVE_IMAGE_PATH = "/cejv569/medicationtracker/assets/saveandclose.png";
-
         // Controls
         @FXML
         private VBox signupVBox;
@@ -82,7 +79,12 @@ public class SignupController extends ViewController {
     }
 
     /**
-     * initialize() adds an event handler to the saveButton that validates all the text fields in the
+     * initialize():
+     * Calls the Application Controller to initialize the operation interface it must use.
+     * Then loops through all the textfields and adds them to the required TextInputControl list.
+     * Then calls GUIUtility.signalEmptyField which changes certain properties on the textfields in the list,
+     * if one is empty.
+     * adds an event handler to the saveButton that validates all the text fields in the
      * form and if they are all filled correctly calls save() save to save the information.
      */
     @FXML
@@ -110,9 +112,6 @@ public class SignupController extends ViewController {
                 GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
                 GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
                 UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
-
-        //create and set the background for the save button
-        saveButton.setBackground(GUIUtility.getBackgroundImage(getClass(), SAVE_IMAGE_PATH));
 
         //add event handler for save button.  Every time the button save is
         //clicked, it checks if there are empty fields to signal and if their values

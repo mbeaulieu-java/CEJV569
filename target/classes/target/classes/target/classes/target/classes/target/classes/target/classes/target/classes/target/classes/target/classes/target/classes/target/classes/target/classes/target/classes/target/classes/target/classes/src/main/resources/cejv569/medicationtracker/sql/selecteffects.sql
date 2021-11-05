@@ -1,2 +1,2 @@
-select id, label, effect_description, negative, body_location
+select id, label, effectDescription, negative, bodyLocation
 from effects;

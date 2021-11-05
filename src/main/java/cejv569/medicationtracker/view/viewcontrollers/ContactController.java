@@ -25,12 +25,6 @@ import javafx.scene.layout.Pane;
  */
 public class ContactController extends ViewController{
 
-    /**
-     * Resource Paths constants
-     */
-    //relative path for the submit button graphic
-    private final String SUBMIT_IMAGE_PATH = "/cejv569/medicationtracker/assets/submit.png";
-
     @FXML
     private TextField nameTextField;
 
@@ -69,7 +63,9 @@ public class ContactController extends ViewController{
     }
 
     /**
-     *  initialize() sets the background graphic for the submit button and adds an event handler for it.
+     *  initialize() Calls the Application Controller to initialize the operation interface it must use.
+     *  It then calls GUIUtility.signalEmptyField which changes certain properties on the textfields in the list,
+     *  if one is empty.
      *  The event handler class the isValidInfo to validate the information before it is submitted.
      */
     @FXML
@@ -80,8 +76,7 @@ public class ContactController extends ViewController{
         //init all the required fields so the user gets the feedback about which fields are
         //required.
         initFieldValidation();
-        //set submitButton background image
-        submitButton.setBackground(GUIUtility.getBackgroundImage(getClass(),SUBMIT_IMAGE_PATH));
+
         //add button handler
         submitButton.addEventHandler(ActionEvent.ACTION,(e)->{isValidInfo();});
     }

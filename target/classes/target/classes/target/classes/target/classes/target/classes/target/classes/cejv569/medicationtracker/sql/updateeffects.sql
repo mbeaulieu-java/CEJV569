@@ -1,7 +1,7 @@
 update effects
 set 
 label = ?,
-effect_description = ?,
+effectDescription = ?,
 negative = ?,
-body_location = ?
+bodyLocation = ?
 where id = ?;

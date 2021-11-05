@@ -71,29 +71,51 @@
             <Font size="45.0" />
          </font>
       </Label>
-      <ButtonBar buttonMinWidth="100.0" layoutX="1.0" layoutY="585.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="900.0">
+      <ButtonBar buttonMinWidth="100.0" layoutX="1.0" layoutY="570.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="900.0">
         <buttons>
-            <HBox layoutY="630.0" prefHeight="60.0" prefWidth="890.0" spacing="20.0">
+            <HBox layoutY="630.0" prefHeight="60.0" prefWidth="890.0" spacing="60.0">
                <children>
-                  <Button fx:id="signupButton" accessibleText="Sign up" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Button">
+                  <Button fx:id="signupButton" accessibleText="Sign up" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-graphic: url('/assets/signup.png');" text="Button">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
-                     </cursor></Button>
-                <Button fx:id="loginButton" accessibleText="Log in" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" defaultButton="true" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Button">
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/signup.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                <Button fx:id="loginButton" accessibleText="Log in" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" defaultButton="true" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Button">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
-                     </cursor></Button>
-                  <Button fx:id="contactButton" accessibleText="Contact" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0">
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/login.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="contactButton" accessibleText="Contact" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-image: url(&quot;&quot;);">
                      <font>
                         <Font name="Garamond Bold" size="16.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/contact.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
                <padding>
-                  <Insets left="120.0" right="120.0" />
+                  <Insets left="225.0" right="120.0" />
                </padding>
             </HBox>
         </buttons>

@@ -1,5 +1,10 @@
-- Use LoginDataController to validate the user and password and generate the
-appropriate exceptions if they are wrong.  If right, return userid.
-- In LoginController - catch the errors and show the appropriate user error messages.
+- Display a message to the effect that the fields in red are required instead of saying
+the fields are blank.
 
-- In the GUI utility, in the red box function could assign all the controls a onaction based on keypress or keyreleased.
+- load the background images in the fxml instead of dynamically.
+
+- create seperate .fxml files for each panel in the accordion, then either assign the controllers
+dynamically or in SceneBuilder...should work as long as am not referring to any components that
+haven't been initialized yet.
+
+- integrate more functionality in the interface....

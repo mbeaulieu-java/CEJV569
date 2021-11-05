@@ -53,7 +53,7 @@
                                     <Image url="@../../../../../../../../../Downloads/account.jpg" />
                                  </image>
                               </ImageView>
-                              <VBox fillWidth="false" layoutX="324.0" layoutY="9.0" prefHeight="298.0" prefWidth="640.0" spacing="2.0">
+                              <VBox fillWidth="false" layoutX="324.0" layoutY="9.0" prefHeight="291.0" prefWidth="640.0" spacing="2.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="686.0" spacing="30.0">
                                        <children>
@@ -117,6 +117,9 @@
                                              <font>
                                                 <Font name="Garamond Bold" size="14.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                        <padding>
@@ -136,12 +139,12 @@
                                                 <Cursor fx:constant="TEXT" />
                                              </cursor>
                                           </TextField>
-                                          <PasswordField fx:id="passwordTextField" prefWidth="100.0">
+                                          <PasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="193.0">
                                              <cursor>
                                                 <Cursor fx:constant="TEXT" />
                                              </cursor>
                                           </PasswordField>
-                                          <PasswordField fx:id="passwordConfirmationTextField" prefWidth="100.0">
+                                          <PasswordField fx:id="passwordConfirmationTextField" prefHeight="26.0" prefWidth="193.0">
                                              <cursor>
                                                 <Cursor fx:constant="TEXT" />
                                              </cursor>
@@ -207,22 +210,12 @@
                                           <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="addAccountButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Add">
-                                             <cursor>
-                                                <Cursor fx:constant="OPEN_HAND" />
-                                             </cursor>
-                                          </Button>
                                           <Button fx:id="editAccountButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Edit">
                                              <cursor>
                                                 <Cursor fx:constant="OPEN_HAND" />
                                              </cursor>
                                           </Button>
                                           <Button fx:id="saveAccountButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Save">
-                                             <cursor>
-                                                <Cursor fx:constant="OPEN_HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <Button fx:id="deleteAccountButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Delete">
                                              <cursor>
                                                 <Cursor fx:constant="OPEN_HAND" />
                                              </cursor>

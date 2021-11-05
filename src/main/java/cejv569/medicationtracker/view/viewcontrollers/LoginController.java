@@ -38,14 +38,6 @@ public class LoginController extends ViewController{
 
 
     /**
-     * Resource Paths constants
-     */
-    //relative path for the button graphics
-    private final String LOGIN_IMAGE_PATH = "/cejv569/medicationtracker/assets/login.png";
-    private final String SIGNUP_IMAGE_PATH = "/cejv569/medicationtracker/assets/signup.png";
-    private final String CONTACT_IMAGE_PATH = "/cejv569/medicationtracker/assets/contact.png";
-
-    /**
      * Constants for FXML files
      */
 
@@ -107,11 +99,10 @@ public class LoginController extends ViewController{
     }
 
     /**
-     *  initialize()
-     *  1) Initializes it's operation attribute via a call to ApplicationController ...operationFactory.
-     *  Then sets the background graphic for the login and signup buttons.
-     *  Calls the method required to initiate value validation processing for the text fields
-     *  on the form.
+     *  initialize():
+     *  Calls the Application Controller to initialize the operation interface it must use.
+     * It then calls GUIUtility.signalEmptyField which changes certain properties on the textfields in the list,
+     *  if one is empty.
      *  After which it assigns event handlers to all the buttons.
      */
     @FXML
@@ -119,15 +110,8 @@ public class LoginController extends ViewController{
         //set the operation interface object for the LoginController
         ApplicationController.getInstance().operationFactory(this);
 
-      //create the background image and set the background for the loginButton
-        loginButton.setBackground(GUIUtility.getBackgroundImage(getClass(),LOGIN_IMAGE_PATH));
-
-        //create the background image and set the background for the signupButton
-        signupButton.setBackground(GUIUtility.getBackgroundImage(getClass(),SIGNUP_IMAGE_PATH));
-
-        //create the background image and set the background for the ContactButton
-        contactButton.setBackground(GUIUtility.getBackgroundImage(getClass(),CONTACT_IMAGE_PATH));
-
+        //set the required fields list and call the functions that change the TextInputField
+        //properties to denote that the field is empty.
         initFieldValidation();
 
         // Add event handlers for buttons

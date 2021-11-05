@@ -1,2 +1,2 @@
-insert into effects(label,effect_description,negative,body_location)
+insert into effects(label,effectDescription,negative,bodyLocation)
 values (?,?,?,?);
