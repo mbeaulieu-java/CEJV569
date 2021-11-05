@@ -20,11 +20,10 @@ import java.io.IOException;
  *                          (viewcontrollers package)
  *
  *      2) The model layer:  This includes controllers that take data from the view layer, apply app
- *      business rules to it and then transfer the data to the database layer.  It also transforms
- *      data received from the database layer to a whatever format required by the view layer.
+ *      business rules to it and then transfer the data to the database layer.
  *      All controllers of the model layer have DataController as a parent class. (model package - controller package)
  *
- *      3) This is the model/data layer: It also has controllers which actually are responsible for
+ *      3) The data layer: It has controllers which are responsible for
  *      initializing and executing the queries required to store, update, delete and retrieve
  *      data from the database.  All these controllers have DataTransactions as a parent class.
  *      (transactionobjects package).
@@ -52,20 +51,34 @@ import java.io.IOException;
  *
  *      Data is transmitted via two different types of data objects.
  *
- *          A) View Data - all sub classes of the class ViewObservableData.  This comprises all data
+ *      To render each layer more independent in terms of the data objects used for data exchange, an interface layer
+ *      was added.  These data interfaces have a parent class - Data .  The interfaces
+ *      allow flexibility in data exchange in that each layer can work with it's own type of
+ *      data objects, as long as these implement the appropriate data interface.
+ *      (datainterfaces package).
+ *
+ *     In this application, two types of data objects are used for the processing of
+ *     data.
+
+ *          1) View Data - all sub classes of the class ViewObservableData.  This comprises all data
  *          retrieved from the user via the gui, which needs to be transmitted to the model layer.
- *          These objects possess observable properties.  View Data gets transmitted between
- *          the view and model layers. (viewdata package)
+ *          These objects possess observable properties.  Each data object must implement
+ *          a particular data interface to transmit data to the model layer, as the model
+ *          can only accept data object entities that support that particular interface.  View Data
+ *          objects are exclusively used in the application by the ViewController subclasses comprising
+ *          the View layer.
+ *          (viewdata package)
  *
  *
- *          B) Data Objects - all sub classes of DBData.  These are simple java classes
- *          which mirror the fields to be found in the resultsets produced by the databases'
- *          queries.  DBData objects type objects are exchanged between the model and data layers.
+ *          2) Data Objects - all sub classes of DBData.  These are simple java classes (POGO)
+ *          which mirror the fields to be found in the database's tables.  DBData subclasses
+ *          are used in both the model and data layers.  All DBData subclasses also implement the
+ *          data interfaces (Data interface child classes) to facilitate consistent data exchange
+ *          between the model and view layers and the model and data layers.
  *          (dataobjects package)
  *
  *          So, essentially requests are sent through the view layer to the model layer and
- *          sometimes on to the data layer when information must be retrieved or a CRUD
- *          operation must be performed in the database.
+ *          onto the data layer when a CRUD operation must be performed in the database.
  *
  *          Further classes have been created to provide support to the operations performed
  *          by the app:
@@ -86,12 +99,12 @@ import java.io.IOException;
  *
  *              2) ResultSetColumnNamesByTransactionKey :  This class contains
  *              enum classes which represent queries in the database from which information
- *              must be extracted by field/column name.  It thus maps constants to the actual column names
- *              used in the queries.
+ *              must be extracted by field/column name.  It thus maps constants to the actual
+ *              column names used in the queries.
  *
- *              3) SQLPropertiesTransactionKeys : This class maps the key-value mappings to be
- *              found in the transactionsqlmatch.properties file to constants the app can use.
- *              This essentially is key words used to denote the type of transaction the query
+ *              3) SQLPropertiesTransactionKeys : This class maps the key-value pairs to be
+ *              found in the transactionsqlmatch.properties file to Constants the app can use.
+ *              These are essentially key words used to denote the type of transaction the query
  *              represents and maps it to the physical address of the sql statement - a .sql
  *              file located in the ./resources/sql directory.
  *
