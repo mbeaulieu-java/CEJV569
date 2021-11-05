@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.geometry.Insets?>
+<TitledPane fx:id="medEffectsTitledPane"
+            animated="false" layoutX="10.0" layoutY="10.0"
+            text="Medication Effects History"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cejv569.medicationtracker.view.viewcontrollers.EffectHistoryController">
+<content>
+    <ScrollPane prefHeight="700.0" prefWidth="1000.0">
+        <content>
+            <AnchorPane fx:id="effectHistoryAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #28d0ff;">
+                <children>
+                    <TableView fx:id="effectHistoryTableView" layoutX="10.0" layoutY="25.0" prefHeight="138.0" prefWidth="968.0">
+                        <columns>
+                            <TableColumn fx:id="effectDateTableColumn" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" sortType="DESCENDING" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Date of Effect" />
+                            <TableColumn fx:id="EffectTableColumn" editable="false" maxWidth="255.0" minWidth="255.0" prefWidth="255.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Effect" />
+                            <TableColumn fx:id="effectMedBrandTableColumn" editable="false" maxWidth="255.0" minWidth="255.0" prefWidth="255.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Medication Brand Name" />
+                            <TableColumn fx:id="effectMedGenericTableColumn" editable="false" maxWidth="255.0" minWidth="255.0" prefWidth="255.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Medication Generic Name" />
+                        </columns>
+                    </TableView>
+                    <TextArea fx:id="effectHistoryTextArea" editable="false" layoutX="10.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="500.0" scrollLeft="255.0" style="-fx-font-family: Garamond; -fx-font-size: 14;" wrapText="true">
+                        <cursor>
+                            <Cursor fx:constant="NONE" />
+                        </cursor>
+                    </TextArea>
+                    <Label layoutX="10.0" layoutY="176.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Effect Description" />
+                    <Label layoutX="10.0" layoutY="6.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 16;" text="Effects History" />
+                    <Label layoutX="530.0" layoutY="176.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Effect duration" />
+                    <Label layoutX="757.0" layoutY="175.0" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" text="Effect severity" />
+                    <Label fx:id="effectHistoryDurationLabel" contentDisplay="CENTER" layoutX="530.0" layoutY="199.0" prefHeight="31.0" prefWidth="204.0" style="-fx-font-family: Garamond; -fx-font-size: 14; -fx-background-color: WHITE;" text="duration">
+                        <padding>
+                            <Insets left="5.0" />
+                        </padding></Label>
+                    <Label fx:id="effectHistorySeverityLabel" layoutX="757.0" layoutY="199.0" prefHeight="31.0" prefWidth="204.0" style="-fx-font-family: Garamond; -fx-font-size: 14; -fx-background-color: WHITE;" text="severity">
+                        <padding>
+                            <Insets left="5.0" />
+                        </padding></Label>
+                </children>
+                <padding>
+                    <Insets bottom="40.0" />
+                </padding>
+            </AnchorPane>
+        </content>
+    </ScrollPane>
+</content>
+</TitledPane>
