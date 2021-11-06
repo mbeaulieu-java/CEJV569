@@ -123,12 +123,12 @@ public class LoginController extends ViewController{
 
         // Add event handlers for buttons
         loginButton.addEventHandler(ActionEvent.ACTION,(e)->{
-            //isValidLogin();
-            try {
-                showProfilePane();
-            } catch(IOException err) {
-                System.err.println(err);
-            }
+            isValidLogin();
+//            try {
+//                showProfilePane();
+//            } catch(IOException err) {
+//                System.err.println(err);
+//            }
         });
         contactButton.addEventHandler(ActionEvent.ACTION,(e)->{getContactPane();});
         signupButton.addEventHandler(ActionEvent.ACTION,(e)->{getSignUpPane();});
@@ -150,7 +150,6 @@ public class LoginController extends ViewController{
     public boolean isValidLogin(){
 
         int userId = 0;
-        accountObservableData = null;
         User userData = null;
 
         //call the function that signals to the user that the field is empty and
@@ -309,6 +308,7 @@ public class LoginController extends ViewController{
         FXMLLoader accountFxmlLoader =
                 new FXMLLoader(MedTrack.class.getResource(ACCOUNT_FILE_PATH));
         TitledPane accountPane = (TitledPane)accountFxmlLoader.load();
+        ((AccountController)accountFxmlLoader.getController()).initializeAccountData(accountObservableData);
 
         FXMLLoader configureMedFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_MED_FILE_PATH));
         TitledPane configureMedPane = (TitledPane)configureMedFxmlLoader.load();

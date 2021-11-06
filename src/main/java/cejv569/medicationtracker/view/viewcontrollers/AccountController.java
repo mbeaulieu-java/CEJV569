@@ -66,7 +66,7 @@ public class AccountController extends ViewController{
         return accountObservableData;
     }
 
-    public void setAccountData(AccountObservableData accountObservableData) {
+    private void setAccountData(AccountObservableData accountObservableData) {
         this.accountObservableData = accountObservableData;
     }
 
@@ -81,6 +81,13 @@ public class AccountController extends ViewController{
     }
 
     public void initializeAccountData(AccountObservableData accountObservableData) {
+        setAccountData(accountObservableData);
+        firstNameTextField.textProperty().bindBidirectional(this.accountObservableData.firstNameProperty());
+        lastNameTextField.textProperty().bindBidirectional(this.accountObservableData.lastNameProperty());
+        emailTextField.textProperty().bindBidirectional(this.accountObservableData.emailProperty());
+        telephoneTextField.textProperty().bindBidirectional(this.accountObservableData.telephoneProperty());
+        userTextField.textProperty().bindBidirectional(this.accountObservableData.userNameProperty());
+        passwordTextField.textProperty().bindBidirectional(this.accountObservableData.passwordProperty());
     }
 
     @FXML
@@ -88,7 +95,6 @@ public class AccountController extends ViewController{
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
-        userTextField.setText("Worked");
 
     }
 
