@@ -15,193 +15,180 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TitledPane fx:id="accountTitledPane" animated="false" text="Account"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="cejv569.medicationtracker.view.viewcontrollers.AccountController">
+<TitledPane fx:id="accountTitledPane" animated="false" style="-fx-background-color: #28d0ff;" text="Account" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cejv569.medicationtracker.view.viewcontrollers.AccountController">
     <content>
-        <ScrollPane prefHeight="700.0" prefWidth="1000.0">
+        <ScrollPane prefHeight="370.0" prefWidth="1000.0" style="-fx-background-color: #28d0ff;">
             <content>
-                <AnchorPane fx:id="accountAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="334.0"
-                            prefWidth="1004.0" style="-fx-background-color: #28d0ff;">
+                <AnchorPane fx:id="accountAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="1004.0" style="-fx-background-color: #28d0ff;">
                     <children>
-                        <ImageView fitHeight="189.0" fitWidth="261.0" layoutX="44.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="189.0" fitWidth="261.0" layoutX="44.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@assets/account.jpg" />
                             </image>
                         </ImageView>
-                        <VBox fillWidth="false" layoutX="324.0" layoutY="9.0" prefHeight="291.0" prefWidth="640.0" spacing="3.0">
-                            <children>
-                                <HBox prefHeight="100.0" prefWidth="686.0" spacing="30.0">
-                                    <children>
-                                        <Label prefWidth="300.0" text="First Name">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label prefWidth="300.0" text="Last Name">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                </HBox>
-                                <HBox prefHeight="62.0" prefWidth="686.0" spacing="30.0">
-                                    <children>
-                                        <TextField fx:id="firstNameTextField" prefWidth="300.0">
-                                            <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </padding>
-                                            <font>
-                                                <Font name="Garamond" size="14.0" />
-                                            </font>
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </TextField>
-                                        <TextField fx:id="lastNameTextField" prefWidth="300.0">
-                                            <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </padding>
-                                            <font>
-                                                <Font name="Garamond" size="14.0" />
-                                            </font>
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </TextField>
-                                    </children>
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                </HBox>
-                                <HBox prefHeight="100.0" prefWidth="686.0" spacing="30.0">
-                                    <children>
-                                        <Label prefWidth="300.0" text="User">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label prefWidth="100.0" text="password">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label prefWidth="175.0" text=" Password Confirmation" wrapText="true">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                            <padding>
-                                                <Insets left="10.0" />
-                                            </padding>
-                                        </Label>
-                                    </children>
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                </HBox>
-                                <HBox prefHeight="62.0" prefWidth="686.0" spacing="18.0">
-                                    <children>
-                                        <TextField fx:id="userTextField" prefWidth="300.0">
-                                            <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </padding>
-                                            <font>
-                                                <Font name="Garamond" size="14.0" />
-                                            </font>
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </TextField>
-                                        <PasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="193.0">
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </PasswordField>
-                                        <PasswordField fx:id="passwordConfirmationTextField" prefHeight="26.0" prefWidth="193.0">
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </PasswordField>
-                                    </children>
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                </HBox>
-                                <HBox prefHeight="100.0" prefWidth="686.0" spacing="30.0">
-                                    <children>
-                                        <Label prefWidth="300.0" text="Email">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label prefWidth="300.0" text="Telephone">
-                                            <font>
-                                                <Font name="Garamond Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                </HBox>
-                                <HBox prefHeight="62.0" prefWidth="686.0" spacing="30.0">
-                                    <children>
-                                        <TextField fx:id="emailTextField" prefWidth="300.0">
-                                            <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </padding>
-                                            <font>
-                                                <Font name="Garamond" size="14.0" />
-                                            </font>
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </TextField>
-                                        <TextField fx:id="telephoneTextField" prefWidth="300.0">
-                                            <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </padding>
-                                            <font>
-                                                <Font name="Garamond" size="14.0" />
-                                            </font>
-                                            <cursor>
-                                                <Cursor fx:constant="TEXT" />
-                                            </cursor>
-                                        </TextField>
-                                    </children>
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                </HBox>
-                                <HBox prefHeight="62.0" prefWidth="600.0" spacing="30.0">
-                                    <padding>
-                                        <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
-                                    </padding>
-                                    <children>
-                                        <Button fx:id="editAccountButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Edit">
-                                            <cursor>
-                                                <Cursor fx:constant="OPEN_HAND" />
-                                            </cursor>
-                                        </Button>
-                                        <Button fx:id="saveAccountButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Save">
-                                            <cursor>
-                                                <Cursor fx:constant="OPEN_HAND" />
-                                            </cursor>
-                                        </Button>
-                                    </children>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                                </HBox>
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
+                          <HBox layoutX="338.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="650.0" spacing="20.0">
+                              <padding>
+                                  <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                              </padding>
+                     <children>
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="300.0" spacing="7.0">
+                           <children>
+                              <Label prefWidth="300.0" text="First Name">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="firstNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Garamond" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                              <Label prefWidth="300.0" text="Last Name">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="lastNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Garamond" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                              <Label prefWidth="300.0" text="Email">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Garamond" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                              <Label prefWidth="300.0" text="Telephone">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="telephoneTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Garamond" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                           </children>
+                           <padding>
+                              <Insets left="23.0" right="20.0" />
+                           </padding>
                         </VBox>
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="300.0" spacing="7.0" style="-fx-border-color: LIGHTGREY; -fx-border-radius: 15; -fx-border-width: 1;">
+                           <children>
+                              <Label prefWidth="300.0" text="User">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="userTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Garamond" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                              <Label prefWidth="300.0" text="password">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                              </PasswordField>
+                              <Label prefWidth="300.0" text=" Password Confirmation" wrapText="true">
+                                 <font>
+                                    <Font name="Garamond Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="passwordConfirmationTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="255.0">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                                 <padding>
+                                    <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
+                                 </padding>
+                              </PasswordField>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="23.0" right="20.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                          </HBox>
+                          <HBox alignment="CENTER" layoutX="370.0" layoutY="300.0" prefHeight="20.0" prefWidth="226.0" spacing="30.0">
+                              <padding>
+                                  <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                              </padding>
+                              <children>
+                                  <Button fx:id="editAccountButton" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="60.0" text="Edit">
+                                      <cursor>
+                                          <Cursor fx:constant="OPEN_HAND" />
+                                      </cursor>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/edit.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                                  </Button>
+                                  <Button fx:id="saveAccountButton" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="60.0" text="Save">
+                                      <cursor>
+                                          <Cursor fx:constant="OPEN_HAND" />
+                                      </cursor>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/save.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                                  </Button>
+                              </children>
+                          </HBox>
+                  <Label fx:id="messageLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="18.0" prefHeight="70.0" prefWidth="325.0" text="Label">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </Label>
                     </children>
                 </AnchorPane>
             </content>

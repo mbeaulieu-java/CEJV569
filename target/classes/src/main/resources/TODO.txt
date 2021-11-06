@@ -1,10 +1,16 @@
-- Display a message to the effect that the fields in red are required instead of saying
-the fields are blank.
 
-- load the background images in the fxml instead of dynamically.
+Read binding and look to apply it in profile controller.
 
-- create seperate .fxml files for each panel in the accordion, then either assign the controllers
-dynamically or in SceneBuilder...should work as long as am not referring to any components that
-haven't been initialized yet.
+Get class example from fit hub for custom tasks
 
-- integrate more functionality in the interface....
+Look up fxml valueof and fxfactory examples to see about custom class could add in fxml to auto load another fxml file.
+
+https://docs.oracle.com/javafx/2/fxml_get_started/custom_control.htm
+
+http://tutorials.jenkov.com/javafx/fxml.html#creating-objects-via-fxml-elements
+
+
+http://tutorials.jenkov.com/javafx/fxml.html#creating-objects-via-fxml-elements
+
+Figure out how to load panels with own FXML files.
+
