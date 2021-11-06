@@ -146,7 +146,7 @@ public class MedTrack extends Application {
 
         //set the Database datasource for the app via a MedTrackDataSource instance which
         //instantiates a database connection with the MedTrack db.
-            ApplicationController.getInstance().setDatasource(MedTrackDatasource.getinstance());
+        ApplicationController.getInstance().setDatasource(MedTrackDatasource.getinstance());
 
         //load and display the log in form.
         FXMLLoader fxmlLoader = new FXMLLoader(MedTrack.class.getResource(this.LOGIN_FILE_PATH));

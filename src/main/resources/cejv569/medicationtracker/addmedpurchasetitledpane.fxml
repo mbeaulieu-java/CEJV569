@@ -11,13 +11,14 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
+
+
 <TitledPane fx:id="addPurchaseTitledPane" animated="false"
             layoutX="10.0" layoutY="10.0"
             text="Add Medication Purchase"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="cejv569.medicationtracker.view.viewcontrollers.LogMedicationPurchaseController"
->
+            fx:controller="cejv569.medicationtracker.view.viewcontrollers.LogMedicationPurchaseController">
 <content>
     <ScrollPane prefHeight="700.0" prefWidth="1000.0">
         <content>

@@ -2,24 +2,31 @@ package cejv569.medicationtracker.view.viewcontrollers;
 
 
 import cejv569.medicationtracker.ApplicationController;
+import cejv569.medicationtracker.model.operationinterfaces.AccountOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
+import cejv569.medicationtracker.utility.GUIUtility;
+import cejv569.medicationtracker.utility.UserMessages;
 import cejv569.medicationtracker.view.viewdata.AccountObservableData;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+import java.util.stream.Stream;
+
 public class AccountController extends ViewController{
 
-    public Pane rootPane;
-    private AccountObservableData accountObservableData;
+    //Controls
 
     @FXML
-    private BorderPane profileBorderPane;
+    private TitledPane accountTitledPane;
 
     @FXML
     private AnchorPane accountAnchorPane;
@@ -51,17 +58,10 @@ public class AccountController extends ViewController{
     @FXML
     private Button saveAccountButton;
 
-
-
-    public AccountController(Pane rootPane) {
-        //set the operation interface object for the LoginController
-        ApplicationController.getInstance().operationFactory(this);
-        this.rootPane = rootPane;
-    }
+    private AccountObservableData accountObservableData;
+    private AccountOperation accountoperation;
 
     //Getter and Setters
-
-
     private AccountObservableData getAccountData() {
         return accountObservableData;
     }
@@ -70,31 +70,25 @@ public class AccountController extends ViewController{
         this.accountObservableData = accountObservableData;
     }
 
-    public ViewOperation getOperation() {
-        return super.operation;
+    public AccountOperation getOperation() {
+        return accountoperation;
     }
 
     @Override
     public void setOperation(ViewOperation operation) {
         super.operation = operation;
-    }
-
-    public Pane getRootPane() {
-        return rootPane;
+        this.accountoperation = (AccountOperation)operation;
     }
 
     public void initializeAccountData(AccountObservableData accountObservableData) {
-        this.setAccountData(accountObservableData);
-        Scene accountScene = new Scene(getRootPane());
-//        //TRY to FIGURE oUT WAY TO GET IT ON SEPERATE FORM
-//        getRootPane().getParent().getParent().
-//
-//        firstNameTextField.setText(accountObservableData.getFirstName());
-        System.out.println(
-                accountObservableData.getUserName() + "\n " +
-                        accountObservableData.getPassword() + "\n" +
-                        accountObservableData.getLastName() + "\n" +
-                accountObservableData.getEmail() + "\n" +
-                        accountObservableData.getTelephone());
     }
+
+    @FXML
+    void initialize() {
+
+        //set the operation interface object for the AccountController
+        ApplicationController.getInstance().operationFactory(this);
+
+    }
+
 }

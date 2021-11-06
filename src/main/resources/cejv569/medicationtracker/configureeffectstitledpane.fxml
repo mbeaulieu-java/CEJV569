@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<TitledPane fx:id="ConfigEffectsTitlePane" animated="false" layoutX="10.0"
-            layoutY="552.0" text="Configure Medication Effects"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="cejv569.medicationtracker.view.viewcontrollers.ConfigureMedicationEffectController">
+<TitledPane fx:id="ConfigEffectsTitlePane" animated="false" layoutX="10.0" layoutY="10.0" prefHeight="1436.0" prefWidth="1002.0" text="Configure Medication Effects" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cejv569.medicationtracker.view.viewcontrollers.ConfigureMedicationEffectController">
 <content>
     <ScrollPane prefHeight="700.0" prefWidth="1000.0">
         <content>
-            <AnchorPane fx:id="effectsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #28d0ff;">
+            <AnchorPane fx:id="effectsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #28d0ff;">
                 <children>
+                    <ImageView fitHeight="82.0" fitWidth="137.0" layoutX="35.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@assets/effects3.jpg" />
+                        </image>
+                    </ImageView>
+                    <ImageView fitHeight="82.0" fitWidth="137.0" layoutX="35.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@assets/effects2.jpg" />
+                        </image>
+                    </ImageView>
                     <ImageView fitHeight="82.0" fitWidth="137.0" layoutX="35.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@assets/effects1.jpg" />
                         </image>
                     </ImageView>
-                    <VBox fillWidth="false" layoutX="330.0" layoutY="4.0" prefHeight="312.0" prefWidth="640.0" spacing="10.0">
+                    <VBox fillWidth="false" layoutX="330.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="640.0" spacing="5.0">
                         <children>
-                            <HBox prefHeight="32.0" prefWidth="620.0" spacing="30.0">
+                            <HBox prefHeight="30.0" prefWidth="620.0" spacing="30.0">
                                 <children>
                                     <Label prefWidth="300.0" text="Name of Effect">
                                         <font>
@@ -45,7 +56,7 @@
                                     <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
                                 </padding>
                             </HBox>
-                            <HBox prefHeight="62.0" prefWidth="686.0" spacing="30.0">
+                            <HBox prefHeight="40.0" prefWidth="686.0" spacing="30.0">
                                 <children>
                                     <ComboBox fx:id="effectComboBox" editable="true" prefWidth="300.0" promptText="Enter name of effect" visibleRowCount="5">
                                         <cursor>
@@ -62,7 +73,7 @@
                                     <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
                                 </padding>
                             </HBox>
-                            <HBox prefHeight="40.0" prefWidth="620.0" spacing="60.0">
+                            <HBox prefHeight="30.0" prefWidth="620.0" spacing="60.0">
                                 <children>
                                     <Label prefWidth="300.0" text="Description">
                                         <font>
@@ -77,12 +88,12 @@
                                     <Insets bottom="2.0" right="10.0" top="2.0" />
                                 </padding>
                             </HBox>
-                            <HBox prefHeight="400.0" prefWidth="686.0" spacing="30.0">
+                            <HBox prefHeight="130.0" prefWidth="686.0" spacing="30.0">
                                 <padding>
                                     <Insets bottom="2.0" top="2.0" />
                                 </padding>
                                 <children>
-                                    <TextArea fx:id="EffectDescriptionTextArea" prefHeight="400.0" prefWidth="600.0" promptText="Enter the effect / side effect description">
+                                    <TextArea fx:id="EffectDescriptionTextArea" prefHeight="120.0" prefWidth="620.0" promptText="Enter the effect / side effect description">
                                         <HBox.margin>
                                             <Insets left="5.0" />
                                         </HBox.margin></TextArea>
@@ -103,7 +114,7 @@
                                     <Insets />
                                 </VBox.margin>
                             </HBox>
-                            <HBox prefHeight="100.0" prefWidth="600.0" spacing="25.0">
+                            <HBox prefHeight="70.0" prefWidth="600.0" spacing="25.0">
                                 <children>
                                     <Button fx:id="addEffectButton" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-min-height: 30;" text="Add">
                                         <cursor>
@@ -135,16 +146,6 @@
                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                         </padding>
                     </VBox>
-                    <ImageView fitHeight="82.0" fitWidth="137.0" layoutX="35.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@assets/effects2.jpg" />
-                        </image>
-                    </ImageView>
-                    <ImageView fitHeight="82.0" fitWidth="137.0" layoutX="35.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@assets/effects3.jpg" />
-                        </image>
-                    </ImageView>
                 </children></AnchorPane>
         </content>
     </ScrollPane>

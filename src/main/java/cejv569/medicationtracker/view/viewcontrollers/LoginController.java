@@ -16,11 +16,10 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -44,6 +43,14 @@ public class LoginController extends ViewController{
     private final String CONTACT_FILE_PATH = "contactForm.fxml";
     private final String PROFILE_FILE_PATH = "profileForm.fxml";
     private final String SIGNUP_FILE_PATH = "signupForm.fxml";
+    private final String ACCOUNT_FILE_PATH = "accounttitledpane.fxml";
+    private final String ADD_MED_PURCHASE_FILE_PATH = "addmedpurchasetitledpane.fxml";
+    private final String CONFIG_EFFECTS_FILE_PATH = "configureeffectstitledpane.fxml";
+    private final String CONFIG_MED_FILE_PATH = "configuremedtitledpane.fxml";
+    private final String LOG_MED_EFFECT_FILE_PATH = "logmedeffecttitledpane.fxml";
+    private final String LOG_MED_FILE_PATH = "logmedicationtitledpane.fxml";
+    private final String MED_EFFECTS_HISTORY_FILE_PATH = "medeffectshistorytitledpane.fxml";
+
 
 
 
@@ -115,7 +122,14 @@ public class LoginController extends ViewController{
         initFieldValidation();
 
         // Add event handlers for buttons
-        loginButton.addEventHandler(ActionEvent.ACTION,(e)->{isValidLogin();});
+        loginButton.addEventHandler(ActionEvent.ACTION,(e)->{
+            //isValidLogin();
+            try {
+                showProfilePane();
+            } catch(IOException err) {
+                System.err.println(err);
+            }
+        });
         contactButton.addEventHandler(ActionEvent.ACTION,(e)->{getContactPane();});
         signupButton.addEventHandler(ActionEvent.ACTION,(e)->{getSignUpPane();});
     }
@@ -189,20 +203,7 @@ public class LoginController extends ViewController{
 
                     messageLabel.setVisible(false);
                     try {
-                        Stage stage = new Stage();
-
-                        //pass in account data to Profile Controller
-                        //This allows the scene to pass the accountObservableData to the AccountController instance
-                        //so it can initialize it's controls with the user account data.
-
-                        FXMLLoader fxmlLoader = new FXMLLoader(MedTrack.class.getResource(PROFILE_FILE_PATH));
-                        Scene scene = new Scene(fxmlLoader.load());
-                        ((ProfileController)fxmlLoader.getController()).initializeAccountData(accountObservableData);
-                        stage.setTitle("MedTrack");
-                        stage.setScene(scene);
-                        stage.centerOnScreen();
-                        stage.showAndWait();
-
+                        showProfilePane();
                         //re-set account data to null for next login attempt if user comes back to
                         //login screen.
                         accountObservableData = null;
@@ -290,5 +291,57 @@ public class LoginController extends ViewController{
                 GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
                 UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
 
+    }
+    public void showProfilePane () throws IOException {
+
+        Accordion accordion = null;
+        Stage stage = new Stage();
+        Scene scene = null;
+
+        //pass in account data to Profile Controller
+        //This allows the scene to pass the accountObservableData to the AccountController instance
+        //so it can initialize it's controls with the user account data.
+
+        FXMLLoader rootFxmlLoader =
+                new FXMLLoader(MedTrack.class.getResource(PROFILE_FILE_PATH));
+        BorderPane profilePane = (BorderPane)rootFxmlLoader.load();
+
+        FXMLLoader accountFxmlLoader =
+                new FXMLLoader(MedTrack.class.getResource(ACCOUNT_FILE_PATH));
+        TitledPane accountPane = (TitledPane)accountFxmlLoader.load();
+
+        FXMLLoader configureMedFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_MED_FILE_PATH));
+        TitledPane configureMedPane = (TitledPane)configureMedFxmlLoader.load();
+
+        FXMLLoader configureEffectsFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_EFFECTS_FILE_PATH));
+        TitledPane configureEffectsPane = (TitledPane)configureEffectsFxmlLoader.load();
+
+        FXMLLoader addMedPurchaseFxmlLoader =
+                new FXMLLoader(MedTrack.class.getResource(ADD_MED_PURCHASE_FILE_PATH));
+        TitledPane addMedPurchasePane = (TitledPane)addMedPurchaseFxmlLoader.load();
+
+        FXMLLoader logMedicationFxmlLoader = new FXMLLoader(MedTrack.class.getResource(LOG_MED_FILE_PATH));
+        TitledPane logMedicationPane = (TitledPane)logMedicationFxmlLoader.load();
+
+        FXMLLoader logMedEffectFxmlLoader = new FXMLLoader(MedTrack.class.getResource(LOG_MED_EFFECT_FILE_PATH));
+        TitledPane logMedEffectPane = (TitledPane)logMedEffectFxmlLoader.load();
+
+        FXMLLoader medEffectsHistoryFxmlLoader = new FXMLLoader(MedTrack.class.getResource(MED_EFFECTS_HISTORY_FILE_PATH));
+        TitledPane medEffectsHistoryPane = (TitledPane)medEffectsHistoryFxmlLoader.load();
+
+        accordion = (Accordion)profilePane.getChildren().get(1);
+
+         accordion.getPanes().add(accountPane);
+         accordion.getPanes().add(configureMedPane);
+         accordion.getPanes().add(configureEffectsPane);
+         accordion.getPanes().add(addMedPurchasePane);
+         accordion.getPanes().add(logMedicationPane);
+         accordion.getPanes().add(medEffectsHistoryPane);
+         scene = new Scene(profilePane);
+
+         stage.setTitle("MedTrack");
+         stage.setScene(scene);
+         stage.centerOnScreen();
+         stage.showAndWait();
     }
 }

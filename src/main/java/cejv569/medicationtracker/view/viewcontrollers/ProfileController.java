@@ -298,7 +298,6 @@ public class ProfileController {
     void initialize() {
         //create and retrieve the main image for the pane background and set the pane background
         profileBorderPane.setBackground(GUIUtility.getBackgroundImage(getClass(),MAIN_IMAGE_PATH));
-        createSubControllers();
     }
 
     public void initializeAccountData(AccountObservableData data) {
@@ -319,14 +318,5 @@ public class ProfileController {
             } catch(IOException | IllegalStateException e ){
                 System.err.println(e.getMessage());
             }
-    }
-    private void createSubControllers() {
-         accountController = new AccountController(accountAnchorPane);
-         configureMedicationController = new ConfigureMedicationController(configureMedAnchorPane);
-         configureMedicationEffectController = new ConfigureMedicationEffectController(effectsAnchorPane);
-         effectHistoryController = new EffectHistoryController(effectHistoryAnchorPane);
-        logMedicationController = new LogMedicationController(logMedicationAnchorPane) ;
-        logMedicationEffectController = new LogMedicationEffectController(logEffectAnchorPane);
-        logMedicationPurchaseController = new LogMedicationPurchaseController(medPurchaseAnchorPane);
     }
 }

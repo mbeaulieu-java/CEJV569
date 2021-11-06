@@ -1,30 +1,79 @@
 package cejv569.medicationtracker.view.viewcontrollers;
 
+import cejv569.medicationtracker.ApplicationController;
+import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
-import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
+
 
 public class ConfigureMedicationController extends ViewController {
+    //Controls
 
-    public Pane rootPane;
+    @FXML
+    private TitledPane configMedTitlePane;
 
+    @FXML
+    private AnchorPane configureMedAnchorPane;
+
+    @FXML
+    private ComboBox<?> brandComboBox;
+
+    @FXML
+    private ComboBox<?> genericComboBox;
+
+    @FXML
+    private ComboBox<?> formatComboBox;
+
+    @FXML
+    private ComboBox<?> measurementComboBox;
+
+    @FXML
+    private ListView<?> medIngredientsListView;
+
+    @FXML
+    private Button addIngredientButton;
+
+    @FXML
+    private Button removeIngredientButton;
+
+    @FXML
+    private ListView<?> ingredientsListView;
+
+    @FXML
+    private Button addMedicationButton;
+
+    @FXML
+    private Button editMedicationButton;
+
+    @FXML
+    private Button saveMedicationButton;
+
+    @FXML
+    private Button deleteMedicationButton;
+
+    private ConfigureMedicationOperation configureMedicationOperation;
     //Getters and Setters
 
-
-
     public ViewOperation getOperation() {
-        return super.operation;
+        return this.configureMedicationOperation;
     }
 
     @Override
     public void setOperation(ViewOperation operation) {
         super.operation = operation;
+        this.configureMedicationOperation = (ConfigureMedicationOperation)operation;
     }
 
-    public ConfigureMedicationController(Pane rootPane) {
-        this.rootPane = rootPane;
-    }
+    @FXML
+    void initialize() {
 
-    public Pane getRootPane() {
-        return rootPane;
+        //set the operation interface object for the AccountController
+        ApplicationController.getInstance().operationFactory(this);
+
     }
 }

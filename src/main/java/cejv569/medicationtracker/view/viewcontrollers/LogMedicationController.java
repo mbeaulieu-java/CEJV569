@@ -1,31 +1,74 @@
 package cejv569.medicationtracker.view.viewcontrollers;
 
+import cejv569.medicationtracker.ApplicationController;
+import cejv569.medicationtracker.model.operationinterfaces.LogMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
-import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 
 public class LogMedicationController extends ViewController{
 
+    //Controls
 
-    public Pane rootPane;
+    @FXML
+    private TitledPane logMedicationTitledPane;
 
-    //Getters & Setters
+    @FXML
+    private AnchorPane logMedicationAnchorPane;
 
+    @FXML
+    private ComboBox<?> brandMedTakenComboBox;
 
+    @FXML
+    private ComboBox<?> genericMedTakenComboBox;
 
-    public ViewOperation getOperation() {
-        return super.operation;
+    @FXML
+    private TextField dosesTakenTextField;
+
+    @FXML
+    private DatePicker dateTakenDatePicker;
+
+    @FXML
+    private Label purchaseDateLabel;
+
+    @FXML
+    private Button addMedTakenButton;
+
+    @FXML
+    private Button editMedTakenButton;
+
+    @FXML
+    private Button saveMedTakenButton;
+
+    @FXML
+    private Button deleteMedTakenButton;
+
+   //Attributes
+   private LogMedicationOperation logMedicationOperation;
+
+   //Getters & Setters
+
+    public LogMedicationOperation getOperation() {
+        return this.logMedicationOperation;
     }
 
     @Override
     public void setOperation(ViewOperation operation) {
         super.operation = operation;
+        this.logMedicationOperation = (LogMedicationOperation)operation;
     }
 
-    public LogMedicationController(Pane rootPane) {
-        this.rootPane = rootPane;
-    }
+    @FXML
+    void initialize() {
 
-    public Pane getRootPane() {
-        return rootPane;
+        //set the operation interface object for the AccountController
+        ApplicationController.getInstance().operationFactory(this);
+
     }
 }
