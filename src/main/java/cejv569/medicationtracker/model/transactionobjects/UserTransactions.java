@@ -208,13 +208,13 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      */
     @Override
     public User getData(int userId) throws OperationFailureException {
-       User data = null;
+        User data = null;
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, fNameColName,lNameColName, userColName, passwordColName,
                 emailColName,phoneColName;
 
-        //retrieve the insert user query using the proper SQLTransactionKey
+        //retrieve the select user query using the proper SQLTransactionKey
         try {
             theStatement = getDatasource()
                     .getSQLStatement(

@@ -7,7 +7,6 @@ public class MedicationData extends DBData implements Medication {
     private int id;
     private int formatId;
     private int measurementId;
-    private int ingredientsId;
     private String brandName;
     private String genericName;
 
@@ -17,7 +16,6 @@ public class MedicationData extends DBData implements Medication {
         this.id = id;
         this.formatId = formatId;
         this.measurementId = measurementId;
-        this.ingredientsId = ingredientsId;
         this.brandName = brandName;
         this.genericName = genericName;
     }
@@ -48,14 +46,7 @@ public class MedicationData extends DBData implements Medication {
     public void setMeasurementId(int measurementId) {
         this.measurementId = measurementId;
     }
-    @Override
-    public int getIngredientsId() {
-        return ingredientsId;
-    }
-    @Override
-    public void setIngredientsId(int ingredientsId) {
-        this.ingredientsId = ingredientsId;
-    }
+
     @Override
     public String getBrandName() {
         return brandName;

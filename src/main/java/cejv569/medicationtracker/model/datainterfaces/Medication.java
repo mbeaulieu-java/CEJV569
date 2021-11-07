@@ -29,10 +29,6 @@ public interface Medication extends Data{
 
    void setMeasurementId(int measurementId);
 
-    int getIngredientsId();
-
-    void setIngredientsId(int ingredientsId);
-
     String getBrandName();
 
     void setBrandName(String brandName);

@@ -14,15 +14,11 @@ public interface Ingredient extends Data{
 
     void setId(int id);
 
-    String getCommonName();
+    String getName();
 
-    void setCommonName(String commonName);
+    void setName(String name);
 
-    String getScientificName();
-
-    void setScientificName(String scientificName);
-
-    boolean isMedicinal();
+    boolean getMedicinal();
 
     void setMedicinal(boolean medicinal);
 }

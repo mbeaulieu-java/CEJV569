@@ -5,15 +5,13 @@ import cejv569.medicationtracker.model.datainterfaces.Ingredient;
 public class IngredientData extends DBData implements Ingredient {
 
     private int id;
-    private String commonName;
-    private String scientificName;
+    private String name;
     private boolean medicinal;
 
     //Constructor
     public IngredientData(int id, String commonName, String scientificName, boolean medicinal) {
         this.id = id;
-        this.commonName = commonName;
-        this.scientificName = scientificName;
+        this.name = commonName;
         this.medicinal = medicinal;
     }
 
@@ -27,23 +25,15 @@ public class IngredientData extends DBData implements Ingredient {
         this.id = id;
     }
     @Override
-    public String getCommonName() {
-        return commonName;
+    public String getName() {
+        return name;
     }
     @Override
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
+    public void setName(String name) {
+        this.name = name;
     }
     @Override
-    public String getScientificName() {
-        return scientificName;
-    }
-    @Override
-    public void setScientificName(String scientificName) {
-        this.scientificName = scientificName;
-    }
-    @Override
-    public boolean isMedicinal() {
+    public boolean getMedicinal() {
         return medicinal;
     }
     @Override
