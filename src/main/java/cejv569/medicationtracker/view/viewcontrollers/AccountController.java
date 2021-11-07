@@ -2,6 +2,7 @@ package cejv569.medicationtracker.view.viewcontrollers;
 
 
 import cejv569.medicationtracker.ApplicationController;
+import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.operationinterfaces.AccountOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.GUIUtility;
@@ -90,11 +91,36 @@ public class AccountController extends ViewController{
         passwordTextField.textProperty().bindBidirectional(this.accountObservableData.passwordProperty());
     }
 
+    private void doSave() {
+        if (validateAccountData()) {
+            updateAccountData();
+        }
+    }
+
+    private boolean validateAccountData() {
+        return true;
+    }
+
+    private void updateAccountData() {
+        try {
+            getOperation().putData(getAccountData());
+        } catch (OperationFailureException e) {
+            //display error message
+
+        }
+
+    }
+
     @FXML
     void initialize() {
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
+
+        saveAccountButton.addEventHandler(ActionEvent.ACTION,e->{
+            doSave();
+        });
+
 
     }
 

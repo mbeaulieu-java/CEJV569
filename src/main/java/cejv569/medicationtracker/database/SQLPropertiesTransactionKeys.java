@@ -20,8 +20,8 @@ public class SQLPropertiesTransactionKeys {
         INSERT_CONTACT("insert_contact"),
         READ_USER_INFO ("read_user_info"),
         VALIDATE_USERNAME ("validate_username"),
-        CREATE_USER("create_user"),
-        UPDATE_USER ("update_user");
+        CREATE_USER_INFO("create_user"),
+        UPDATE_USER_INFO("update_user");
 
         SQLTransactionKeys(String tKey) {
             this.tKey = tKey;

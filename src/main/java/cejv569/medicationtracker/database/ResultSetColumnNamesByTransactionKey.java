@@ -52,7 +52,7 @@ public class ResultSetColumnNamesByTransactionKey {
      * The query retrieves the users table fields based on the id ID field paremeter provided to
      * the query.
      * */
-    public enum Read_User_Info {
+    public enum User_Info {
 
         ID ("id"),
         FIRST_NAME ("first_name"),
@@ -62,7 +62,7 @@ public class ResultSetColumnNamesByTransactionKey {
         EMAIL("email"),
         TELEPHONE("telephone");
 
-        Read_User_Info(String columnName) {
+        User_Info(String columnName) {
             this.columnName = columnName;
         }
 

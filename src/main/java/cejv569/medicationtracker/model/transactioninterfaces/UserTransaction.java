@@ -84,4 +84,6 @@ public interface UserTransaction extends DataTransaction{
     */
    void createData(User data) throws OperationFailureException;
 
+   void updateData(User data) throws OperationFailureException;
+
 }
