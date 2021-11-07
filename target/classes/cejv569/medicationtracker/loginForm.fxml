@@ -75,7 +75,7 @@
         <buttons>
             <HBox layoutY="630.0" prefHeight="60.0" prefWidth="890.0" spacing="60.0">
                <children>
-                  <Button fx:id="signupButton" accessibleText="Sign up" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-graphic: url('/assets/signup.png');" text="Button">
+                  <Button fx:id="signupButton" accessibleText="Sign up" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Button">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
@@ -98,7 +98,7 @@
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <Button fx:id="contactButton" accessibleText="Contact" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-image: url(&quot;&quot;);">
+                  <Button fx:id="contactButton" accessibleText="Contact" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0">
                      <font>
                         <Font name="Garamond Bold" size="16.0" />
                      </font>

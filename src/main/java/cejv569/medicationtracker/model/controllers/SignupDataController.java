@@ -81,15 +81,7 @@ public class SignupDataController extends DataController implements SignupOperat
             //UserData type object and send it via createData to the database layer
             //so that a new user record can be created in the database.
 
-            getTransaction().createData(new UserData(
-                    data.getId(),
-                    data.getFirstName(),
-                    data.getLastName(),
-                    data.getUserName(),
-                    data.getPassword(),
-                    data.getEmail(),
-                    data.getTelephone()
-            ));
+            getTransaction().createData(data);
             successful = true;
         }
         //return if the post operation was successful.

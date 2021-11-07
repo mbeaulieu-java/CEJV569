@@ -69,12 +69,7 @@ public class ContactDataController extends DataController implements ContactOper
         //create a ContactData object and transfer the data from the view object to it, then send
         //the information to the database layer via the transaction request createData().
         try {
-            getTransaction().createData(new ContactData(
-                    data.getId(),
-                    data.getFullName(),
-                    data.getMessage(),
-                    data.getDate(),
-                    data.getEmail()));
+            getTransaction().createData(data);
 
             //if no errors are thrown, the operation was successful.
             successful = true;
