@@ -96,7 +96,7 @@ public class UserTransactions extends DataTransactions implements UserTransactio
                     .getSQLStatement(
                             SQLPropertiesTransactionKeys
                                     .SQLTransactionKeys
-                                    .CREATE_USER.tKey);
+                                    .CREATE_USER_INFO.tKey);
 
             // set the parameters for the insertion prepared statement
             theStatement.setString(1,data.getFirstName());
@@ -230,13 +230,13 @@ public class UserTransactions extends DataTransactions implements UserTransactio
             if (resultSet.next()) {
                 //get the utilities class that contains the column names for this query &
                 //get the query column values from the resultSet
-                idColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.ID.columnName;
-                fNameColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.FIRST_NAME.columnName;
-                lNameColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.LAST_NAME.columnName;
+                idColName = ResultSetColumnNamesByTransactionKey.User_Info.ID.columnName;
+                fNameColName = ResultSetColumnNamesByTransactionKey.User_Info.FIRST_NAME.columnName;
+                lNameColName = ResultSetColumnNamesByTransactionKey.User_Info.LAST_NAME.columnName;
                 userColName = ResultSetColumnNamesByTransactionKey.Validate_UserName.USER_NAME.columnName;
                 passwordColName = ResultSetColumnNamesByTransactionKey.Validate_UserName.USER_PASSWORD.columnName;
-                emailColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.EMAIL.columnName;
-                phoneColName = ResultSetColumnNamesByTransactionKey.Read_User_Info.TELEPHONE.columnName;
+                emailColName = ResultSetColumnNamesByTransactionKey.User_Info.EMAIL.columnName;
+                phoneColName = ResultSetColumnNamesByTransactionKey.User_Info.TELEPHONE.columnName;
 
                 //create the UserData object instance to return the data retrieved
                 //from the resultset returned by the prepared statement.
@@ -257,5 +257,36 @@ public class UserTransactions extends DataTransactions implements UserTransactio
         }
         //returned to data object with the data or null, if no record was found.
        return data;
+    }
+
+    @Override
+    public void updateData(User data) throws OperationFailureException {
+        PreparedStatement theStatement;
+        //retrieve the update user query using the proper SQLTransactionKey
+        try {
+            theStatement = getDatasource()
+                    .getSQLStatement(
+                            SQLPropertiesTransactionKeys
+                                    .SQLTransactionKeys
+                                    .UPDATE_USER_INFO.tKey);
+
+            // set the parameters for the update prepared statement
+            theStatement.setString(1,data.getFirstName());
+            theStatement.setString(2,data.getLastName());
+            theStatement.setString(3,data.getUserName());
+            theStatement.setString(4,data.getPassword());
+            theStatement.setString(5,data.getEmail());
+            theStatement.setString(6,data.getTelephone());
+            theStatement.setInt(7,data.getId());
+
+            //excute the update
+            theStatement.executeUpdate();
+
+            theStatement.clearParameters();
+        } catch(OperationFailureException | SQLException e) {
+            throw new OperationFailureException (e.getMessage());
+        } catch (Exception e) {
+            throw new OperationFailureException (e.getMessage());
+        }
     }
 }
