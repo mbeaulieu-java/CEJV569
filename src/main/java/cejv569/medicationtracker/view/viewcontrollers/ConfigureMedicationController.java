@@ -4,10 +4,7 @@ import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 
@@ -48,13 +45,11 @@ public class ConfigureMedicationController extends ViewController {
     private Button addMedicationButton;
 
     @FXML
-    private Button editMedicationButton;
-
-    @FXML
     private Button saveMedicationButton;
 
     @FXML
-    private Button deleteMedicationButton;
+    private Label messageLabel;
+
 
     private ConfigureMedicationOperation configureMedicationOperation;
     //Getters and Setters
