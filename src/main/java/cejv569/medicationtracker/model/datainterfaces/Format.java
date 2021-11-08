@@ -18,7 +18,4 @@ public interface Format extends Data{
 
    void setLabel(String label);
 
-   String getFormatDescription();
-
-   void setFormatDescription(String formatDescription);
 }

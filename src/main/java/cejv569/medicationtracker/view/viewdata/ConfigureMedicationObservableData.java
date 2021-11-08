@@ -6,19 +6,19 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ConfigureMedicationObservableData extends ViewObservableData implements Medication {
 
-    private final String ID_PROP_NAME = "id";
+    private final static String ID_PROP_NAME = "id";
     private SimpleIntegerProperty id;
 
-    private final String FORMATID_PROP_NAME = "formatId";
+    private final static String FORMATID_PROP_NAME = "formatId";
     private SimpleIntegerProperty formatId;
 
-    private final String MEASUREMENTID_PROP_NAME = "measurementId";
+    private final static String MEASUREMENTID_PROP_NAME = "measurementId";
     private SimpleIntegerProperty measurementId;
 
-    private final String BRANDNAME_PROP_NAME = "brandName";
+    private final static String BRANDNAME_PROP_NAME = "brandName";
     private SimpleStringProperty brandName;
 
-    private final String GENERICNAME_PROP_NAME = "genericName";
+    private final static String GENERICNAME_PROP_NAME = "genericName";
     private SimpleStringProperty genericName;
 
     @Override

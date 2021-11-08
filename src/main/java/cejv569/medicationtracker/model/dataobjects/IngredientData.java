@@ -9,9 +9,9 @@ public class IngredientData extends DBData implements Ingredient {
     private boolean medicinal;
 
     //Constructor
-    public IngredientData(int id, String commonName, String scientificName, boolean medicinal) {
+    public IngredientData(int id, String name, boolean medicinal) {
         this.id = id;
-        this.name = commonName;
+        this.name = name;
         this.medicinal = medicinal;
     }
 

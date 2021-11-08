@@ -10,6 +10,13 @@ public class MedicationIngredientsData extends DBData implements MedicationIngre
     private int ingredientId;
     private String name;
 
+    public MedicationIngredientsData(int id, int medicationId, int ingredientId, String name) {
+        this.id = id;
+        this.medicationId = medicationId;
+        this.ingredientId = ingredientId;
+        this.name = name;
+    }
+
     @Override
     public int getId() {
         return this.id;

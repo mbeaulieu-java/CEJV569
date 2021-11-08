@@ -1,1 +1,1 @@
-select * from ingredients order by name asc;
+select id, name, medicinal from ingredients order by name asc;

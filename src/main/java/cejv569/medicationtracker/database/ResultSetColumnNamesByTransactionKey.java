@@ -68,4 +68,70 @@ public class ResultSetColumnNamesByTransactionKey {
 
         public String columnName;
     }
+
+    public enum Ingredients_Info {
+
+        ID("id"),
+        NAME("name"),
+        MEDICINAL("medicinal");
+
+        Ingredients_Info(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public String columnName;
+    }
+
+    public enum Medication_Ingredients_Info {
+
+        ID("id"),
+        MEDICATION_ID("medication_id"),
+        INGREDIENT_ID("ingredient_id"),
+        NAME("name");
+
+        Medication_Ingredients_Info(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public String columnName;
+    }
+
+    public enum Formats_Info {
+
+        ID("id"),
+        LABEL("label");
+
+        Formats_Info(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public String columnName;
+    }
+
+    public enum Measurement_Units_Info {
+
+        ID("id"),
+        UNIT_NAME("unit_name");
+
+        Measurement_Units_Info(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public String columnName;
+    }
+
+    public enum Medications_Info {
+
+        ID("id"),
+        FORMAT_ID("format_id"),
+        MEASUREMENT_ID("measurement_id"),
+        BRAND_NAME("brand_name"),
+        GENERIC_NAME("generic_name");
+
+        Medications_Info(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public String columnName;
+    }
 }

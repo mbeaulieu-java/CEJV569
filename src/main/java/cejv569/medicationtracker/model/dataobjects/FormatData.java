@@ -6,13 +6,12 @@ public class FormatData extends DBData implements Format {
 
     private int id;
     private String label;
-    private String formatDescription;
+
 
     //Constructor
-    public FormatData(int id, String label, String formatDescription) {
+    public FormatData(int id, String label) {
         this.id = id;
         this.label = label;
-        this.formatDescription = formatDescription;
     }
 
     //Getters and Setters
@@ -31,13 +30,5 @@ public class FormatData extends DBData implements Format {
     @Override
     public void setLabel(String label) {
         this.label = label;
-    }
-    @Override
-    public String getFormatDescription() {
-        return formatDescription;
-    }
-    @Override
-    public void setFormatDescription(String formatDescription) {
-        this.formatDescription = formatDescription;
     }
 }

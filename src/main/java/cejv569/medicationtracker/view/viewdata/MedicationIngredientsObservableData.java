@@ -7,18 +7,29 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class MedicationIngredientsObservableData extends ViewObservableData implements MedicationIngredients {
 
-    private final String ID_PROP_NAME = "id";
+    private final static String ID_PROP_NAME = "id";
     private SimpleIntegerProperty id;
 
-    private final String MEDICATIONID_PROP_NAME = "medicationId";
+    private final static String MEDICATIONID_PROP_NAME = "medicationId";
     private SimpleIntegerProperty medicationId;
 
-    private final String INGREDIENTID_PROP_NAME = "ingredientId";
+    private final static String INGREDIENTID_PROP_NAME = "ingredientId";
     private SimpleIntegerProperty ingredientId;
 
-    private final String NAME_PROP_NAME = "name";
+    private final static String NAME_PROP_NAME = "name";
     private SimpleStringProperty name;
 
+    //Constructor
+
+
+    public MedicationIngredientsObservableData(int id, int medicationId, int ingredientId, String name) {
+        this.id.set(id);
+        this.medicationId.set(medicationId);
+        this.ingredientId.set(ingredientId);
+        this.name.set(name);
+    }
+
+    //Setters and getters
     @Override
     public int getId() {
         return id.get();

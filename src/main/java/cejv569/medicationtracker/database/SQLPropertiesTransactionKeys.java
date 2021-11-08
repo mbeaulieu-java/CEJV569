@@ -21,7 +21,13 @@ public class SQLPropertiesTransactionKeys {
         READ_USER_INFO ("read_user_info"),
         VALIDATE_USERNAME ("validate_username"),
         CREATE_USER_INFO("create_user"),
-        UPDATE_USER_INFO("update_user");
+        UPDATE_USER_INFO("update_user"),
+        READ_INGREDIENTS_INFO("read_ingredients"),
+        READ_MEDICATION_INGREDIENTS_INFO("read_medication_ingredients"),
+        READ_FORMATS_INFO("read_formats_info"),
+        READ_MEASUREMENT_UNITS_INFO("read_measurement_units_info"),
+        READ_MEDICATIONS_INFO("read_medications_info");
+
 
         SQLTransactionKeys(String tKey) {
             this.tKey = tKey;
