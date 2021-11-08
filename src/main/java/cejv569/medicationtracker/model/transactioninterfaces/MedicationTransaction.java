@@ -19,5 +19,5 @@ public interface MedicationTransaction extends DataTransaction{
             throws OperationFailureException;
     void createMedication(Medication medication) throws OperationFailureException;
     void updateMedication (Medication medication) throws OperationFailureException;
-    void deleteMedication(Medication medication) throws OperationFailureException;
+    
 }

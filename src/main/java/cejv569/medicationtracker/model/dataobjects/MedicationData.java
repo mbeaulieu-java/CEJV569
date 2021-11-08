@@ -7,17 +7,20 @@ public class MedicationData extends DBData implements Medication {
     private int id;
     private int formatId;
     private int measurementId;
+    private int userId;
     private String brandName;
     private String genericName;
 
     //Constructor
 
-    public MedicationData(int id, int formatId, int measurementId, int ingredientsId, String brandName, String genericName) {
+    public MedicationData(int id, int formatId, int measurementId,int userId, String brandName, String genericName) {
         this.id = id;
         this.formatId = formatId;
         this.measurementId = measurementId;
+        this.userId = userId;
         this.brandName = brandName;
         this.genericName = genericName;
+
     }
 
     //Getters and Setters
@@ -62,5 +65,15 @@ public class MedicationData extends DBData implements Medication {
     @Override
     public void setGenericName(String genericName) {
         this.genericName = genericName;
+    }
+
+    @Override
+    public int getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

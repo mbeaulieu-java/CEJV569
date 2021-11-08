@@ -4,9 +4,6 @@ import cejv569.medicationtracker.database.MedTrackDatasource;
 import cejv569.medicationtracker.database.SQLPropertiesTransactionKeys;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.Contact;
-import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.model.dataobjects.ContactData;
-import cejv569.medicationtracker.model.dataobjects.UserData;
 import cejv569.medicationtracker.model.transactioninterfaces.ContactTransaction;
 
 import java.sql.PreparedStatement;
@@ -61,7 +58,7 @@ public class ContactTransactions extends DataTransactions implements ContactTran
                     .getSQLStatement(
                             SQLPropertiesTransactionKeys
                                     .SQLTransactionKeys
-                                    .INSERT_CONTACT.tKey);
+                                    .CREATE_CONTACT.tKey);
 
             // set the parameters for the insertion prepared statement
             theStatement.setString(1,data.getFullName());

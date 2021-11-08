@@ -313,32 +313,38 @@ public class LoginController extends ViewController{
         FXMLLoader configureMedFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_MED_FILE_PATH));
         TitledPane configureMedPane = (TitledPane)configureMedFxmlLoader.load();
 
-        FXMLLoader configureEffectsFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_EFFECTS_FILE_PATH));
-        TitledPane configureEffectsPane = (TitledPane)configureEffectsFxmlLoader.load();
-
-        FXMLLoader addMedPurchaseFxmlLoader =
-                new FXMLLoader(MedTrack.class.getResource(ADD_MED_PURCHASE_FILE_PATH));
-        TitledPane addMedPurchasePane = (TitledPane)addMedPurchaseFxmlLoader.load();
-
-        FXMLLoader logMedicationFxmlLoader = new FXMLLoader(MedTrack.class.getResource(LOG_MED_FILE_PATH));
-        TitledPane logMedicationPane = (TitledPane)logMedicationFxmlLoader.load();
-
-        FXMLLoader logMedEffectFxmlLoader = new FXMLLoader(MedTrack.class.getResource(LOG_MED_EFFECT_FILE_PATH));
-        TitledPane logMedEffectPane = (TitledPane)logMedEffectFxmlLoader.load();
-
-        FXMLLoader medEffectsHistoryFxmlLoader = new FXMLLoader(MedTrack.class.getResource(MED_EFFECTS_HISTORY_FILE_PATH));
-        TitledPane medEffectsHistoryPane = (TitledPane)medEffectsHistoryFxmlLoader.load();
+        /**
+         * THESE PANES WILL BE ADDED LATER AND ARE NOT PART OF THIS PROJECT
+         */
+//        FXMLLoader configureEffectsFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_EFFECTS_FILE_PATH));
+//        TitledPane configureEffectsPane = (TitledPane)configureEffectsFxmlLoader.load();
+//
+//        FXMLLoader addMedPurchaseFxmlLoader =
+//                new FXMLLoader(MedTrack.class.getResource(ADD_MED_PURCHASE_FILE_PATH));
+//        TitledPane addMedPurchasePane = (TitledPane)addMedPurchaseFxmlLoader.load();
+//
+//        FXMLLoader logMedicationFxmlLoader = new FXMLLoader(MedTrack.class.getResource(LOG_MED_FILE_PATH));
+//        TitledPane logMedicationPane = (TitledPane)logMedicationFxmlLoader.load();
+//
+//        FXMLLoader logMedEffectFxmlLoader = new FXMLLoader(MedTrack.class.getResource(LOG_MED_EFFECT_FILE_PATH));
+//        TitledPane logMedEffectPane = (TitledPane)logMedEffectFxmlLoader.load();
+//
+//        FXMLLoader medEffectsHistoryFxmlLoader = new FXMLLoader(MedTrack.class.getResource(MED_EFFECTS_HISTORY_FILE_PATH));
+//        TitledPane medEffectsHistoryPane = (TitledPane)medEffectsHistoryFxmlLoader.load();
 
         accordion = (Accordion)profilePane.getChildren().get(1);
 
          accordion.getPanes().add(accountPane);
          accordion.getPanes().add(configureMedPane);
-         accordion.getPanes().add(configureEffectsPane);
-         accordion.getPanes().add(addMedPurchasePane);
-         accordion.getPanes().add(logMedicationPane);
-         accordion.getPanes().add(medEffectsHistoryPane);
-         scene = new Scene(profilePane);
 
+         //TO BE ADDED LATER, NOT PART OF THIS PROJECT
+//         accordion.getPanes().add(configureEffectsPane);
+//         accordion.getPanes().add(addMedPurchasePane);
+//         accordion.getPanes().add(logMedicationPane);
+//         accordion.getPanes().add(medEffectsHistoryPane);
+
+
+        scene = new Scene(profilePane);
          stage.setTitle("MedTrack");
          stage.setScene(scene);
          stage.centerOnScreen();

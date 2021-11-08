@@ -122,7 +122,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     public List<Medication> getMedications() throws OperationFailureException {
         ResultSet resultSet;
         PreparedStatement theStatement;
-        String idColName, formatIdColName,measurementIdColName,brandNameColName,genericNameColName;
+        String idColName, formatIdColName, measurementIdColName, userIdColName,
+                brandNameColName,genericNameColName;
         List<Medication> medicationsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
@@ -137,13 +138,16 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             //get the query column values from the resultSet
             idColName = ResultSetColumnNamesByTransactionKey
                     .Medications_Info.ID.columnName;
+            formatIdColName = ResultSetColumnNamesByTransactionKey
+                    .Medications_Info.FORMAT_ID.columnName;
             measurementIdColName = ResultSetColumnNamesByTransactionKey
                     .Medications_Info.MEASUREMENT_ID.columnName;
-            brandNameColName = ResultSetColumnNamesByTransactionKey
-                    .Medications_Info.BRAND_NAME.columnName;
+            userIdColName = ResultSetColumnNamesByTransactionKey
+                    .Medications_Info.USER_ID.columnName;
             genericNameColName = ResultSetColumnNamesByTransactionKey
                     .Medications_Info.GENERIC_NAME.columnName;
-
+            brandNameColName = ResultSetColumnNamesByTransactionKey
+                    .Medications_Info.BRAND_NAME.columnName;
 
             //excute the Select query
             resultSet = theStatement.executeQuery();
@@ -156,7 +160,11 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                 //from the resultset returned by the prepared statement.
                 medicationsList.add(new MedicationData(
                         resultSet.getInt(idColName),
-                        resultSet.getString(labelColName)));
+                        resultSet.getInt(formatIdColName),
+                        resultSet.getInt(measurementIdColName),
+                        resultSet.getInt(userIdColName),
+                        resultSet.getString(brandNameColName),
+                        resultSet.getString(genericNameColName)));
             }
 
         } catch(OperationFailureException | SQLException e) {
@@ -165,7 +173,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             throw new OperationFailureException (e.getMessage());
         }
         //return the formats list  or null, if no records are found.
-        return (formatsList.isEmpty() ? null : formatsList);
+        return (medicationsList.isEmpty() ? null : medicationsList);
     }
 
     @Override
@@ -260,26 +268,136 @@ public class MedicationTransactions extends DataTransactions implements Medicati
 
     @Override
     public void createMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
+        PreparedStatement theStatement = null;
 
+        if (!medicationIngredients.isEmpty()) {
+            //retrieve the insert query using the proper SQLTransactionKey
+            theStatement = getDatasource()
+                    .getSQLStatement(
+                            SQLPropertiesTransactionKeys
+                                    .SQLTransactionKeys
+                                    .CREATE_MEDICATION_INGREDIENTS_INFO.tKey);
+        }
+
+
+        try {
+            for (MedicationIngredients ing:medicationIngredients) {
+
+                //clear the parameters for the next query to be run
+                theStatement.clearParameters();
+
+                // set the parameters for the insertion prepared statement
+                theStatement.setInt(1,ing.getMedicationId());
+                theStatement.setInt(2,ing.getIngredientId());
+
+                //excute the insert
+                theStatement.executeUpdate();
+            }
+
+        } catch(SQLException e) {
+            throw new OperationFailureException (e.getMessage());
+        } catch (Exception e) {
+            throw new OperationFailureException (e.getMessage());
+        }
     }
 
     @Override
     public void deleteMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
+        PreparedStatement theStatement = null;
 
+        if (!medicationIngredients.isEmpty()) {
+            //retrieve the delete query using the proper SQLTransactionKey
+            theStatement = getDatasource()
+                    .getSQLStatement(
+                            SQLPropertiesTransactionKeys
+                                    .SQLTransactionKeys
+                                    .DELETE_MEDICATION_INGREDIENTS_INFO.tKey);
+        }
+
+
+        try {
+            for (MedicationIngredients ing:medicationIngredients) {
+
+                //clear the parameters for the next query to be run
+                theStatement.clearParameters();
+
+                // set the parameters for the delete prepared statement
+                theStatement.setInt(1,ing.getId());
+
+                //excute the delete
+                theStatement.executeUpdate();
+            }
+
+        } catch(SQLException e) {
+            throw new OperationFailureException (e.getMessage());
+        } catch (Exception e) {
+            throw new OperationFailureException (e.getMessage());
+        }
     }
 
     @Override
     public void createMedication(Medication medication) throws OperationFailureException {
+        PreparedStatement theStatement = null;
 
+            //retrieve the insert query using the proper SQLTransactionKey
+            theStatement = getDatasource()
+                    .getSQLStatement(
+                            SQLPropertiesTransactionKeys
+                                    .SQLTransactionKeys
+                                    .CREATE_MEDICATION_INFO.tKey);
+
+        try{
+            // set the parameters for the insert prepared statement
+            theStatement.setInt(1,medication.getFormatId());
+            theStatement.setInt(2,medication.getMeasurementId());
+            theStatement.setInt(3,medication.getUserId());
+            theStatement.setString(4,medication.getBrandName());
+            theStatement.setString(5,medication.getGenericName());
+
+            //excute the insert
+            theStatement.executeUpdate();
+
+            //clear the parameters for the next query to be run
+            theStatement.clearParameters();
+
+        } catch(SQLException e) {
+            throw new OperationFailureException (e.getMessage());
+        } catch (Exception e) {
+            throw new OperationFailureException (e.getMessage());
+        }
     }
 
     @Override
     public void updateMedication(Medication medication) throws OperationFailureException {
+        PreparedStatement theStatement = null;
 
+        //retrieve the update query using the proper SQLTransactionKey
+        theStatement = getDatasource()
+                .getSQLStatement(
+                        SQLPropertiesTransactionKeys
+                                .SQLTransactionKeys
+                                .UPDATE_MEDICATION_INFO.tKey);
+
+        try{
+            // set the parameters for the update prepared statement
+            theStatement.setInt(1,medication.getFormatId());
+            theStatement.setInt(2,medication.getMeasurementId());
+            theStatement.setInt(3,medication.getUserId());
+            theStatement.setString(4,medication.getBrandName());
+            theStatement.setString(5,medication.getGenericName());
+            theStatement.setInt(6,medication.getId());
+
+            //excute the update
+            theStatement.executeUpdate();
+
+            //clear the parameters for the next query to be run
+            theStatement.clearParameters();
+
+        } catch(SQLException e) {
+            throw new OperationFailureException (e.getMessage());
+        } catch (Exception e) {
+            throw new OperationFailureException (e.getMessage());
+        }
     }
 
-    @Override
-    public void deleteMedication(Medication medication) throws OperationFailureException {
-
-    }
 }

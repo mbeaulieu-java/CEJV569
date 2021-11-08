@@ -36,4 +36,9 @@ public interface Medication extends Data{
     String getGenericName();
 
     void setGenericName(String genericName);
+
+    int getUserId();
+
+    void setUserId(int userId);
+
 }

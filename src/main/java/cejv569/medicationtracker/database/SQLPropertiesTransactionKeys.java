@@ -17,7 +17,7 @@ public class SQLPropertiesTransactionKeys {
 
     public enum SQLTransactionKeys {
         SQL_DIRECTORY("sql_file_path"),
-        INSERT_CONTACT("insert_contact"),
+        CREATE_CONTACT("create_contact"),
         READ_USER_INFO ("read_user_info"),
         VALIDATE_USERNAME ("validate_username"),
         CREATE_USER_INFO("create_user"),
@@ -26,8 +26,11 @@ public class SQLPropertiesTransactionKeys {
         READ_MEDICATION_INGREDIENTS_INFO("read_medication_ingredients"),
         READ_FORMATS_INFO("read_formats_info"),
         READ_MEASUREMENT_UNITS_INFO("read_measurement_units_info"),
-        READ_MEDICATIONS_INFO("read_medications_info");
-
+        READ_MEDICATIONS_INFO("read_medications_info"),
+        CREATE_MEDICATION_INGREDIENTS_INFO("create_medication_ingredients"),
+        DELETE_MEDICATION_INGREDIENTS_INFO("delete_medication_ingredients"),
+        CREATE_MEDICATION_INFO("create_medication"),
+        UPDATE_MEDICATION_INFO("update_medication");
 
         SQLTransactionKeys(String tKey) {
             this.tKey = tKey;

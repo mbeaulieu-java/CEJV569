@@ -15,12 +15,29 @@ public class ConfigureMedicationObservableData extends ViewObservableData implem
     private final static String MEASUREMENTID_PROP_NAME = "measurementId";
     private SimpleIntegerProperty measurementId;
 
+    private final static String USERID_PROP_NAME = "userId";
+    private SimpleIntegerProperty userId;
+
+
     private final static String BRANDNAME_PROP_NAME = "brandName";
     private SimpleStringProperty brandName;
 
     private final static String GENERICNAME_PROP_NAME = "genericName";
     private SimpleStringProperty genericName;
 
+    //Constructor
+
+
+    public ConfigureMedicationObservableData(int id, int formatId,int measurementId, int userId, String brandName, String genericName) {
+        this.id.set(id);
+        this.formatId.set(formatId);
+        this.measurementId.set(measurementId);
+        this.userId.set(userId);
+        this.brandName.set(brandName);
+        this.genericName.set(genericName);
+    }
+
+    //Getters and Setters
     @Override
     public int getId() {
         return id.get();
@@ -84,5 +101,19 @@ public class ConfigureMedicationObservableData extends ViewObservableData implem
     @Override
     public void setGenericName(String genericName) {
         this.genericName.set(genericName);
+    }
+
+    @Override
+    public int getUserId() {
+        return userId.get();
+    }
+
+    public SimpleIntegerProperty userIdProperty() {
+        return userId;
+    }
+
+    @Override
+    public void setUserId(int userId) {
+        this.userId.set(userId);
     }
 }

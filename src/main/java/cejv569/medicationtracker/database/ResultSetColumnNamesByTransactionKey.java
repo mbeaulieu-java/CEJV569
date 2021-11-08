@@ -85,7 +85,7 @@ public class ResultSetColumnNamesByTransactionKey {
     public enum Medication_Ingredients_Info {
 
         ID("id"),
-        MEDICATION_ID("medication_id"),
+        MEDICATION_ID("med_id"),
         INGREDIENT_ID("ingredient_id"),
         NAME("name");
 
@@ -125,6 +125,7 @@ public class ResultSetColumnNamesByTransactionKey {
         ID("id"),
         FORMAT_ID("format_id"),
         MEASUREMENT_ID("measurement_id"),
+        USER_ID("userid"),
         BRAND_NAME("brand_name"),
         GENERIC_NAME("generic_name");
 
