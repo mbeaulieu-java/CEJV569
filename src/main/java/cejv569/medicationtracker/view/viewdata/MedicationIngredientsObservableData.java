@@ -23,10 +23,10 @@ public class MedicationIngredientsObservableData extends ViewObservableData impl
 
 
     public MedicationIngredientsObservableData(int id, int medicationId, int ingredientId, String name) {
-        this.id.set(id);
-        this.medicationId.set(medicationId);
-        this.ingredientId.set(ingredientId);
-        this.name.set(name);
+        this.id = new SimpleIntegerProperty(this,ID_PROP_NAME,id);
+        this.medicationId = new SimpleIntegerProperty(this,MEDICATIONID_PROP_NAME,medicationId);
+        this.ingredientId = new SimpleIntegerProperty(this,INGREDIENTID_PROP_NAME,ingredientId);
+        this.name = new SimpleStringProperty(this, NAME_PROP_NAME,name);
     }
 
     //Setters and getters

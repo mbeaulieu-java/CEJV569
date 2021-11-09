@@ -2,13 +2,12 @@ package cejv569.medicationtracker.view.viewcontrollers;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
-import cejv569.medicationtracker.model.datainterfaces.Format;
-import cejv569.medicationtracker.model.datainterfaces.Medication;
-import cejv569.medicationtracker.model.datainterfaces.MedicationIngredients;
+import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.view.viewdata.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -65,11 +64,13 @@ public class ConfigureMedicationController extends ViewController {
 
     //attributes
     private ConfigureMedicationOperation configureMedicationOperation;
-    private ObservableList<ConfigureMedicationObservableData> medicationsList;
-    private ObservableList<MedicationIngredientsObservableData> medicationIngredientsList;
-    private ObservableList<FormatObservableData> formatsList;
-    private ObservableList<MeasurementUnitObservableData> measurementUnitsList;
-    private ObservableList<IngredientObservableData> ingredientsList;
+    private List<ConfigureMedicationObservableData> medicationsList;
+    private List<MedicationIngredientsObservableData> medicationIngredientsList;
+    private List<FormatObservableData> formatsList;
+    private List<MeasurementUnitObservableData> measurementUnitsList;
+
+    private List<IngredientObservableData> ingredientODList;
+    private ObservableList<SimpleStringProperty> ingredientNames;
     private int userId;
     //Getters and Setters
 
@@ -91,45 +92,39 @@ public class ConfigureMedicationController extends ViewController {
         this.userId = userId;
     }
 
-    protected ObservableList<ConfigureMedicationObservableData> getMedicationsList() {
+    protected List<ConfigureMedicationObservableData> getMedicationsList() {
         return medicationsList;
     }
 
-    protected void setMedicationsList(ObservableList<ConfigureMedicationObservableData> medicationsList) {
+    protected void setMedicationsList(List<ConfigureMedicationObservableData> medicationsList) {
         this.medicationsList = medicationsList;
     }
 
-    protected ObservableList<MedicationIngredientsObservableData> getMedicationIngredientsList() {
+    protected List<MedicationIngredientsObservableData> getMedicationIngredientsList() {
         return medicationIngredientsList;
     }
 
-    protected void setMedicationIngredientsList(ObservableList<MedicationIngredientsObservableData> medicationIngredientsList) {
+    protected void setMedicationIngredientsList(List<MedicationIngredientsObservableData> medicationIngredientsList) {
         this.medicationIngredientsList = medicationIngredientsList;
     }
 
-    protected ObservableList<FormatObservableData> getFormatsList() {
+    protected List<FormatObservableData> getFormatsList() {
         return formatsList;
     }
 
-    protected void setFormatsList(ObservableList<FormatObservableData> formatsList) {
+    protected void setFormatsList(List<FormatObservableData> formatsList) {
         this.formatsList = formatsList;
     }
 
-    protected ObservableList<MeasurementUnitObservableData> getMeasurementUnitsList() {
+    protected List<MeasurementUnitObservableData> getMeasurementUnitsList() {
         return measurementUnitsList;
     }
 
-    protected void setMeasurementUnitsList(ObservableList<MeasurementUnitObservableData> measurementUnitsList) {
+    protected void setMeasurementUnitsList(List<MeasurementUnitObservableData> measurementUnitsList) {
         this.measurementUnitsList = measurementUnitsList;
     }
 
-    protected ObservableList<IngredientObservableData> getIngredientsList() {
-        return ingredientsList;
-    }
 
-    protected void setIngredientsList(ObservableList<IngredientObservableData> ingredientsList) {
-        this.ingredientsList = ingredientsList;
-    }
 
     //Methods/Functions
 
@@ -138,24 +133,70 @@ public class ConfigureMedicationController extends ViewController {
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
-
+        initializeFieldValues();
 
     }
     private void initializeFieldValues() {
         initializeIngredientValues();
-        initializeFormatValues();
-        initializeMeasurementUnitValues();
-        initializeMedicationValues();
-        initializeMedicationIngredientsValues();
-        bindProperties();
+        bindIngredientNameProperties();
+//        initializeFormatValues();
+//        initializeMeasurementUnitValues();
+//        initializeMedicationValues();
+//        initializeMedicationIngredientsValues();
+
     }
 
     private void initializeMedicationValues () {
+        List<Medication> medicationList = null;
+        Stream<Medication> medicationStream = null;
+        try {
+            medicationList = getOperation().getMedications(getUserId());
+            if (medicationList == null) {
+                LogError.logUnrecoverableError(
+                        new OperationFailureException("No Medication List was obtained for user " +
+                                "with ID:" + getUserId()));
+            } else {
 
+                medicationsList =  new ArrayList<ConfigureMedicationObservableData>();
+                medicationStream = medicationList.stream();
+                medicationStream.forEach(m->{
+                    medicationsList.add(
+                            new ConfigureMedicationObservableData (
+                                    m.getId(),
+                                    m.getFormatId(),
+                                    m.getMeasurementId(),
+                                    m.getUserId(),
+                                    m.getBrandName(),
+                                    m.getGenericName()));});
+            }
+
+        }catch (OperationFailureException e) {
+            LogError.logUnrecoverableError(e);
+        }
     }
 
     private void initializeMedicationIngredientsValues() {
+        List<MedicationIngredients> medicationIngredientList = null;
+        Stream<MedicationIngredients> medicationIngredientStream = null;
+        try {
+            medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
 
+            if (medicationIngredientList != null) {
+
+                medicationIngredientsList =  new ArrayList<MedicationIngredientsObservableData>();
+                medicationIngredientStream = medicationIngredientList.stream();
+                medicationIngredientStream.forEach(m->{
+                    medicationIngredientsList.add(
+                            new MedicationIngredientsObservableData(
+                                    m.getId(),
+                                    m.getMedicationId(),
+                                    m.getIngredientId(),
+                                    m.getName()));});
+            }
+
+        }catch (OperationFailureException e) {
+            LogError.logUnrecoverableError(e);
+        }
     }
 
     private void initializeFormatValues() {
@@ -167,7 +208,7 @@ public class ConfigureMedicationController extends ViewController {
                 LogError.logUnrecoverableError(new OperationFailureException("No Formats List was obtained"));
             } else {
 
-                formatsList =  FXCollections.observableArrayList();
+                formatsList =  new ArrayList<FormatObservableData>();
                 formatsStream = formatList.stream();
                 formatsStream.forEach(f->{
                         formatsList.add(
@@ -183,13 +224,66 @@ public class ConfigureMedicationController extends ViewController {
 
     private void initializeMeasurementUnitValues() {
 
+        List<MeasurementUnit> measurementUnitList = null;
+        Stream<MeasurementUnit> measurementUnitStream = null;
+        try {
+            measurementUnitList = getOperation().getMeasurementUnits();
+            if (measurementUnitList == null) {
+                LogError.logUnrecoverableError(new OperationFailureException("No Measurement Unit List was obtained"));
+            } else {
+
+                measurementUnitsList =  new ArrayList<MeasurementUnitObservableData>();
+                measurementUnitStream = measurementUnitList.stream();
+                measurementUnitStream.forEach(mu->{
+                    measurementUnitsList.add(
+                            new MeasurementUnitObservableData(
+                                    mu.getId(),
+                                    mu.getUnitName()));});
+            }
+
+        }catch (OperationFailureException e) {
+            LogError.logUnrecoverableError(e);
+        }
     }
 
     private void initializeIngredientValues() {
 
+        List<Ingredient> ingredientList = null;
+
+        try {
+
+            ingredientList = getOperation().getIngredients();
+            if (ingredientList == null) {
+                LogError.logUnrecoverableError(new OperationFailureException("No Ingredient List was obtained"));
+            } else {
+
+                ingredientODList = new ArrayList<IngredientObservableData>();
+                for ( Ingredient i : ingredientList) {
+                    ingredientODList.add(
+                            new IngredientObservableData(
+                                    i.getId(),
+                                    i.getName(),
+                                    i.getMedicinal()));
+                }
+
+            }
+
+        }catch (OperationFailureException e) {
+            LogError.logUnrecoverableError(e);
+        }
     }
 
-    private void bindProperties () {
-
+    private void bindIngredientNameProperties () {
+        SimpleStringProperty temp;
+        if (ingredientODList != null && ingredientODList.size() > 0) {
+            ingredientNames = FXCollections.observableArrayList();
+            for (IngredientObservableData iod : ingredientODList) {
+               temp = new SimpleStringProperty();
+               temp.bindBidirectional(iod.nameProperty());
+                ingredientNames.add(temp);
+            }
+            ingredientsListView = null;
+            ingredientsListView = new ListView<SimpleStringProperty>(ingredientNames);
+        }
     }
 }

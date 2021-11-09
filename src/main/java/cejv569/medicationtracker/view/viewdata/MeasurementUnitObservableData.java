@@ -6,14 +6,18 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class MeasurementUnitObservableData extends ViewObservableData implements MeasurementUnit {
 
+    private final static String ID_PROP_NAME = "id";
     private SimpleIntegerProperty id;
+
+    private final static String UNITNAME_PROP_NAME = "unitName";
+
     private SimpleStringProperty unitName;
 
     //Constructor
 
     public MeasurementUnitObservableData(int id, String unitName) {
-        this.id.set(id);
-        this.unitName.set(unitName);
+        this.id = new SimpleIntegerProperty(this,ID_PROP_NAME,id);
+        this.unitName = new SimpleStringProperty(this,UNITNAME_PROP_NAME,unitName);
     }
 
     //Setters and Getters

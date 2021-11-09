@@ -123,6 +123,8 @@ public class LoginController extends ViewController{
 
         // Add event handlers for buttons
         loginButton.addEventHandler(ActionEvent.ACTION,(e)->{
+            userTextField.setText("m@g.com");
+            passwordTextField.setText("12345678");
             isValidLogin();
 //            try {
 //                showProfilePane();

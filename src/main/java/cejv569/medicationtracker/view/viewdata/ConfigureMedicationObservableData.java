@@ -29,12 +29,13 @@ public class ConfigureMedicationObservableData extends ViewObservableData implem
 
 
     public ConfigureMedicationObservableData(int id, int formatId,int measurementId, int userId, String brandName, String genericName) {
-        this.id.set(id);
-        this.formatId.set(formatId);
-        this.measurementId.set(measurementId);
-        this.userId.set(userId);
-        this.brandName.set(brandName);
-        this.genericName.set(genericName);
+
+        this.id = new SimpleIntegerProperty(this,ID_PROP_NAME,id);
+        this.formatId = new SimpleIntegerProperty(this,FORMATID_PROP_NAME,formatId);
+        this.measurementId = new SimpleIntegerProperty(this,MEASUREMENTID_PROP_NAME,measurementId);
+        this.userId = new SimpleIntegerProperty(this,USERID_PROP_NAME,userId);
+        this.brandName = new SimpleStringProperty(this,BRANDNAME_PROP_NAME,brandName);
+        this.genericName = new SimpleStringProperty(this, GENERICNAME_PROP_NAME,genericName);
     }
 
     //Getters and Setters

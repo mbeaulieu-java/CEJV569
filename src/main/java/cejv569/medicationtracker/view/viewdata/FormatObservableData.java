@@ -16,8 +16,8 @@ public class FormatObservableData extends ViewObservableData implements Format {
     //constructor
 
     public FormatObservableData(int id, String label) {
-        this.id.set(id);
-        this.label.set(label);
+        this.id = new SimpleIntegerProperty(this,ID_PROP_NAME,id);
+        this.label = new SimpleStringProperty(this,LABEL_PROP_NAME,label);
     }
 
     //Setters and Getters

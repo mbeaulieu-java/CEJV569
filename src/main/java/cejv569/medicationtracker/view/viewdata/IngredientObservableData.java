@@ -18,6 +18,12 @@ public class IngredientObservableData extends ViewObservableData implements Ingr
     private final static String MEDICINAL_PROP_NAME = "medicinal";
     private SimpleBooleanProperty medicinal;
 
+    public IngredientObservableData(int id, String name, boolean medicinal) {
+        this.id.set(id);
+        this.name.set(name);
+        this.medicinal.set(medicinal);
+    }
+
     @Override
     public int getId() {
         return id.get();
