@@ -30,7 +30,8 @@ public class SQLPropertiesTransactionKeys {
         CREATE_MEDICATION_INGREDIENTS_INFO("create_medication_ingredients"),
         DELETE_MEDICATION_INGREDIENTS_INFO("delete_medication_ingredients"),
         CREATE_MEDICATION_INFO("create_medication"),
-        UPDATE_MEDICATION_INFO("update_medication");
+        UPDATE_MEDICATION_INFO("update_medication"),
+        VERIFY_UNIQUE_MEDICATION("verify_unique_medication");
 
         SQLTransactionKeys(String tKey) {
             this.tKey = tKey;

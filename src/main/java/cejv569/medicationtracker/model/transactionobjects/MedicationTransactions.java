@@ -3,6 +3,7 @@ package cejv569.medicationtracker.model.transactionobjects;
 import cejv569.medicationtracker.database.MedTrackDatasource;
 import cejv569.medicationtracker.database.ResultSetColumnNamesByTransactionKey;
 import cejv569.medicationtracker.database.SQLPropertiesTransactionKeys;
+import cejv569.medicationtracker.exceptions.MedicationAlreadyAddedException;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.dataobjects.*;
@@ -23,8 +24,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     public List<Ingredient> getIngredients() throws OperationFailureException {
         ResultSet resultSet;
         PreparedStatement theStatement;
-        String idColName, nameColName,medicinalColName;
-        List <Ingredient> ingredientsList = new ArrayList<>();
+        String idColName, nameColName, medicinalColName;
+        List<Ingredient> ingredientsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
         try {
@@ -56,21 +57,21 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getBoolean(medicinalColName)));
             }
 
-        } catch(OperationFailureException | SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (OperationFailureException | SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
         //return null if no records are retrieved or the ingredients list
         return (ingredientsList.isEmpty() ? null : ingredientsList);
     }
 
     @Override
-    public List<MedicationIngredients> getMedicationIngredients() throws OperationFailureException {
+    public List<MedicationIngredients> getMedicationIngredients(int userId) throws OperationFailureException {
         ResultSet resultSet;
         PreparedStatement theStatement;
-        String idColName,medicationIdColName,ingredientIdColName, nameColName;
-        List <MedicationIngredients> medicationIngredientsList = new ArrayList<>();
+        String idColName, medicationIdColName, ingredientIdColName, nameColName;
+        List<MedicationIngredients> medicationIngredientsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
         try {
@@ -92,6 +93,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             ingredientIdColName = ResultSetColumnNamesByTransactionKey
                     .Medication_Ingredients_Info.INGREDIENT_ID.columnName;
 
+            theStatement.setInt(1, userId);
 
             //excute the Select query
             resultSet = theStatement.executeQuery();
@@ -109,21 +111,21 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getString(nameColName)));
             }
 
-        } catch(OperationFailureException | SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (OperationFailureException | SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
         //returne the medication ingredients list  or null, if no records are found.
         return (medicationIngredientsList.isEmpty() ? null : medicationIngredientsList);
     }
 
     @Override
-    public List<Medication> getMedications() throws OperationFailureException {
+    public List<Medication> getMedications(int userId) throws OperationFailureException {
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, formatIdColName, measurementIdColName, userIdColName,
-                brandNameColName,genericNameColName;
+                brandNameColName, genericNameColName;
         List<Medication> medicationsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
@@ -149,6 +151,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             brandNameColName = ResultSetColumnNamesByTransactionKey
                     .Medications_Info.BRAND_NAME.columnName;
 
+            theStatement.setInt(1, userId);
+
             //excute the Select query
             resultSet = theStatement.executeQuery();
 
@@ -167,10 +171,10 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getString(genericNameColName)));
             }
 
-        } catch(OperationFailureException | SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (OperationFailureException | SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
         //return the formats list  or null, if no records are found.
         return (medicationsList.isEmpty() ? null : medicationsList);
@@ -181,7 +185,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, labelColName;
-        List <Format> formatsList = new ArrayList<>();
+        List<Format> formatsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
         try {
@@ -212,10 +216,10 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getString(labelColName)));
             }
 
-        } catch(OperationFailureException | SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (OperationFailureException | SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
         //return the formats list  or null, if no records are found.
         return (formatsList.isEmpty() ? null : formatsList);
@@ -226,7 +230,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, unitNameColName;
-        List <MeasurementUnit> measurementUnitsList = new ArrayList<>();
+        List<MeasurementUnit> measurementUnitsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
         try {
@@ -257,10 +261,10 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getString(unitNameColName)));
             }
 
-        } catch(OperationFailureException | SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (OperationFailureException | SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
         //return the formats list  or null, if no records are found.
         return (measurementUnitsList.isEmpty() ? null : measurementUnitsList);
@@ -281,23 +285,23 @@ public class MedicationTransactions extends DataTransactions implements Medicati
 
 
         try {
-            for (MedicationIngredients ing:medicationIngredients) {
+            for (MedicationIngredients ing : medicationIngredients) {
 
                 //clear the parameters for the next query to be run
                 theStatement.clearParameters();
 
                 // set the parameters for the insertion prepared statement
-                theStatement.setInt(1,ing.getMedicationId());
-                theStatement.setInt(2,ing.getIngredientId());
+                theStatement.setInt(1, ing.getMedicationId());
+                theStatement.setInt(2, ing.getIngredientId());
 
                 //excute the insert
                 theStatement.executeUpdate();
             }
 
-        } catch(SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
     }
 
@@ -316,22 +320,22 @@ public class MedicationTransactions extends DataTransactions implements Medicati
 
 
         try {
-            for (MedicationIngredients ing:medicationIngredients) {
+            for (MedicationIngredients ing : medicationIngredients) {
 
                 //clear the parameters for the next query to be run
                 theStatement.clearParameters();
 
                 // set the parameters for the delete prepared statement
-                theStatement.setInt(1,ing.getId());
+                theStatement.setInt(1, ing.getId());
 
                 //excute the delete
                 theStatement.executeUpdate();
             }
 
-        } catch(SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
     }
 
@@ -339,20 +343,20 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     public void createMedication(Medication medication) throws OperationFailureException {
         PreparedStatement theStatement = null;
 
-            //retrieve the insert query using the proper SQLTransactionKey
-            theStatement = getDatasource()
-                    .getSQLStatement(
-                            SQLPropertiesTransactionKeys
-                                    .SQLTransactionKeys
-                                    .CREATE_MEDICATION_INFO.tKey);
+        //retrieve the insert query using the proper SQLTransactionKey
+        theStatement = getDatasource()
+                .getSQLStatement(
+                        SQLPropertiesTransactionKeys
+                                .SQLTransactionKeys
+                                .CREATE_MEDICATION_INFO.tKey);
 
-        try{
+        try {
             // set the parameters for the insert prepared statement
-            theStatement.setInt(1,medication.getFormatId());
-            theStatement.setInt(2,medication.getMeasurementId());
-            theStatement.setInt(3,medication.getUserId());
-            theStatement.setString(4,medication.getBrandName());
-            theStatement.setString(5,medication.getGenericName());
+            theStatement.setInt(1, medication.getFormatId());
+            theStatement.setInt(2, medication.getMeasurementId());
+            theStatement.setInt(3, medication.getUserId());
+            theStatement.setString(4, medication.getBrandName());
+            theStatement.setString(5, medication.getGenericName());
 
             //excute the insert
             theStatement.executeUpdate();
@@ -360,10 +364,10 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             //clear the parameters for the next query to be run
             theStatement.clearParameters();
 
-        } catch(SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
     }
 
@@ -378,14 +382,14 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                                 .SQLTransactionKeys
                                 .UPDATE_MEDICATION_INFO.tKey);
 
-        try{
+        try {
             // set the parameters for the update prepared statement
-            theStatement.setInt(1,medication.getFormatId());
-            theStatement.setInt(2,medication.getMeasurementId());
-            theStatement.setInt(3,medication.getUserId());
-            theStatement.setString(4,medication.getBrandName());
-            theStatement.setString(5,medication.getGenericName());
-            theStatement.setInt(6,medication.getId());
+            theStatement.setInt(1, medication.getFormatId());
+            theStatement.setInt(2, medication.getMeasurementId());
+            theStatement.setInt(3, medication.getUserId());
+            theStatement.setString(4, medication.getBrandName());
+            theStatement.setString(5, medication.getGenericName());
+            theStatement.setInt(6, medication.getId());
 
             //excute the update
             theStatement.executeUpdate();
@@ -393,11 +397,49 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             //clear the parameters for the next query to be run
             theStatement.clearParameters();
 
-        } catch(SQLException e) {
-            throw new OperationFailureException (e.getMessage());
+        } catch (SQLException e) {
+            throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
-            throw new OperationFailureException (e.getMessage());
+            throw new OperationFailureException(e.getMessage());
         }
     }
 
+    @Override
+    public boolean medicationAlreadyExists(Medication medication) throws OperationFailureException {
+        PreparedStatement theStatement;
+        ResultSet resultSet;
+        boolean medicationExists = true;
+
+        //use the getSQLStatement to retrieve the right query to validate if the medication record to add
+        //is already in the database, with another primary key but with identical information.
+
+        try {
+            theStatement = getDatasource()
+                    .getSQLStatement(
+                            SQLPropertiesTransactionKeys
+                                    .SQLTransactionKeys
+                                    .VERIFY_UNIQUE_MEDICATION.tKey);
+
+            //set the parameters that must be unique and so need to be validate to see
+            //if they already exist in the database.
+            theStatement.setInt(1,medication.getUserId());
+            theStatement.setInt(2,medication.getFormatId());
+            theStatement.setInt(3,medication.getMeasurementId());
+            theStatement.setString(4, medication.getBrandName());
+            theStatement.setString(5, medication.getGenericName());
+            theStatement.setInt(6,medication.getId());
+
+            resultSet = theStatement.executeQuery();
+
+            //if next() returns true, then the select statement returned a record with the
+            //same user name hence the username already exists in the database.
+            medicationExists = resultSet.next();
+
+            theStatement.clearParameters();
+
+        } catch (SQLException e) {
+            throw new OperationFailureException(e.getMessage());
+        }
+        return medicationExists;
+    }
 }

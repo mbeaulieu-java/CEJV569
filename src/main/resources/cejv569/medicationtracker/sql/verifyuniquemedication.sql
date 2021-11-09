@@ -1,1 +1,1 @@
-select id from medication where (format_id = 1 and measurement_id = 1 and userid = 1) and (brand_name = '' or generic_name = '') and (id != 0 and id != 1); 
+select id from medication where ( userid = ? and format_id = ? and measurement_id = ?) and (brand_name = ? or generic_name = ?) and (id != ?);
