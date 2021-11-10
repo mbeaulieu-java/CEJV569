@@ -111,7 +111,7 @@
                                 <children>
                                     <ListView fx:id="medIngredientsListView" editable="true" fixedCellSize="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="255.0" HBox.hgrow="NEVER">
                                         <padding>
-                                            <Insets bottom="3.0" left="1.0" right="1.0" top="3.0" />
+                                            <Insets bottom="3.0" left="3.0" right="1.0" top="3.0" />
                                         </padding>
                                         <cursor>
                                             <Cursor fx:constant="TEXT" />

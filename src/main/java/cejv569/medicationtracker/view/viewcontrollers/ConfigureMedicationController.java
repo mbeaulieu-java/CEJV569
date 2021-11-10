@@ -75,7 +75,7 @@ public class ConfigureMedicationController extends ViewController {
 
     //attributes
     private ConfigureMedicationOperation configureMedicationOperation;
-    private List<ConfigureMedicationObservableData> medicationsList;
+    private List<Medication> medicationsList;
     private List<MedicationIngredients> medicationIngredientList;
     private List<Format> formatList;
     private List<MeasurementUnit> measurementUnitsList;
@@ -102,10 +102,12 @@ public class ConfigureMedicationController extends ViewController {
         this.userId = userId;
         try {
            medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
+            medicationsList = getOperation().getMedications(getUserId());
         } catch (OperationFailureException e) {
             LogError.logUnrecoverableError(e);
         }
     }
+
 
     //Methods/Functions
 
@@ -134,37 +136,27 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     private void addRemoveIngredients (){
-        medIngredientsListView.getItems().clear();
-        medIngredientsListView.getItems()
-                .addAll(ingredientsListView.getSelectionModel().getSelectedItems());
+        if (medIngredientsListView.getItems().isEmpty()) {
+            medIngredientsListView.getItems()
+                    .setAll(IngredientCell.getselectedIngredients().entrySet());
+        } else {
+            for (Map.Entry<Integer,String> e : medIngredientsListView.getSelectionModel().getSelectedItems()) {
+                IngredientCell.getselectedIngredients().remove(e.getKey());
+            }
+            medIngredientsListView.getItems().clear();
+            medIngredientsListView
+                    .getItems().setAll(IngredientCell.getselectedIngredients().entrySet());
+        }
+
     }
 
     private void initializeMedicationValues () {
         List<Medication> medicationList = null;
         Stream<Medication> medicationStream = null;
         try {
-            medicationList = getOperation().getMedications(getUserId());
-            if (medicationList == null) {
-                LogError.logUnrecoverableError(
-                        new OperationFailureException("No Medication List was obtained for user " +
-                                "with ID:" + getUserId()));
-            } else {
 
-                medicationsList =  new ArrayList<ConfigureMedicationObservableData>();
-                medicationStream = medicationList.stream();
-                medicationStream.forEach(m->{
-                    medicationsList.add(
-                            new ConfigureMedicationObservableData (
-                                    m.getId(),
-                                    m.getFormatId(),
-                                    m.getMeasurementId(),
-                                    m.getUserId(),
-                                    m.getBrandName(),
-                                    m.getGenericName()));});
-            }
-
-        }catch (OperationFailureException e) {
-            LogError.logUnrecoverableError(e);
+        }catch (Exception e) {
+            LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
     }
 
