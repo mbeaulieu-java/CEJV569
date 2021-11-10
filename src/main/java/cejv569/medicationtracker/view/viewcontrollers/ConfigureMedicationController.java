@@ -173,10 +173,6 @@ public class ConfigureMedicationController extends ViewController {
         try {
             medIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             medIngredientsListView.setCellFactory(ingList-> new MedicationIngredientCell());
-
-            medIngredientsListView.getItems().addListener(MouseEvent.MOUSE_PRESSED,(k,v)->{
-
-            });
         }catch (Exception e) {
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }

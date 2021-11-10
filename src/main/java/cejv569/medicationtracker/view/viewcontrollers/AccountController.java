@@ -116,7 +116,6 @@ public class AccountController extends ViewController{
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
-
         saveAccountButton.addEventHandler(ActionEvent.ACTION,e->{
             doSave();
         });

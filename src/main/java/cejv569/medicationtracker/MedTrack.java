@@ -2,6 +2,8 @@ package cejv569.medicationtracker;
 
 import cejv569.medicationtracker.database.MedTrackDatasource;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -155,6 +157,8 @@ public class MedTrack extends Application {
         stage.setTitle("MedTrack");
         stage.setScene(scene);
         stage.centerOnScreen();
+        stage.getScene().getWindow().setOnCloseRequest(e->{closeApp(e);});
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -168,6 +172,10 @@ public class MedTrack extends Application {
         MedTrackDatasource.getinstance().closeConnection();
         super.stop();
 
+    }
+
+    private void closeApp(Event e) {
+        Platform.exit();
     }
 
     /**x

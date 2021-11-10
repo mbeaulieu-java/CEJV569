@@ -241,6 +241,7 @@ public class LoginController extends ViewController{
 
         try {
             Stage stage = new Stage();
+            stage.setResizable(false);
             GUIUtility.openPane(stage,CONTACT_FILE_PATH, null);
             //call function to clear login user name and password in text fields
             GUIUtility.clearAllInputTextFields((Pane)userTextField.getParent());
@@ -258,6 +259,7 @@ public class LoginController extends ViewController{
 
         try {
             Stage stage = new Stage();
+            stage.setResizable(false);
             GUIUtility.openPane(stage,SIGNUP_FILE_PATH, null);
             initFieldValidation();
         } catch(IOException | IllegalStateException e ){
