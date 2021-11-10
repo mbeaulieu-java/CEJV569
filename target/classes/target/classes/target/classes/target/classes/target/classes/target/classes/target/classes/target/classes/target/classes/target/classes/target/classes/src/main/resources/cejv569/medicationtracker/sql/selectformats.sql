@@ -1,1 +1,0 @@
-select id, label from formats order by label asc;

@@ -1,0 +1,1 @@
+select medication_ingredients.id as id, medication_ingredients.med_id as med_id, medication_ingredients.ingredient_id as ingredient_id from medication_ingredients inner join medication on med_id = medication.id where medication.userid = ?;

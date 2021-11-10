@@ -1,0 +1,1 @@
+select id from medication where ( userid = ? and format_id = ? and measurement_id = ?) and (brand_name = ? or generic_name = ?) and (id != ?);

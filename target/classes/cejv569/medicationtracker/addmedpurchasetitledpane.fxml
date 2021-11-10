@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<TitledPane fx:id="addPurchaseTitledPane" animated="false" layoutX="10.0" layoutY="10.0" text="Add Medication Purchase" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cejv569.medicationtracker.view.viewcontrollers.LogMedicationPurchaseController">
+<content>
+    <ScrollPane prefHeight="700.0" prefWidth="1000.0">
+        <content>
+            <AnchorPane fx:id="medPurchaseAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #28d0ff;">
+                <children>
+                    <ImageView fitHeight="189.0" fitWidth="261.0" layoutX="36.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@assets/medpurchase.jpg" />
+                        </image>
+                    </ImageView>
+                    <VBox fillWidth="false" layoutX="330.0" layoutY="15.0" prefHeight="159.0" prefWidth="632.0" spacing="2.0">
+                        <children>
+                            <HBox prefHeight="100.0" prefWidth="686.0" spacing="30.0">
+                                <children>
+                                    <Label prefWidth="300.0" text="Medication brand name">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </Label>
+                                    <Label prefWidth="300.0" text="Medication generic name">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </Label>
+                                </children>
+                                <padding>
+                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                </padding>
+                            </HBox>
+                            <HBox prefHeight="62.0" prefWidth="686.0" spacing="33.0">
+                                <children>
+                                    <ComboBox fx:id="selectBrandComboBox" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" promptText="Select Brand Name" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" />
+                                    <ComboBox fx:id="selectGenericComboBox" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" promptText="Select Generic Name" style="-fx-font-family: Garamond; -fx-font-weight: Bold; -fx-font-size: 14;" />
+                                </children>
+                                <padding>
+                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                </padding>
+                            </HBox>
+                            <HBox prefHeight="100.0" prefWidth="686.0" spacing="53.0">
+                                <children>
+                                    <Label prefWidth="120.0" text="Unit of measure">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                        <padding>
+                                            <Insets left="10.0" />
+                                        </padding>
+                                    </Label>
+                                    <Label prefWidth="100.0" text="Number of units">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </Label>
+                                    <Label prefWidth="250.0" text="Maximum number of doses per 24 hours" wrapText="true">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                        <padding>
+                                            <Insets right="20.0" />
+                                        </padding>
+                                    </Label>
+                                </children>
+                                <padding>
+                                    <Insets bottom="2.0" top="2.0" />
+                                </padding>
+                            </HBox>
+                            <HBox prefHeight="62.0" prefWidth="686.0" spacing="57.0">
+                                <children>
+                                    <Label fx:id="unitsOfMeasureLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #fffbfb;" text="mg">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                        <cursor>
+                                            <Cursor fx:constant="NONE" />
+                                        </cursor>
+                                        <HBox.margin>
+                                            <Insets left="7.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="numberOfUnitsTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" promptText="Enter number of units as a number">
+                                        <padding>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </padding>
+                                        <font>
+                                            <Font name="Garamond" size="14.0" />
+                                        </font>
+                                        <cursor>
+                                            <Cursor fx:constant="TEXT" />
+                                        </cursor>
+                                        <HBox.margin>
+                                            <Insets />
+                                        </HBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="maxUnitsTextField" layoutX="150.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="110.0" promptText="Enter max number of doses a day">
+                                        <padding>
+                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </padding>
+                                        <font>
+                                            <Font name="Garamond" size="14.0" />
+                                        </font>
+                                        <cursor>
+                                            <Cursor fx:constant="TEXT" />
+                                        </cursor>
+                                        <HBox.margin>
+                                            <Insets />
+                                        </HBox.margin>
+                                    </TextField>
+                                </children>
+                                <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                </padding>
+                            </HBox>
+                            <HBox prefHeight="100.0" prefWidth="686.0" spacing="130.0">
+                                <children>
+                                    <Label prefHeight="25.0" prefWidth="188.0" text="Purchase Date">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </Label>
+                                    <Label prefHeight="29.0" prefWidth="80.0" text="Expiry Date">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </Label>
+                                </children>
+                                <padding>
+                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                </padding>
+                            </HBox>
+                            <HBox prefHeight="62.0" prefWidth="686.0" spacing="135.0">
+                                <padding>
+                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                </padding>
+                                <children>
+                                    <DatePicker fx:id="purchaseDatePicker" promptText="Select purchase date">
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                    </DatePicker>
+                                    <DatePicker fx:id="expiryDatePicker" promptText="Select expiry date">
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                    </DatePicker>
+                                </children>
+                            </HBox>
+                            <HBox prefHeight="100.0" prefWidth="600.0" spacing="25.0">
+                                <padding>
+                                    <Insets left="10.0" />
+                                </padding>
+                                <VBox.margin>
+                                    <Insets left="200.0" top="10.0" />
+                                </VBox.margin>
+                            </HBox>
+                            <VBox prefHeight="300.0" prefWidth="300.0" spacing="7.0">
+                                <children>
+                                    <CheckBox fx:id="currentlyTakingCheckBox" mnemonicParsing="false" prefHeight="37.0" prefWidth="140.0" selected="true" text="Currently taking">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="recurrentCheckBox" mnemonicParsing="false" prefHeight="19.0" prefWidth="168.0" text="Recurrent medication">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </CheckBox>
+                                    <CheckBox fx:id="alertCheckBox" mnemonicParsing="false" prefHeight="19.0" prefWidth="128.0" selected="true" text="Alert on expiry ">
+                                        <font>
+                                            <Font name="Garamond Bold" size="14.0" />
+                                        </font>
+                                    </CheckBox>
+                                </children>
+                            </VBox>
+                        </children>
+                        <padding>
+                            <Insets bottom="10.0" left="10.0" right="10.0" />
+                        </padding>
+                    </VBox>
+                    <HBox layoutX="667.0" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="265.0" spacing="10.0">
+                        <padding>
+                            <Insets left="10.0" right="10.0" />
+                        </padding>
+                        <children>
+                            <Button fx:id="addMedPurchaseButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="120.0" prefWidth="60.0" text="Add">
+                                <cursor>
+                                    <Cursor fx:constant="OPEN_HAND" />
+                                </cursor>
+                                <HBox.margin>
+                                    <Insets />
+                                </HBox.margin>
+                            </Button>
+                            <Button fx:id="editMedPurchaseButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="50.0" text="Edit">
+                                <cursor>
+                                    <Cursor fx:constant="OPEN_HAND" />
+                                </cursor>
+                            </Button>
+                            <Button fx:id="saveMedPurchaseButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="50.0" text="Save">
+                                <cursor>
+                                    <Cursor fx:constant="OPEN_HAND" />
+                                </cursor>
+                            </Button>
+                            <Button fx:id="deleteMedPurchaseButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="60.0" prefWidth="50.0" text="Delete">
+                                <cursor>
+                                    <Cursor fx:constant="OPEN_HAND" />
+                                </cursor>
+                            </Button>
+                        </children>
+                    </HBox>
+                </children>
+            </AnchorPane>
+        </content>
+    </ScrollPane>
+</content>
+</TitledPane>

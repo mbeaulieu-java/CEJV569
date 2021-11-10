@@ -1,1 +1,0 @@
-delete from medication_ingredients where id = ?;

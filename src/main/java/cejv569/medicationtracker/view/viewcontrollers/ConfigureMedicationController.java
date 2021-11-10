@@ -6,6 +6,7 @@ import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.LogError;
+import cejv569.medicationtracker.view.customcellclasses.BrandNameCell;
 import cejv569.medicationtracker.view.customcellclasses.IngredientCell;
 import cejv569.medicationtracker.view.customcellclasses.MedicationIngredientCell;
 import cejv569.medicationtracker.view.viewdata.*;
@@ -41,7 +42,7 @@ public class ConfigureMedicationController extends ViewController {
     private AnchorPane configureMedAnchorPane;
 
     @FXML
-    private ComboBox<String> brandComboBox;
+    private ComboBox<Map.Entry<Integer,String>> brandComboBox;
 
     @FXML
     private ComboBox<String> genericComboBox;
@@ -124,7 +125,7 @@ public class ConfigureMedicationController extends ViewController {
           initializeIngredientValues();
           initializeFormatValues();
           initializeMeasurementUnitValues();
-//        initializeMedicationValues();
+          initializeMedicationValues();
           initializeMedicationIngredientsValues();
 
     }
@@ -151,10 +152,11 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     private void initializeMedicationValues () {
-        List<Medication> medicationList = null;
-        Stream<Medication> medicationStream = null;
+
         try {
 
+
+            brandComboBox.setCellFactory(medMap-> new BrandNameCell());
         }catch (Exception e) {
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
@@ -164,7 +166,7 @@ public class ConfigureMedicationController extends ViewController {
 
         try {
             medIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            medIngredientsListView.setCellFactory(ingList-> new MedicationIngredientCell());
+            medIngredientsListView.setCellFactory(medIngMap-> new MedicationIngredientCell());
         }catch (Exception e) {
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
@@ -250,7 +252,7 @@ public class ConfigureMedicationController extends ViewController {
         }
         if (!ingredientMap.isEmpty()) {
             ingredientsListView.getItems().addAll(ingredientMap.entrySet());
-            ingredientsListView.setCellFactory(ingList-> new IngredientCell());
+            ingredientsListView.setCellFactory(ingMap-> new IngredientCell());
             ingPropertyList = new SimpleListProperty<>();
         }
 

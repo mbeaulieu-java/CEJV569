@@ -1,1 +1,0 @@
-select id, name, medicinal from ingredients order by name asc;
