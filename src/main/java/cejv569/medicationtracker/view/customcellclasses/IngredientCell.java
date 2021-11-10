@@ -1,6 +1,7 @@
 package cejv569.medicationtracker.view.customcellclasses;
 
 import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;

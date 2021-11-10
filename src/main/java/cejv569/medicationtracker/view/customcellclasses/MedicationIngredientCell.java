@@ -9,7 +9,9 @@ import java.util.Map;
 
 public class MedicationIngredientCell extends ListCell<Map.Entry<Integer,String>>{
 
-    public MedicationIngredientCell() {}
+    public MedicationIngredientCell() {
+        this.setPadding(new Insets(2,2,2,2));
+    }
 
 
         @Override

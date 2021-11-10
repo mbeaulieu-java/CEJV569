@@ -7,6 +7,7 @@ import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOp
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.view.customcellclasses.IngredientCell;
+import cejv569.medicationtracker.view.customcellclasses.MedicationIngredientCell;
 import cejv569.medicationtracker.view.viewdata.*;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.*;
@@ -14,8 +15,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.collections.ObservableList;
 import javafx.collections.ListChangeListener;
@@ -167,12 +171,22 @@ public class ConfigureMedicationController extends ViewController {
     private void initializeMedicationIngredientsValues() {
 
         try {
+            medIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            medIngredientsListView.setCellFactory(ingList-> new MedicationIngredientCell());
 
-            ingredientsListView.setCellFactory(ingList-> new IngredientCell());
+            medIngredientsListView.getItems().addListener(MouseEvent.MOUSE_PRESSED,(k,v)->{
 
+            });
         }catch (Exception e) {
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
+    }
+
+    private void selectChecked(Event e) {
+        ListView listView = (ListView)e.getTarget();
+        System.out.println(listView.getFocusModel().getFocusedIndex());
+
+        listView.getSelectionModel().getSelectedItems().add(listView.getFocusModel().getFocusedItem());
     }
 
     private void initializeFormatValues() {
