@@ -3,6 +3,7 @@ package cejv569.medicationtracker.view.viewdata;
 import cejv569.medicationtracker.model.datainterfaces.Ingredient;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class IngredientObservableData extends ViewObservableData implements Ingredient {
@@ -10,7 +11,7 @@ public class IngredientObservableData extends ViewObservableData implements Ingr
 
     //properties
     private final static String ID_PROP_NAME = "id";
-    private ReadOnlyIntegerWrapper id;
+    private SimpleIntegerProperty id;
 
     private final static String NAME_PROP_NAME = "name";
     private SimpleStringProperty name;
@@ -19,9 +20,10 @@ public class IngredientObservableData extends ViewObservableData implements Ingr
     private SimpleBooleanProperty medicinal;
 
     public IngredientObservableData(int id, String name, boolean medicinal) {
-        this.id.set(id);
-        this.name.set(name);
-        this.medicinal.set(medicinal);
+
+        this.id = new SimpleIntegerProperty(this,ID_PROP_NAME,id);
+        this.name = new SimpleStringProperty(this,NAME_PROP_NAME,name);
+        this.medicinal = new SimpleBooleanProperty(this,MEDICINAL_PROP_NAME,medicinal);
     }
 
     @Override
@@ -34,7 +36,7 @@ public class IngredientObservableData extends ViewObservableData implements Ingr
         this.id.set(id);
     }
 
-    public ReadOnlyIntegerWrapper idProperty() {
+    public SimpleIntegerProperty idProperty() {
         return id;
     }
 

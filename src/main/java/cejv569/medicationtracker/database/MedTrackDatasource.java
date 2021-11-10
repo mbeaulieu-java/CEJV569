@@ -216,7 +216,7 @@ public class MedTrackDatasource {
             // be caught by the calling client.
             if (preparedStatement == null) {
                 throw new OperationFailureException("The sql query with key: " + sqlTransactionKey +
-                        "was not found");
+                        " was not found");
             }
             //return the preparedStatement to the requesting class instance
             return preparedStatement;

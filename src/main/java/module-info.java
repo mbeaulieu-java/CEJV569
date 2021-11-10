@@ -12,6 +12,8 @@ module cejv569.medicationtracker {
     opens cejv569.medicationtracker.view.viewdata to javafx.fxml;
     exports cejv569.medicationtracker.view.viewdata;
 
+    opens cejv569.medicationtracker.view.customcellclasses to javafx.fxml;
+    exports cejv569.medicationtracker.view.customcellclasses;
 
     opens cejv569.medicationtracker.database to javafx.fxml;
     exports cejv569.medicationtracker.database;

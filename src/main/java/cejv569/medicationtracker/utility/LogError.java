@@ -2,6 +2,7 @@ package cejv569.medicationtracker.utility;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -92,7 +93,7 @@ public class LogError {
             //the task to occur in a delay of 2000 milliseconds.
             TimerTask task = new TimerTask() {
                 public void run() {
-                    System.exit(0);
+                    Platform.exit();
                 }
             };
             Timer timer = new Timer("Timer");
