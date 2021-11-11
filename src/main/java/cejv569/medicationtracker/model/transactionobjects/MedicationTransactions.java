@@ -116,8 +116,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
         }
-        //returne the medication ingredients list  or null, if no records are found.
-        return (medicationIngredientsList.isEmpty() ? null : medicationIngredientsList);
+        //return the medication ingredients list  or null, if no records are found.
+        return medicationIngredientsList;
     }
 
     @Override
@@ -177,7 +177,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             throw new OperationFailureException(e.getMessage());
         }
         //return the formats list  or null, if no records are found.
-        return (medicationsList.isEmpty() ? null : medicationsList);
+        
+        return medicationsList;
     }
 
     @Override

@@ -16,7 +16,6 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -316,7 +315,8 @@ public class LoginController extends ViewController{
 
         FXMLLoader configureMedFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_MED_FILE_PATH));
         TitledPane configureMedPane = (TitledPane)configureMedFxmlLoader.load();
-        ((ConfigureMedicationController)configureMedFxmlLoader.getController()).setUserId(accountObservableData.getId());
+        System.out.println(accountObservableData.getId());
+        ((ConfigureMedicationController)configureMedFxmlLoader.getController()).initializeUserData(accountObservableData.getId());
 
         /**
          * THESE PANES WILL BE ADDED LATER AND ARE NOT PART OF THIS PROJECT

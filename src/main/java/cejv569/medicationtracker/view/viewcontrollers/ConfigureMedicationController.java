@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -42,7 +43,7 @@ public class ConfigureMedicationController extends ViewController {
     private AnchorPane configureMedAnchorPane;
 
     @FXML
-    private ComboBox<Map.Entry<Integer,String>> brandComboBox;
+    private ComboBox<Medication> brandComboBox;
 
     @FXML
     private ComboBox<String> genericComboBox;
@@ -99,14 +100,10 @@ public class ConfigureMedicationController extends ViewController {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void initializeUserData(int userId) {
         this.userId = userId;
-        try {
-           medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
-            medicationsList = getOperation().getMedications(getUserId());
-        } catch (OperationFailureException e) {
-            LogError.logUnrecoverableError(e);
-        }
+        initializeMedicationValues();
+        //initializeMedicationIngredientsValues();
     }
 
 
@@ -117,17 +114,16 @@ public class ConfigureMedicationController extends ViewController {
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
+        System.out.println(userId);
         initializeFieldValues();
         initializeButtons();
+
 
     }
     private void initializeFieldValues() {
           initializeIngredientValues();
           initializeFormatValues();
           initializeMeasurementUnitValues();
-          initializeMedicationValues();
-          initializeMedicationIngredientsValues();
-
     }
     private void initializeButtons(){
         addIngredientButton
@@ -152,12 +148,24 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     private void initializeMedicationValues () {
+        ObservableList<Medication> brandsList = null;
+        ObservableList<Medication> genericList = null;
 
+        Label label = new Label();
+        label.setText("Add new medication");
         try {
-
-
-            brandComboBox.setCellFactory(medMap-> new BrandNameCell());
+//            brandComboBox.setPlaceholder(label);
+//            medicationsList = getOperation().getMedications(getUserId());
+//            brandsList = FXCollections.observableArrayList(medicationsList);
+//            brandComboBox.setItems(brandsList);
+//            brandComboBox.setCellFactory(medMap-> new BrandNameCell());
+//
+//            genericComboBox.setPlaceholder(label);
+//            genericList = FXCollections.observableArrayList(medicationsList);
+//            genericComboBox.setItems(genericList);
+//            brandComboBox.setCellFactory(medMap-> new BrandNameCell());
         }catch (Exception e) {
+            System.err.println(e);
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
     }
@@ -165,6 +173,7 @@ public class ConfigureMedicationController extends ViewController {
     private void initializeMedicationIngredientsValues() {
 
         try {
+            medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
             medIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             medIngredientsListView.setCellFactory(medIngMap-> new MedicationIngredientCell());
         }catch (Exception e) {
