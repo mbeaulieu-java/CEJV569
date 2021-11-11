@@ -14,7 +14,7 @@ public interface ConfigureMedicationOperation extends ViewOperation{
     List <MeasurementUnit> getMeasurementUnits() throws OperationFailureException;
     void postMedicationIngredients(List <MedicationIngredients>medicationIngredients)
             throws OperationFailureException;
-    void deleteMedicationIngredients(List <MedicationIngredients> medicationIngredients)
+    void deleteMedicationIngredients(MedicationIngredients ingredient)
             throws OperationFailureException;
     void postMedication(Medication medication) throws OperationFailureException,
             MedicationAlreadyAddedException;

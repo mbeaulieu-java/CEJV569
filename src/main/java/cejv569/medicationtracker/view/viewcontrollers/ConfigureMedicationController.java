@@ -7,6 +7,7 @@ import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOp
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.view.customcellclasses.*;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -56,7 +57,7 @@ public class ConfigureMedicationController extends ViewController {
     @FXML
     private ListView<MedicationIngredients> medicationIngredientsListView;
 
-    //attributes
+    //Lists
     private ConfigureMedicationOperation configureMedicationOperation;
     private List<Medication> medicationsList;
     private List<MedicationIngredients> medicationIngredientList;
@@ -64,7 +65,30 @@ public class ConfigureMedicationController extends ViewController {
     private List<MeasurementUnit> measurementUnitsList;
     private List<Ingredient> ingredientList;
 
+    //Observable Lists
+    private static ObservableList<Ingredient> ingredientOList;
+    private static ObservableList<Medication> medicationOList;
+    private static ObservableList<MedicationIngredients> medicationIngredientOList;
+    private static ObservableList<Format> formatOList;
+    private static ObservableList<MeasurementUnit> measurementOList;
+
+    //Bindable Properties
+    public SimpleBooleanProperty editingProperty;
+    public SimpleBooleanProperty adding;
+    public SimpleBooleanProperty saving;
+    public SimpleBooleanProperty disableField;
+    public SimpleBooleanProperty enableField;
+    //Bindable field variables
+    private boolean editing;
+    private boolean adding;
+    private boolean saving;
+    private boolean disableField;
+    private boolean enableField;
+
+    //Attributes
     private int userId;
+
+
     //Getters and Setters
 
     public ConfigureMedicationOperation getOperation() {
@@ -85,27 +109,75 @@ public class ConfigureMedicationController extends ViewController {
         this.userId = userId;
         initializeMedicationValues();
         initializeMedicationIngredientsValues();
+        initializeIngredientValues();
+        initializeFormatValues();
+        initializeMeasurementUnitValues();
     }
 
+    public static ObservableList<Ingredient> getIngredientOList() {
+        return ingredientOList;
+    }
+
+    public void setIngredientOList(ObservableList<Ingredient> ingredientOList) {
+        this.ingredientOList = ingredientOList;
+    }
+
+    public static ObservableList<Medication> getMedicationOList() {
+        return medicationOList;
+    }
+
+    public void setMedicationOList(ObservableList<Medication> medicationOList) {
+        this.medicationOList = medicationOList;
+    }
+
+    public static ObservableList<MedicationIngredients> getMedicationIngredientOList() {
+        return medicationIngredientOList;
+    }
+
+    public void setMedicationIngredientOList(ObservableList<MedicationIngredients> medicationIngredientOList) {
+        this.medicationIngredientOList = medicationIngredientOList;
+    }
+
+    public static ObservableList<Format> getFormatOList() {
+        return formatOList;
+    }
+
+    public void setFormatOList(ObservableList<Format> formatOList) {
+        this.formatOList = formatOList;
+    }
+
+    public static ObservableList<MeasurementUnit> getMeasurementOList() {
+        return measurementOList;
+    }
+
+    public void setMeasurementOList(ObservableList<MeasurementUnit> measurementOList) {
+        this.measurementOList = measurementOList;
+    }
 
     //Methods/Functions
 
     @FXML
     void initialize() {
+        // Set ObservableLists to Null
+        ingredientOList = null;
+        medicationOList = null;
+        medicationIngredientOList = null;
+        formatOList = null;
+        measurementOList = null;
+        editingProperty = new SimpleBooleanProperty(true);
+        adding = new SimpleBooleanProperty(true);
+        saving = new SimpleBooleanProperty(true);
+        disableField = new SimpleBooleanProperty(true);
+        enableField = new SimpleBooleanProperty(true);
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
-        System.out.println(userId);
-        initializeFieldValues();
+
         initializeButtons();
 
 
     }
-    private void initializeFieldValues() {
-          initializeIngredientValues();
-          initializeFormatValues();
-          initializeMeasurementUnitValues();
-    }
+
     private void initializeButtons(){
 
     }
@@ -116,7 +188,7 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     private void initializeMedicationValues () {
-        ObservableList<Medication> medicationOList = null;
+
         try {
             medicationsList = getOperation().getMedications(getUserId());
             medicationOList = FXCollections.observableList(medicationsList);
@@ -129,7 +201,7 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     private void initializeMedicationIngredientsValues() {
-        ObservableList<MedicationIngredients> medicationIngredientOList = null;
+
         try {
             medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
             medicationIngredientOList = FXCollections.observableList(medicationIngredientList);
@@ -150,8 +222,6 @@ public class ConfigureMedicationController extends ViewController {
 
     private void initializeFormatValues() {
 
-        ObservableList<Format> formatOList = null;
-
         try {
             formatList = getOperation().getFormats();
             if (formatList == null) {
@@ -169,7 +239,6 @@ public class ConfigureMedicationController extends ViewController {
     private void initializeMeasurementUnitValues() {
 
         try {
-            ObservableList<MeasurementUnit> measurementOList = null;
 
             measurementUnitsList = getOperation().getMeasurementUnits();
 
@@ -187,10 +256,7 @@ public class ConfigureMedicationController extends ViewController {
 
     private void initializeIngredientValues() {
 
-        ObservableList<Ingredient> ingredientOList = null;
-
         try {
-
             ingredientList = getOperation().getIngredients();
             if (ingredientList == null) {
                 LogError.logUnrecoverableError(new OperationFailureException("No Ingredient List was obtained"));
@@ -204,4 +270,21 @@ public class ConfigureMedicationController extends ViewController {
             LogError.logUnrecoverableError(e);
         }
     }
+
+    private boolean doEdit(){
+
+        return false;
+    }
+
+    private boolean doAdd(){
+
+        return false;
+    }
+
+    public static boolean doMedicationIngredientDelete(MedicationIngredients medicationIngredient){
+        return false;
+    }
+
+
+
 }

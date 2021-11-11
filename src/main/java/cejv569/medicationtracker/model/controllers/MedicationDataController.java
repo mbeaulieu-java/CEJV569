@@ -111,10 +111,10 @@ public class MedicationDataController extends DataController implements Configur
     }
 
     @Override
-    public void deleteMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
+    public void deleteMedicationIngredients(MedicationIngredients medicationIngredient) throws OperationFailureException {
         try {
-            if (!medicationIngredients.isEmpty()) {
-                getTransaction().deleteMedicationIngredients(medicationIngredients);
+            if (medicationIngredient != null) {
+                getTransaction().deleteMedicationIngredients(medicationIngredient);
             }
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());

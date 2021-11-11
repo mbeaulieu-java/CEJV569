@@ -303,10 +303,10 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     }
 
     @Override
-    public void deleteMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
+    public void deleteMedicationIngredients(MedicationIngredients medicationIngredient) throws OperationFailureException {
         PreparedStatement theStatement = null;
 
-        if (!medicationIngredients.isEmpty()) {
+        if (medicationIngredient != null) {
             //retrieve the delete query using the proper SQLTransactionKey
             theStatement = getDatasource()
                     .getSQLStatement(
@@ -315,19 +315,16 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                                     .DELETE_MEDICATION_INGREDIENTS_INFO.tKey);
         }
 
-
         try {
-            for (MedicationIngredients ing : medicationIngredients) {
+            // set the parameters for the delete prepared statement
+            theStatement.setInt(1, medicationIngredient.getId());
 
-                //clear the parameters for the next query to be run
-                theStatement.clearParameters();
+            //excute the delete
+            theStatement.executeUpdate();
 
-                // set the parameters for the delete prepared statement
-                theStatement.setInt(1, ing.getId());
+            //clear the parameters for the next query to be run
+            theStatement.clearParameters();
 
-                //excute the delete
-                theStatement.executeUpdate();
-            }
 
         } catch (SQLException e) {
             throw new OperationFailureException(e.getMessage());

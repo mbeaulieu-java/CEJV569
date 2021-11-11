@@ -16,7 +16,7 @@ public interface MedicationTransaction extends DataTransaction{
     List <MeasurementUnit> getMeasurementUnits() throws OperationFailureException;
     void createMedicationIngredients(List <MedicationIngredients>medicationIngredients)
             throws OperationFailureException;
-    void deleteMedicationIngredients(List <MedicationIngredients> medicationIngredients)
+    void deleteMedicationIngredients(MedicationIngredients medicationIngredients)
             throws OperationFailureException;
     void createMedication(Medication medication) throws OperationFailureException;
     void updateMedication (Medication medication) throws OperationFailureException;
