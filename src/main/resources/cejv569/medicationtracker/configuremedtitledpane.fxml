@@ -75,7 +75,7 @@
                                           </Button>
                                           <Button fx:id="editButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
                                              <graphic>
-                                                <ImageView fitHeight="25.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView disable="true" fitHeight="25.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@assets/edit.png" />
                                                    </image>
@@ -155,13 +155,13 @@
                               <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
-                        <ListView fx:id="medicationListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="255.0" />
+                        <ListView fx:id="medicationListView" fixedCellSize="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="255.0" />
                         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="300.0" text="Ingredients in Medication">
                            <font>
                               <Font name="Garamond Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="medicationIngredientsListView" editable="true" fixedCellSize="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="255.0">
+                        <ListView fx:id="medicationIngredientsListView" editable="true" fixedCellSize="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="255.0">
                            <padding>
                               <Insets bottom="3.0" left="3.0" right="1.0" top="3.0" />
                            </padding>
