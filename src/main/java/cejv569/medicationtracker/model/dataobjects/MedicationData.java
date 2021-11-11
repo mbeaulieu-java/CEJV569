@@ -8,18 +8,16 @@ public class MedicationData extends DBData implements Medication {
     private int formatId;
     private int measurementId;
     private int userId;
-    private String brandName;
-    private String genericName;
+    private String name;
 
     //Constructor
 
-    public MedicationData(int id, int formatId, int measurementId,int userId, String brandName, String genericName) {
+    public MedicationData(int id, int formatId, int measurementId, int userId, String name) {
         this.id = id;
         this.formatId = formatId;
         this.measurementId = measurementId;
         this.userId = userId;
-        this.brandName = brandName;
-        this.genericName = genericName;
+        this.name = name;
 
     }
 
@@ -51,20 +49,12 @@ public class MedicationData extends DBData implements Medication {
     }
 
     @Override
-    public String getBrandName() {
-        return brandName;
+    public String getName() {
+        return name;
     }
     @Override
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-    @Override
-    public String getGenericName() {
-        return genericName;
-    }
-    @Override
-    public void setGenericName(String genericName) {
-        this.genericName = genericName;
+    public void setName(String name) {
+        this.name = this.name;
     }
 
     @Override

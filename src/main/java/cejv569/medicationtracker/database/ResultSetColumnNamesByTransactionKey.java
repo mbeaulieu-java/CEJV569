@@ -126,8 +126,7 @@ public class ResultSetColumnNamesByTransactionKey {
         FORMAT_ID("format_id"),
         MEASUREMENT_ID("measurement_id"),
         USER_ID("userid"),
-        BRAND_NAME("brand_name"),
-        GENERIC_NAME("generic_name");
+        NAME("name");
 
         Medications_Info(String columnName) {
             this.columnName = columnName;

@@ -6,31 +6,15 @@ import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.operationinterfaces.ConfigureMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.LogError;
-import cejv569.medicationtracker.view.customcellclasses.BrandNameCell;
-import cejv569.medicationtracker.view.customcellclasses.IngredientCell;
-import cejv569.medicationtracker.view.customcellclasses.MedicationIngredientCell;
-import cejv569.medicationtracker.view.viewdata.*;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableMap;
-import javafx.event.ActionEvent;
+import cejv569.medicationtracker.view.customcellclasses.*;
 import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.collections.ObservableList;
-import javafx.collections.ListChangeListener;
 import javafx.collections.FXCollections;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 
 public class ConfigureMedicationController extends ViewController {
@@ -43,37 +27,34 @@ public class ConfigureMedicationController extends ViewController {
     private AnchorPane configureMedAnchorPane;
 
     @FXML
-    private ComboBox<Medication> brandComboBox;
+    private TextField medicationNameTextField;
 
     @FXML
-    private ComboBox<String> genericComboBox;
+    private ListView<Format> formatListView;
 
     @FXML
-    private ChoiceBox<String> formatChoiceBox;
-
-    @FXML
-    private ChoiceBox<String> measurementChoiceBox;
-
-    @FXML
-    private ListView<Map.Entry<Integer,String>> medIngredientsListView;
-
-    @FXML
-    private Button addIngredientButton;
-
-    @FXML
-    private Button removeIngredientButton;
-
-    @FXML
-    private ListView<Map.Entry<Integer,String>> ingredientsListView;
+    private ListView<MeasurementUnit> measurementListView;
 
     @FXML
     private Button addMedicationButton;
+
+    @FXML
+    private Button editButton;
 
     @FXML
     private Button saveMedicationButton;
 
     @FXML
     private Label messageLabel;
+
+    @FXML
+    private ListView<Ingredient> ingredientsListView;
+
+    @FXML
+    private ListView<Medication> medicationListView;
+
+    @FXML
+    private ListView<MedicationIngredients> medicationIngredientsListView;
 
     //attributes
     private ConfigureMedicationOperation configureMedicationOperation;
@@ -103,7 +84,7 @@ public class ConfigureMedicationController extends ViewController {
     public void initializeUserData(int userId) {
         this.userId = userId;
         initializeMedicationValues();
-        //initializeMedicationIngredientsValues();
+        initializeMedicationIngredientsValues();
     }
 
 
@@ -126,44 +107,21 @@ public class ConfigureMedicationController extends ViewController {
           initializeMeasurementUnitValues();
     }
     private void initializeButtons(){
-        addIngredientButton
-                .addEventHandler(ActionEvent.ACTION,e->{addRemoveIngredients();});
-        removeIngredientButton
-                .addEventHandler(ActionEvent.ACTION,e->{addRemoveIngredients();});
+
     }
 
     private void addRemoveIngredients (){
-        if (medIngredientsListView.getItems().isEmpty()) {
-            medIngredientsListView.getItems()
-                    .setAll(IngredientCell.getselectedIngredients().entrySet());
-        } else {
-            for (Map.Entry<Integer,String> e : medIngredientsListView.getSelectionModel().getSelectedItems()) {
-                IngredientCell.getselectedIngredients().remove(e.getKey());
-            }
-            medIngredientsListView.getItems().clear();
-            medIngredientsListView
-                    .getItems().setAll(IngredientCell.getselectedIngredients().entrySet());
-        }
+
 
     }
 
     private void initializeMedicationValues () {
-        ObservableList<Medication> brandsList = null;
-        ObservableList<Medication> genericList = null;
-
-        Label label = new Label();
-        label.setText("Add new medication");
+        ObservableList<Medication> medicationOList = null;
         try {
-//            brandComboBox.setPlaceholder(label);
-//            medicationsList = getOperation().getMedications(getUserId());
-//            brandsList = FXCollections.observableArrayList(medicationsList);
-//            brandComboBox.setItems(brandsList);
-//            brandComboBox.setCellFactory(medMap-> new BrandNameCell());
-//
-//            genericComboBox.setPlaceholder(label);
-//            genericList = FXCollections.observableArrayList(medicationsList);
-//            genericComboBox.setItems(genericList);
-//            brandComboBox.setCellFactory(medMap-> new BrandNameCell());
+            medicationsList = getOperation().getMedications(getUserId());
+            medicationOList = FXCollections.observableList(medicationsList);
+            medicationListView.setItems(medicationOList);
+            medicationListView.setCellFactory(medlist-> new MedicationCell());
         }catch (Exception e) {
             System.err.println(e);
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
@@ -171,11 +129,13 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     private void initializeMedicationIngredientsValues() {
-
+        ObservableList<MedicationIngredients> medicationIngredientOList = null;
         try {
             medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
-            medIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            medIngredientsListView.setCellFactory(medIngMap-> new MedicationIngredientCell());
+            medicationIngredientOList = FXCollections.observableList(medicationIngredientList);
+            medicationIngredientsListView.setItems(medicationIngredientOList);
+            medicationIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            medicationIngredientsListView.setCellFactory(medinglist-> new MedicationIngredientCell());
         }catch (Exception e) {
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
@@ -190,58 +150,44 @@ public class ConfigureMedicationController extends ViewController {
 
     private void initializeFormatValues() {
 
-        ObservableMap<Integer,String> formatMap = null;
+        ObservableList<Format> formatOList = null;
 
         try {
             formatList = getOperation().getFormats();
             if (formatList == null) {
                 LogError.logUnrecoverableError(new OperationFailureException("No Formats List was obtained"));
             } else {
-
-                formatMap = FXCollections.observableHashMap();
-                for (Format f : formatList) {
-                    formatMap.put(f.getId(), f.getLabel());
-                }
+                formatOList = FXCollections.observableList(formatList);
+                formatListView.setItems(formatOList);
+                formatListView.setCellFactory(formatlist-> new FormatCell());
             }
         }catch (OperationFailureException e) {
             LogError.logUnrecoverableError(e);
-        }
-        if (!formatMap.isEmpty()) {
-            formatChoiceBox.getItems().addAll(formatMap.values());
-            formatChoiceBox.getSelectionModel().selectFirst();
         }
     }
 
     private void initializeMeasurementUnitValues() {
 
-
-        ObservableMap<Integer,String> measurementUnitMap = null;
-
         try {
-            measurementUnitsList = getOperation().getMeasurementUnits();
-            if (measurementUnitsList == null) {
-                LogError.logUnrecoverableError(new OperationFailureException("No Measurement Unit List was obtained"));
-            } else {
+            ObservableList<MeasurementUnit> measurementOList = null;
 
-                measurementUnitMap = FXCollections.observableHashMap();
-                for (MeasurementUnit mu : measurementUnitsList) {
-                    measurementUnitMap.put(mu.getId(), mu.getUnitName());
-                }
+            measurementUnitsList = getOperation().getMeasurementUnits();
+
+        if (measurementUnitsList == null) {
+            LogError.logUnrecoverableError(new OperationFailureException("No Measurement Unit List was obtained"));
+        } else {
+                measurementOList = FXCollections.observableList(measurementUnitsList);
+                measurementListView.setItems(measurementOList);
+                measurementListView.setCellFactory(measurementlist-> new MeasurementCell());
             }
         }catch (OperationFailureException e) {
             LogError.logUnrecoverableError(e);
-        }
-
-        if(!measurementUnitMap.isEmpty()) {
-            measurementChoiceBox.getItems().addAll(measurementUnitMap.values());
-            measurementChoiceBox.getSelectionModel().selectFirst();
         }
     }
 
     private void initializeIngredientValues() {
 
-        ObservableMap<Integer,String> ingredientMap = null;
-        ListProperty<ObservableList<Map.Entry<Integer,String>>> ingPropertyList = null;
+        ObservableList<Ingredient> ingredientOList = null;
 
         try {
 
@@ -249,22 +195,13 @@ public class ConfigureMedicationController extends ViewController {
             if (ingredientList == null) {
                 LogError.logUnrecoverableError(new OperationFailureException("No Ingredient List was obtained"));
             } else {
-
-                ingredientMap = FXCollections.observableHashMap();
-                for ( Ingredient i : ingredientList) {
-                    ingredientMap.put(i.getId(),i.getName());
-                }
-
+                ingredientOList = FXCollections.observableList(ingredientList);
+                ingredientsListView.setItems(ingredientOList);
+                ingredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                ingredientsListView.setCellFactory(inglist-> new IngredientCell());
             }
         }catch (OperationFailureException e) {
             LogError.logUnrecoverableError(e);
         }
-        if (!ingredientMap.isEmpty()) {
-            ingredientsListView.getItems().addAll(ingredientMap.entrySet());
-            ingredientsListView.setCellFactory(ingMap-> new IngredientCell());
-            ingPropertyList = new SimpleListProperty<>();
-        }
-
     }
-
 }

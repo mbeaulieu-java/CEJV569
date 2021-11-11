@@ -1,1 +1,1 @@
-update medication set format_id = ?, measurement_id = ?, userid = ?, brand_name = ?, generic_name = ? where medication.id = ?;
+update medication set format_id = ?, measurement_id = ?, userid = ?, name = ? where medication.id = ?;

@@ -315,7 +315,6 @@ public class LoginController extends ViewController{
 
         FXMLLoader configureMedFxmlLoader = new FXMLLoader(MedTrack.class.getResource(CONFIG_MED_FILE_PATH));
         TitledPane configureMedPane = (TitledPane)configureMedFxmlLoader.load();
-        System.out.println(accountObservableData.getId());
         ((ConfigureMedicationController)configureMedFxmlLoader.getController()).initializeUserData(accountObservableData.getId());
 
         /**

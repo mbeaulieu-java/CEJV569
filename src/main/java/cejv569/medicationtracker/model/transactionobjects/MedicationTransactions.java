@@ -3,7 +3,6 @@ package cejv569.medicationtracker.model.transactionobjects;
 import cejv569.medicationtracker.database.MedTrackDatasource;
 import cejv569.medicationtracker.database.ResultSetColumnNamesByTransactionKey;
 import cejv569.medicationtracker.database.SQLPropertiesTransactionKeys;
-import cejv569.medicationtracker.exceptions.MedicationAlreadyAddedException;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.dataobjects.*;
@@ -125,7 +124,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, formatIdColName, measurementIdColName, userIdColName,
-                brandNameColName, genericNameColName;
+                nameColName;
         List<Medication> medicationsList = new ArrayList<>();
 
         //retrieve the select ingredients query using the proper SQLTransactionKey
@@ -146,10 +145,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                     .Medications_Info.MEASUREMENT_ID.columnName;
             userIdColName = ResultSetColumnNamesByTransactionKey
                     .Medications_Info.USER_ID.columnName;
-            genericNameColName = ResultSetColumnNamesByTransactionKey
-                    .Medications_Info.GENERIC_NAME.columnName;
-            brandNameColName = ResultSetColumnNamesByTransactionKey
-                    .Medications_Info.BRAND_NAME.columnName;
+            nameColName = ResultSetColumnNamesByTransactionKey
+                    .Medications_Info.NAME.columnName;
 
             theStatement.setInt(1, userId);
 
@@ -167,8 +164,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getInt(formatIdColName),
                         resultSet.getInt(measurementIdColName),
                         resultSet.getInt(userIdColName),
-                        resultSet.getString(brandNameColName),
-                        resultSet.getString(genericNameColName)));
+                        resultSet.getString(nameColName)));
             }
 
         } catch (OperationFailureException | SQLException e) {
@@ -356,8 +352,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setInt(1, medication.getFormatId());
             theStatement.setInt(2, medication.getMeasurementId());
             theStatement.setInt(3, medication.getUserId());
-            theStatement.setString(4, medication.getBrandName());
-            theStatement.setString(5, medication.getGenericName());
+            theStatement.setString(4, medication.getName());
 
             //excute the insert
             theStatement.executeUpdate();
@@ -388,9 +383,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setInt(1, medication.getFormatId());
             theStatement.setInt(2, medication.getMeasurementId());
             theStatement.setInt(3, medication.getUserId());
-            theStatement.setString(4, medication.getBrandName());
-            theStatement.setString(5, medication.getGenericName());
-            theStatement.setInt(6, medication.getId());
+            theStatement.setString(4, medication.getName());
+            theStatement.setInt(5, medication.getId());
 
             //excute the update
             theStatement.executeUpdate();
@@ -426,9 +420,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setInt(1,medication.getUserId());
             theStatement.setInt(2,medication.getFormatId());
             theStatement.setInt(3,medication.getMeasurementId());
-            theStatement.setString(4, medication.getBrandName());
-            theStatement.setString(5, medication.getGenericName());
-            theStatement.setInt(6,medication.getId());
+            theStatement.setString(4, medication.getName());
+            theStatement.setInt(5,medication.getId());
 
             resultSet = theStatement.executeQuery();
 

@@ -3,11 +3,9 @@ package cejv569.medicationtracker.view.customcellclasses;
 import cejv569.medicationtracker.model.datainterfaces.Medication;
 import javafx.scene.control.ListCell;
 
-import java.util.Map;
+public class MedicationCell extends ListCell<Medication> {
 
-public class BrandNameCell extends ListCell<Medication> {
-
-    public BrandNameCell() {}
+    public MedicationCell() {}
 
     @Override
     protected void updateItem(Medication item, boolean empty) {
@@ -16,7 +14,7 @@ public class BrandNameCell extends ListCell<Medication> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(item.getBrandName());
+            setText(item.getName());
         }
     }
 }

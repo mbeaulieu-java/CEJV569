@@ -1,1 +1,1 @@
-insert into medication (format_id, measurement_id,userid,brand_name,generic_name) values (?,?,?,?,?);
+insert into medication (format_id, measurement_id,userid,name) values (?,?,?,?);

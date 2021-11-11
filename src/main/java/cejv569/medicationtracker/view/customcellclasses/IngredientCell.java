@@ -1,5 +1,6 @@
 package cejv569.medicationtracker.view.customcellclasses;
 
+import cejv569.medicationtracker.model.datainterfaces.Ingredient;
 import cejv569.medicationtracker.view.viewcontrollers.ConfigureMedicationController;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -12,12 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IngredientCell extends ListCell<Map.Entry<Integer,String>> {
+public class IngredientCell extends ListCell<Ingredient> {
     CheckBox ingredientSelection;
-    private static Map<Integer,String> selectedIngredients = new HashMap<>();
+    private static Map<Integer,Ingredient> selectedIngredients = new HashMap<>();
     public IngredientCell() {
         ingredientSelection = new CheckBox();
-        ingredientSelection.setPadding(new Insets(2,0,2,0));
+        ingredientSelection.setPadding(new Insets(4,0,4,2));
         this.contentDisplayProperty().set(ContentDisplay.GRAPHIC_ONLY);
 
         ingredientSelection.setOnMouseClicked(e->{
@@ -26,12 +27,12 @@ public class IngredientCell extends ListCell<Map.Entry<Integer,String>> {
 
     }
 
-    public static Map<Integer,String> getselectedIngredients() {
+    public static Map<Integer,Ingredient> getselectedIngredients() {
         return selectedIngredients;
     }
 
     @Override
-    protected void updateItem(Map.Entry<Integer,String> ingredients, boolean empty) {
+    protected void updateItem(Ingredient ingredients, boolean empty) {
         super.updateItem(ingredients, empty);
 
         if(empty || ingredients == null) {
@@ -39,7 +40,7 @@ public class IngredientCell extends ListCell<Map.Entry<Integer,String>> {
             setGraphic(null);
         } else {
             setText(null);
-            ingredientSelection.setText(ingredients.getValue());
+            ingredientSelection.setText(ingredients.getName());
             setGraphic(ingredientSelection);
         }
     }
@@ -56,9 +57,9 @@ public class IngredientCell extends ListCell<Map.Entry<Integer,String>> {
 
         this.updateSelected(true);
         if (ingredientSelection.isSelected()) {
-            selectedIngredients.put(this.getItem().getKey(),this.getItem().getValue());
+            selectedIngredients.put(this.getItem().getId(),this.getItem());
         } else {
-            selectedIngredients.remove(this.getItem().getKey());
+            selectedIngredients.remove(this.getItem());
         }
 
 

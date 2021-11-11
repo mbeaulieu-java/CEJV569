@@ -19,23 +19,19 @@ public class ConfigureMedicationObservableData extends ViewObservableData implem
     private SimpleIntegerProperty userId;
 
 
-    private final static String BRANDNAME_PROP_NAME = "brandName";
-    private SimpleStringProperty brandName;
-
-    private final static String GENERICNAME_PROP_NAME = "genericName";
-    private SimpleStringProperty genericName;
+    private final static String NAME_PROP_NAME = "name";
+    private SimpleStringProperty name;
 
     //Constructor
 
 
-    public ConfigureMedicationObservableData(int id, int formatId,int measurementId, int userId, String brandName, String genericName) {
+    public ConfigureMedicationObservableData(int id, int formatId, int measurementId, int userId, String name) {
 
         this.id = new SimpleIntegerProperty(this,ID_PROP_NAME,id);
         this.formatId = new SimpleIntegerProperty(this,FORMATID_PROP_NAME,formatId);
         this.measurementId = new SimpleIntegerProperty(this,MEASUREMENTID_PROP_NAME,measurementId);
         this.userId = new SimpleIntegerProperty(this,USERID_PROP_NAME,userId);
-        this.brandName = new SimpleStringProperty(this,BRANDNAME_PROP_NAME,brandName);
-        this.genericName = new SimpleStringProperty(this, GENERICNAME_PROP_NAME,genericName);
+        this.name = new SimpleStringProperty(this, NAME_PROP_NAME, name);
     }
 
     //Getters and Setters
@@ -79,29 +75,16 @@ public class ConfigureMedicationObservableData extends ViewObservableData implem
     }
 
     @Override
-    public String getBrandName() {
-        return brandName.get();
+    public String getName() {
+        return name.get();
     }
 
-    public SimpleStringProperty brandNameProperty() {
-        return brandName;
+    public SimpleStringProperty nameProperty() {
+        return name;
     }
     @Override
-    public void setBrandName(String brandName) {
-        this.brandName.set(brandName);
-    }
-
-    @Override
-    public String getGenericName() {
-        return genericName.get();
-    }
-
-    public SimpleStringProperty genericNameProperty() {
-        return genericName;
-    }
-    @Override
-    public void setGenericName(String genericName) {
-        this.genericName.set(genericName);
+    public void setName(String name) {
+        this.name.set(name);
     }
 
     @Override
