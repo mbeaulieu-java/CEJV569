@@ -27,10 +27,6 @@ public class IngredientCell extends ListCell<Ingredient> {
 
     }
 
-    public static Map<Integer,Ingredient> getselectedIngredients() {
-        return selectedIngredients;
-    }
-
     @Override
     protected void updateItem(Ingredient ingredients, boolean empty) {
         super.updateItem(ingredients, empty);
@@ -57,7 +53,7 @@ public class IngredientCell extends ListCell<Ingredient> {
 
         this.updateSelected(true);
         if (ingredientSelection.isSelected()) {
-            selectedIngredients.put(this.getItem().getId(),this.getItem());
+            ConfigureMedicationController.getSelectedIngredients().add(this.getItem());
         } else {
             selectedIngredients.remove(this.getItem());
         }

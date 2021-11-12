@@ -23,10 +23,12 @@ import java.util.Map;
 
 public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
     private static final String IMAGE_PATH = "/cejv569/medicationtracker/assets/delete.png";
+    private MedicationIngredients selectedForDelete;
     Button deleteButton;
     ImageView deleteImageView;
     HBox hbox;
     public MedicationIngredientCell() {
+
         deleteButton = new Button();
         deleteImageView = new ImageView();
         hbox= new HBox();
@@ -38,6 +40,15 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
 
         deleteButton.setOnAction(e->onClickItemDelete(e));
     }
+
+    public MedicationIngredients getSelectedForDelete() {
+        return selectedForDelete;
+    }
+
+    public void setSelectedForDelete(MedicationIngredients selectedForDelete) {
+        this.selectedForDelete = selectedForDelete;
+    }
+
     private void setButtonProperties() {
         deleteImageView.setImage(new Image(getClass()
                 .getResource(IMAGE_PATH)
@@ -64,9 +75,9 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
         }
 
         private void onClickItemDelete(ActionEvent e) {
-            System.out.println(this.getItem().getId());
-            ConfigureMedicationController.doMedicationIngredientDelete(this.getItem());
-            this.getListView().getItems().remove(this.getItem());
+            //NO GOOD NEED OBSERVER PATTERN!!!
+        // selectedForDelete = this.getItem();
+            this.getListView().getItems().remove(selectedForDelete);
 
         }
 
