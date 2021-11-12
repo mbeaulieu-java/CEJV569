@@ -11,6 +11,7 @@ import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 
 /**
  *
@@ -89,6 +90,7 @@ public class UserTransactions extends DataTransactions implements UserTransactio
      */
     @Override
     public void createData(User data) throws OperationFailureException{
+        int rowCount = 0;
         PreparedStatement theStatement;
         //retrieve the insert user query using the proper SQLTransactionKey
         try {
@@ -107,8 +109,13 @@ public class UserTransactions extends DataTransactions implements UserTransactio
             theStatement.setString(6,data.getTelephone());
 
             //excute the insert
-            theStatement.executeUpdate();
-
+            rowCount = theStatement.executeUpdate();
+            if (rowCount == 0) {
+                throw new SQLSyntaxErrorException("The insert for the user account information failed." +
+                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                        .SQLTransactionKeys
+                        .CREATE_USER_INFO.tKey);
+            }
             theStatement.clearParameters();
         } catch(OperationFailureException | SQLException e) {
             throw new OperationFailureException (e.getMessage());
@@ -262,6 +269,7 @@ public class UserTransactions extends DataTransactions implements UserTransactio
     @Override
     public void updateData(User data) throws OperationFailureException {
         PreparedStatement theStatement;
+        int rowCount = 0;
         //retrieve the update user query using the proper SQLTransactionKey
         try {
             theStatement = getDatasource()
@@ -280,7 +288,14 @@ public class UserTransactions extends DataTransactions implements UserTransactio
             theStatement.setInt(7,data.getId());
 
             //excute the update
-            theStatement.executeUpdate();
+            rowCount = theStatement.executeUpdate();
+
+            if (rowCount == 0) {
+                throw new SQLSyntaxErrorException("The update for the user account information failed." +
+                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                        .SQLTransactionKeys
+                        .UPDATE_USER_INFO.tKey);
+            }
 
             theStatement.clearParameters();
         } catch(OperationFailureException | SQLException e) {

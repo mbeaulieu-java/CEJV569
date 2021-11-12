@@ -8,6 +8,7 @@ import cejv569.medicationtracker.model.transactioninterfaces.ContactTransaction;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 
 /**
  *
@@ -50,7 +51,7 @@ public class ContactTransactions extends DataTransactions implements ContactTran
      */
     @Override
     public void createData(Contact data) throws OperationFailureException {
-
+        int rowCount = 0;
         PreparedStatement theStatement;
         //retrieve the insert user query using the proper SQLTransactionKey
         try {
@@ -66,8 +67,13 @@ public class ContactTransactions extends DataTransactions implements ContactTran
             theStatement.setString(3,data.getMessage());
 
             //excute the insert via query execution
-            theStatement.executeUpdate();
-
+            rowCount = theStatement.executeUpdate();
+            if (rowCount == 0) {
+                throw new SQLSyntaxErrorException("The insert for the contacts failed." +
+                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                        .SQLTransactionKeys
+                        .CREATE_CONTACT.tKey);
+            }
 
             theStatement.clearParameters();
         } catch(OperationFailureException | SQLException e) {

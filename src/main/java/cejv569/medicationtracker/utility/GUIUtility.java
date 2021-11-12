@@ -6,6 +6,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
@@ -13,6 +14,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -248,5 +252,33 @@ public class GUIUtility {
         msgLabel.setText("");
         msgLabel.setStyle("-fx-text-fill: " + DEFAULT_FIELD_TEXTFILL_COLOR +  ";");
         msgLabel.setVisible(false);
+    }
+
+    public static void makeUnEditable(List<Control> controlList)
+            throws InvocationTargetException,IllegalAccessException,NoSuchMethodException{
+        for (Control c: controlList) {
+            Class cls = c.getClass();
+            Method[] methods =  cls.getMethods();
+            for(Method m : methods) {
+                if (m.getName().trim().equalsIgnoreCase("setEditable")) {
+                    m.invoke(c,false);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void makeEditable(List<Control> controlList)
+            throws InvocationTargetException,IllegalAccessException,NoSuchMethodException{
+        for (Control c: controlList) {
+            Class cls = c.getClass();
+            Method[] methods =  cls.getMethods();
+            for(Method m : methods) {
+                if (m.getName().trim().equalsIgnoreCase("setEditable")) {
+                    m.invoke(c,true);
+                    break;
+                }
+            }
+        }
     }
 }

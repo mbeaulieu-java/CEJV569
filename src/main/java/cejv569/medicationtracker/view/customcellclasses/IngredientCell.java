@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class IngredientCell extends ListCell<Ingredient> {
     CheckBox ingredientSelection;
-    private static Map<Integer,Ingredient> selectedIngredients = new HashMap<>();
+
     public IngredientCell() {
         ingredientSelection = new CheckBox();
         ingredientSelection.setPadding(new Insets(4,0,4,2));

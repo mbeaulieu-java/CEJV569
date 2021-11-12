@@ -2,6 +2,7 @@ package cejv569.medicationtracker.view.customcellclasses;
 
 import cejv569.medicationtracker.model.datainterfaces.MedicationIngredients;
 import cejv569.medicationtracker.utility.GUIUtility;
+import cejv569.medicationtracker.view.viewcontrollers.ConfigureMedicationController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -30,11 +31,12 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
         deleteImageView = new ImageView();
         hbox= new HBox();
         setButtonProperties();
-        this.setPadding(new Insets(5,5,5,0));
+        this.setPadding(new Insets(1,5,1,0));
         hbox.setSpacing(10);
         hbox.setPadding(new Insets(0,10,0,0));
-        hbox.getChildren().addAll(deleteButton);
+        hbox.getChildren().add(deleteButton);
 
+        deleteButton.setOnAction(e->onClickItemDelete(e));
     }
     private void setButtonProperties() {
         deleteImageView.setImage(new Image(getClass()
@@ -44,7 +46,6 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
         deleteImageView.setFitHeight(18);
         deleteButton.setGraphic(deleteImageView);
         deleteButton.setCursor(Cursor.OPEN_HAND);
-        deleteButton.setOnAction(e->onClickItemDelete(e));
         deleteButton.setDefaultButton(true);
     }
 
@@ -63,7 +64,10 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
         }
 
         private void onClickItemDelete(ActionEvent e) {
-            System.out.println(this.getItem().getName());
+            System.out.println(this.getItem().getId());
+            ConfigureMedicationController.doMedicationIngredientDelete(this.getItem());
+            this.getListView().getItems().remove(this.getItem());
+
         }
 
 }

@@ -11,10 +11,12 @@ import cejv569.medicationtracker.model.transactioninterfaces.MedicationTransacti
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationTransactions extends DataTransactions implements MedicationTransaction {
+
     public MedicationTransactions(MedTrackDatasource datasource) {
         super(datasource);
     }
@@ -270,6 +272,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     @Override
     public void createMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
         PreparedStatement theStatement = null;
+        int rowCount = 0;
 
         if (!medicationIngredients.isEmpty()) {
             //retrieve the insert query using the proper SQLTransactionKey
@@ -292,7 +295,13 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                 theStatement.setInt(2, ing.getIngredientId());
 
                 //excute the insert
-                theStatement.executeUpdate();
+                rowCount = theStatement.executeUpdate();
+                if (rowCount == 0) {
+                    throw new SQLSyntaxErrorException("The insert for the medication ingredients failed." +
+                            "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                            .SQLTransactionKeys
+                            .CREATE_MEDICATION_INGREDIENTS_INFO.tKey);
+                }
             }
 
         } catch (SQLException e) {
@@ -305,6 +314,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     @Override
     public void deleteMedicationIngredients(MedicationIngredients medicationIngredient) throws OperationFailureException {
         PreparedStatement theStatement = null;
+        int rowCount = 0;
 
         if (medicationIngredient != null) {
             //retrieve the delete query using the proper SQLTransactionKey
@@ -320,11 +330,17 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setInt(1, medicationIngredient.getId());
 
             //excute the delete
-            theStatement.executeUpdate();
+            rowCount = theStatement.executeUpdate();
+
+            if (rowCount == 0) {
+                throw new SQLSyntaxErrorException("The delete for the medication ingredients failed." +
+                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                        .SQLTransactionKeys
+                        .DELETE_MEDICATION_INGREDIENTS_INFO.tKey);
+            }
 
             //clear the parameters for the next query to be run
             theStatement.clearParameters();
-
 
         } catch (SQLException e) {
             throw new OperationFailureException(e.getMessage());
@@ -335,6 +351,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
 
     @Override
     public void createMedication(Medication medication) throws OperationFailureException {
+        int rowCount = 0;
         PreparedStatement theStatement = null;
 
         //retrieve the insert query using the proper SQLTransactionKey
@@ -352,8 +369,13 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setString(4, medication.getName());
 
             //excute the insert
-            theStatement.executeUpdate();
-
+            rowCount = theStatement.executeUpdate();
+            if (rowCount == 0) {
+                throw new SQLSyntaxErrorException("The create for the medication failed." +
+                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                        .SQLTransactionKeys
+                        .CREATE_MEDICATION_INFO.tKey);
+            }
             //clear the parameters for the next query to be run
             theStatement.clearParameters();
 

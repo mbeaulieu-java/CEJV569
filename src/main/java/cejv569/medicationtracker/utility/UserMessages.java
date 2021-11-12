@@ -23,6 +23,8 @@ public class UserMessages {
                 " try again or sign up via the Sign Up icon below, then try logging in again."),
         WRONG_PASSWORD_ERROR_MESSAGE("The password entered does not match the one registered in the " +
                 " database for this user name."),
+        MEDICATION_ALREADY_IN_LIST_ERROR_MESSAGE("A medication with this name, format and measurement unit " +
+                "already exists."),
         USERNAME_ALREADY_EXISTS_MESSAGE("This user name already exists in our system.  " +
                 "Please try logging into the "
                 + "system again with this user name or signup with a new user name value.");
