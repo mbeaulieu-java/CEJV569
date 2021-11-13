@@ -11,14 +11,19 @@ import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.utility.UserMessages;
 import cejv569.medicationtracker.view.customcellclasses.*;
 import cejv569.medicationtracker.view.viewdata.ConfigureMedicationObservableData;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,6 +106,7 @@ public class ConfigureMedicationController extends ViewController {
     private static ConfigureMedicationOperation configureMedicationOperation;
     private List<Control> editableControlList;
     private static List<Ingredient> selectedIngredients;
+    private ListChangeListener deleteIngredientListener;
 
 
     //Getters and Setters
@@ -272,6 +278,7 @@ public class ConfigureMedicationController extends ViewController {
         editableControlList.add(formatListView);
         editableControlList.add(measurementListView);
         editableControlList.add(ingredientsListView);
+        editableControlList.add(medicationIngredientsListView);
 
         try {
             GUIUtility.makeEditable(editableControlList);
@@ -289,6 +296,7 @@ public class ConfigureMedicationController extends ViewController {
         initializeIngredientValues();
         initializeFormatValues();
         initializeMeasurementUnitValues();
+        initializeListeners();
     }
 
     private void initializeButtons(){
@@ -301,9 +309,49 @@ public class ConfigureMedicationController extends ViewController {
 
         editButton.addEventHandler(ActionEvent.ACTION,e->{setEditing();});
         addMedicationButton.addEventHandler(ActionEvent.ACTION,e->{setAdding();});
+    }
 
+
+    private void initializeListeners() {
+        medicationIngredientsListView.refresh();
+
+        deleteIngredientListener = new ListChangeListener<MedicationIngredients>() {
+            @Override
+            public void onChanged(Change<? extends MedicationIngredients> c) {
+                while (c.next()) {
+                    if (c.wasRemoved()) {
+                        List<? extends MedicationIngredients> removed = c.getRemoved();
+                        for (MedicationIngredients i : removed) {
+                            doMedicationIngredientDelete(i);
+                        }
+                    }
+                }
+            }
+        };
+
+        ingredientsListView.refresh();
+
+        ingredientsListView.getItems().addListener(new ListChangeListener<Ingredient>() {
+            @Override
+            public void onChanged(Change<? extends Ingredient> c) {
+                while (c.next()) {
+                    if (c.wasPermutated()) {
+//                        List<? extends MedicationIngredients> permutated =
+//                                c.getPermutation(c.);
+//                        for (MedicationIngredients i : removed) {
+//                            doMedicationIngredientDelete(i);
+//                        }
+                        System.out.println("wasPermutated");
+                    }
+                    if (c.wasUpdated()) {
+                        System.out.println("Updated");
+                    }
+                }
+            }
+        });
 
     }
+
     private boolean validateValues() {
         boolean successful = false;
 
@@ -393,7 +441,7 @@ public class ConfigureMedicationController extends ViewController {
                 ingredientOList = FXCollections.observableList(ingredientList);
                 ingredientsListView.setItems(ingredientOList);
                 ingredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-                ingredientsListView.setCellFactory(inglist-> new IngredientCell());
+                ingredientsListView.setCellFactory(listing-> new IngredientCell());
             }
         }catch (OperationFailureException e) {
             LogError.logUnrecoverableError(e);
@@ -402,16 +450,26 @@ public class ConfigureMedicationController extends ViewController {
 
     private void setAdding() {
         addingProperty.set(true);
+        medicationIngredientsListView.setEditable(false);
     }
+
     private void setEditing() {
         setEditingProperty(true);
+        try {
+            GUIUtility.makeEditable(editableControlList);
+            medicationIngredientsListView.getItems().addListener(deleteIngredientListener);
+        } catch (Exception e) {
+            LogError.logRecoverableError(e);
+        }
     }
 
     private void Save() {
         if (this.isAddingProperty()) {
             doAdd();
         } else if (this.isEditingProperty()) {
-            doEdit();
+            if (doEdit()) {
+                medicationIngredientsListView.getItems().removeListener(deleteIngredientListener);
+            }
         } else {
             doMedicationIngredientDelete();
         }
@@ -432,7 +490,6 @@ public class ConfigureMedicationController extends ViewController {
 
     private boolean doAdd(){
 
-
         Medication medicationData = null;
 
         boolean successful = false;
@@ -447,7 +504,7 @@ public class ConfigureMedicationController extends ViewController {
 
             getOperation().postMedication(medicationData);
 
-            if ()
+            //if ()
             successful = true;
             addingProperty.set(false);
 

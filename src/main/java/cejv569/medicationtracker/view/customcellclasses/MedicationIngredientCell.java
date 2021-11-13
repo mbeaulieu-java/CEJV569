@@ -19,11 +19,12 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
     private static final String IMAGE_PATH = "/cejv569/medicationtracker/assets/delete.png";
-    private MedicationIngredients selectedForDelete;
+
     Button deleteButton;
     ImageView deleteImageView;
     HBox hbox;
@@ -39,14 +40,6 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
         hbox.getChildren().add(deleteButton);
 
         deleteButton.setOnAction(e->onClickItemDelete(e));
-    }
-
-    public MedicationIngredients getSelectedForDelete() {
-        return selectedForDelete;
-    }
-
-    public void setSelectedForDelete(MedicationIngredients selectedForDelete) {
-        this.selectedForDelete = selectedForDelete;
     }
 
     private void setButtonProperties() {
@@ -70,15 +63,13 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
             } else {
                 setGraphic(hbox);
                 setText(ingredient.getName());
-
             }
         }
 
         private void onClickItemDelete(ActionEvent e) {
-            //NO GOOD NEED OBSERVER PATTERN!!!
-        // selectedForDelete = this.getItem();
-            this.getListView().getItems().remove(selectedForDelete);
-
+            this.getListView().getItems().remove(this.getItem());
+            this.getListView().refresh();
+            this.getListView().requestFocus();
         }
 
 }
