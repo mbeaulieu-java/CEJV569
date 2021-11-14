@@ -23,7 +23,7 @@ import java.io.IOException;
  *
  *      2) The model layer:  This includes controllers that take data from the view layer, apply app
  *      business rules to it and then transfer the data to the database layer.
- *      All controllers of the model layer have DataController as a parent class. (model package - controller package)
+ *      All controllers of the model layer have Operation as a parent class. (model package - controller package)
  *
  *      3) The data layer: It has controllers which are responsible for
  *      initializing and executing the queries required to store, update, delete and retrieve
@@ -39,13 +39,13 @@ import java.io.IOException;
  *      Operation interfaces who are sub classes of the ViewOperation interface.
  *
  *      i) The ViewOperation Interfaces are used by the ViewControllers and are implemented by
- *      the DataController subclasses. (operationinterfaces package & controllers package)
+ *      the Operation subclasses. (operationinterfaces package & controllers package)
  *
  *
  *      B) Communication between the model layer and the data layer is mediated by the Transaction
  *      interfaces, which are subclasses of the class DataTransaction.
  *
- *      i) The Transaction Interfaces are used by the DataController children and are implemented by
+ *      i) The Transaction Interfaces are used by the Operation children and are implemented by
  *  *      the DataTransactions subclasses. (transactioninterfaces and transactionobjects packages).
  *
  *      C) The DataTransactions subclasses work directly with the prepared statements returned by the

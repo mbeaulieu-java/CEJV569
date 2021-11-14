@@ -6,9 +6,9 @@ package cejv569.medicationtracker.model.datainterfaces;
  * exchange of data between the AccountController (view layer),
  * the LoginController (view layer),
  * the SignupController (view layer),
- * AccountDataController (model layer),
- * LoginDataController (model layer),
- * SignupDataController (model layer)
+ * AccountOperation (model layer),
+ * LoginOperation (model layer),
+ * SignupOperation (model layer)
  * and the UserTransactions controller (data layer).
  */
 

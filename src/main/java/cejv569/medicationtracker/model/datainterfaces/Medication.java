@@ -7,11 +7,11 @@ package cejv569.medicationtracker.model.datainterfaces;
  * LogMedicationController (view layer),
  * LogMedicationEffectController(view layer),
  * EffectHistoryController(view layer),
- * MedicationDataController(model layer),
- * MedLogDataController (model layer),
- * MedPurchaseDataController(model layer),
- * EffectLogDataController (model layer),
- * EffectHistoryDataController (model layer),
+ * MedicationOperation(model layer),
+ * MedLogOperation (model layer),
+ * MedPurchaseOperation(model layer),
+ * EffectLogOperation (model layer),
+ * EffectHistoryOperation (model layer),
  * and the UserMedicationTransactions controller(data layer).
  */
 

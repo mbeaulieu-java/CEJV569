@@ -4,10 +4,7 @@ import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.utility.LogError;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,7 +45,7 @@ public class MedTrackDatasource {
     private final String TRANSACTION_SQL_MATCH_FILE_PATH =
             "src/main/resources/cejv569/medicationtracker/properties/transactionsqlmatch.properties";
 
-
+    private final String DEFAULT_PRIMARY_KEY_NAME = "key";
     private  MysqlDataSource dataSource;
     private  Connection connection;
     private Properties sqlTransactionProperties;
@@ -164,12 +161,12 @@ public class MedTrackDatasource {
      * from.  That is, the application cannot continue to operate its required behaviour.
      *
      */
-    public PreparedStatement getSQLStatement(String sqlTransactionKey) throws OperationFailureException{
+    public PreparedStatement getSQLStatement(String sqlTransactionKey) throws OperationFailureException {
         String sqlDirectory;
         String sqlFileName;
         Path path;
         Stream<String> lines;
-        String sqlString="";
+        String sqlString = null;
         PreparedStatement preparedStatement = null;
 
         try {
@@ -188,7 +185,7 @@ public class MedTrackDatasource {
                 path = Paths.get(sqlDirectory + sqlFileName);
                 lines = Files.lines(path);
 
-            //if there was data in the file, use the collect method of the stream to collate
+                //if there was data in the file, use the collect method of the stream to collate
                 //all the lines into one String of sql.  In the case of this project, each
                 //query represents only 1 Sql statement.
                 if (lines != null) {
@@ -198,14 +195,19 @@ public class MedTrackDatasource {
                 //if the sql statement is not empty, then create a preparedStatement instance
                 //to be returned to the requesting class as a service to be consumed.
                 if (!sqlString.equals("")) {
-                    preparedStatement = getConnection().prepareStatement(sqlString);
+                    if (sqlString.toLowerCase().contains("insert")) {
+                        preparedStatement = getConnection().prepareStatement(sqlString,
+                                new String[] {this.DEFAULT_PRIMARY_KEY_NAME});//PREPAREDSTATEMENT.RETURN_GENERATED_KEYS
+                    } else {
+                        preparedStatement = getConnection().prepareStatement(sqlString);
+                    }
                 }
             }
         } catch (SecurityException e) {
-           LogError.logUnrecoverableError(e);
+            LogError.logUnrecoverableError(e);
         } catch (FileNotFoundException e) {
             LogError.logUnrecoverableError(e);
-        } catch(IOException e){
+        } catch (IOException e) {
             LogError.logUnrecoverableError(e);
         } catch (IllegalArgumentException | NullPointerException e) {
             LogError.logUnrecoverableError(e);
@@ -221,8 +223,57 @@ public class MedTrackDatasource {
             //return the preparedStatement to the requesting class instance
             return preparedStatement;
         }
-
     }
+
+        public String getSQLQuery(String sqlTransactionKey) throws OperationFailureException{
+            String sqlDirectory;
+            String sqlFileName;
+            Path path;
+            Stream<String> lines;
+            String sqlString = null;
+
+
+            try {
+                //Load the contents of the transactionsqlmatch.properties file into a Properties
+                //instance to retrieve the required .sql file based on it's SQLTransactionKey
+                //key value correspondence.
+                InputStream inputStream = new FileInputStream(TRANSACTION_SQL_MATCH_FILE_PATH);
+                Properties properties = new Properties();
+                properties.load(inputStream);
+                sqlDirectory = properties.getProperty(SQLPropertiesTransactionKeys.SQLTransactionKeys.SQL_DIRECTORY.tKey);
+                sqlFileName = properties.getProperty(sqlTransactionKey);
+
+                //if the sql directory exists and the corresponding sql file was found,
+                //read all the lines of text in the sql file in one shot.
+                if (!(sqlDirectory == null || sqlFileName == null)) {
+                    path = Paths.get(sqlDirectory + sqlFileName);
+                    lines = Files.lines(path);
+
+                    //if there was data in the file, use the collect method of the stream to collate
+                    //all the lines into one String of sql.  In the case of this project, each
+                    //query represents only 1 Sql statement.
+                    if (lines != null) {
+                        sqlString = lines.collect(Collectors.joining());
+                    }
+
+                    //if the sql statement is not empty, then create a preparedStatement instance
+                    //to be returned to the requesting class as a service to be consumed.
+                    if (sqlString.equals("")) {
+                       throw new IOException("SQl File is empty. " + sqlTransactionKey);
+                    }
+                }
+            } catch (SecurityException e) {
+                LogError.logUnrecoverableError(e);
+            } catch (FileNotFoundException e) {
+                LogError.logUnrecoverableError(e);
+            } catch(IOException e){
+                LogError.logUnrecoverableError(e);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                LogError.logUnrecoverableError(e);
+            }
+            //return the query or return null if an error occured
+            return (sqlString.equals("") ? null : sqlString);
+        }
 
 
     /**

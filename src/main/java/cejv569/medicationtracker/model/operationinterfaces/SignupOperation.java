@@ -7,7 +7,7 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
  * SignupOperation is a subclass of ViewOperation.  It interfaces the data requests between the
- * SignupController (view layer) and the SignupDataController(model layer), the later being the
+ * SignupController (view layer) and the SignupOperation(model layer), the later being the
  * class which implements it.  It is used to decouple the view and model layer.  The interface
  * is used to transfer AccountObservableData type instances containing the minimum account data to be saved to the
  * database upon user sign up.
@@ -17,15 +17,15 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 public interface SignupOperation extends ViewOperation {
 
     /**
-     * postData is implemented by SignupDataController and transfers the signup user data
+     * postData is implemented by SignupOperation and transfers the signup user data
      * to the database layer via a User interface type, a Data interface subclass, to be saved to
-     * the database.  The SignupDataController validates if the user name already exists in the database
+     * the database.  The SignupOperation validates if the user name already exists in the database
      * before the data is saved to the database layer because the user name must be unique in the database.
      * If the user name already exists in the database, a UserAlreadyExistsException is thrown.
      * @param data User interface type - contains the user account information entered
      *             at Sign up by the user.
      * @return boolean type - returns true if the postData request was successfully completed
-     *                          by both the SignupDataController and the database layer.
+     *                          by both the SignupOperation and the database layer.
      * @throws UserAlreadyExistsException -         custom exception thrown if the data can't be posted
      *                                               because the user name already exists in the
      *                                                database.

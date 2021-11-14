@@ -1,16 +1,16 @@
-package cejv569.medicationtracker.model.controllers;
+package cejv569.medicationtracker.model.operationobjects;
 
 import cejv569.medicationtracker.ApplicationController;
-import cejv569.medicationtracker.model.operationinterfaces.MedicationPurchaseOperation;
+import cejv569.medicationtracker.model.operationinterfaces.LogEffectOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
 
-public class MedPurchaseDataController extends DataController implements MedicationPurchaseOperation {
+public class EffectLogOperation extends Operation implements LogEffectOperation {
 
-    public MedPurchaseDataController() {
+    public EffectLogOperation() {
         ApplicationController.getInstance().transactionFactory(this);
     }
 
-    // setters and getters
+    //setters and getters
 
     public DataTransaction getTransaction() {
         return super.transaction;

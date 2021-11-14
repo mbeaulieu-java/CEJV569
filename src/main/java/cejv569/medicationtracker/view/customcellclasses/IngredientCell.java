@@ -18,73 +18,30 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class IngredientCell extends CheckBoxListCell<Ingredient> implements Callback<Ingredient,ObservableValue<Boolean>>{
 
+    Callback<Ingredient, ObservableValue<Boolean>> callbackProperty;
+    public IngredientCell(Callback<Ingredient, ObservableValue<Boolean>> getSelectedProperty, StringConverter<Ingredient> converter) {
+        super(getSelectedProperty, converter);
+        callbackProperty = getSelectedProperty;
 
-//    public IngredientCell() {
-//        //ingredientSelection = new CheckBox();
-//        //ingredientSelection.setPadding(new Insets(4,0,4,2));
-//        //this.contentDisplayProperty().set(ContentDisplay.GRAPHIC_ONLY);
-//
-// this.setOnMouseClicked(this::ingredientClicked);
-//        this.setOnMouseClicked(e->itemClicked(e));
-//
-////        ingredientSelection.setOnMouseClicked(e->{
-////            ingredientClicked(e);});
-//
-//    }
-
-
-    public IngredientCell(Callback<Ingredient, ObservableValue<Boolean>> getSelectedProperty) {
-        super(getSelectedProperty);
     }
 
     @Override
     public ObservableValue<Boolean> call(Ingredient param) {
-        return null;
+        return  callbackProperty.call(param);
     }
 
     @Override
-    public void updateItem(Ingredient ingredients, boolean empty) {
-        super.updateItem(ingredients, empty);
-
-        if(empty || ingredients == null) {
-            setText(null);
-            setGraphic(null);
-        } else {
-
-            //setText("");
-           // ingredientSelection.setText(ingredients.getName());
-            //setGraphic(ingredientSelection);
-        }
+    public Node getStyleableNode() {
+        return super.getStyleableNode();
     }
 
     @Override
     public void updateSelected(boolean selected) {
-
-        super.updateSelected(ingredientSelection.isSelected() || selected);
-
+        selected = ((CheckBox)getStyleableNode()).isSelected();
+        super.updateSelected(selected);
     }
-
-
-    private void ingredientClicked(MouseEvent e) {
-
-        this.updateSelected(true);
-        if (ingredientSelection.isSelected()) {
-            //ConfigureMedicationController.getSelectedIngredients().add(this.getItem());
-        } else {
-            //selectedIngredients.remove(this.getItem());
-        }
-
-    }
-
-    private void itemClicked(MouseEvent e) {
-        ingredientSelection.setSelected(!ingredientSelection.isSelected());
-    }
-
 }

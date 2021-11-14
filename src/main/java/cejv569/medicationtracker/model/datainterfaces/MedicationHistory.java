@@ -6,7 +6,7 @@ import java.sql.Timestamp;
  * The Medication History interface is a child of the Data interface base class.  It reflects the
  * structure of the med_history table in the database.  The interface is used to facilitate the
  * exchange of data between the LogMedicationController (view layer),
- * MedLogDataController (model layer)
+ * MedLogOperation (model layer)
  * and the MedicationHistoryTransactions controller(data layer).
  */
 

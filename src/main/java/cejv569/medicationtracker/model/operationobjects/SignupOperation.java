@@ -1,17 +1,14 @@
-package cejv569.medicationtracker.model.controllers;
+package cejv569.medicationtracker.model.operationobjects;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.UserAlreadyExistsException;
 import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.model.dataobjects.UserData;
-import cejv569.medicationtracker.model.operationinterfaces.SignupOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
 import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
-import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
- *  SignupDataController implements the SignupOperation interface through which it receives
+ *  SignupOperation implements the SignupOperation interface through which it receives
  *  requests from the SignupController (view layer). It then applies any business rules to the
  *  data (data validation) required.  After which it transfers a request to the proper
  *  transaction object via it's transaction interface instance (of type UserTransaction).
@@ -19,18 +16,18 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
  *  the database.
  */
 
-public class SignupDataController extends DataController implements SignupOperation {
+public class SignupOperation extends Operation implements cejv569.medicationtracker.model.operationinterfaces.SignupOperation {
 
     //Attributes
     private UserTransaction userTransaction;
 
     /**
-     *SignupDataController - the constructor calls ApplicationController..transactionFactory
+     *SignupOperation - the constructor calls ApplicationController..transactionFactory
      * passing in an instance of itself, as it is the ApplicationController's responsibility to
      * create the transaction object that implements the UserTransaction interface - UserTransactions -
      * which communicates directly with the database.
      */
-    public SignupDataController() {
+    public SignupOperation() {
         ApplicationController.getInstance().transactionFactory(this);
     }
 

@@ -6,7 +6,7 @@ import cejv569.medicationtracker.view.viewdata.ContactObservableData;
 
 /**
  * ContactOperation is a subclass of ViewOperation.  It interfaces the data requests between the
- * ContactController (view layer) and the ContactDataController(model layer), the later being the
+ * ContactController (view layer) and the ContactOperation(model layer), the later being the
  * class which implements it.  It is used to decouple the view and model layer.  The interface
  * is used to transfer Contact type instances.
  */

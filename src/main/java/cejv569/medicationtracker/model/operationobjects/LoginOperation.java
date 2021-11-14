@@ -1,18 +1,15 @@
-package cejv569.medicationtracker.model.controllers;
+package cejv569.medicationtracker.model.operationobjects;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.NoSuchUserNameException;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.WrongPasswordException;
 import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.model.dataobjects.UserData;
-import cejv569.medicationtracker.model.operationinterfaces.LoginOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
 import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
-import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
- *  LoginDataController is a model level controller (a sort of middle) layer and coordinates requests
+ *  LoginOperation is a model level controller (a sort of middle) layer and coordinates requests
  *  between the View (GUI) layer and the database layer.  As such, it implements requests from the
  *  View layer via the LoginOperation interface.  It receives the view request and then
  *  uses it's UserTransaction Interface property to communicate with the database data layer.
@@ -27,7 +24,7 @@ import cejv569.medicationtracker.view.viewdata.AccountObservableData;
  *
  */
 
-public class LoginDataController extends DataController implements LoginOperation {
+public class LoginOperation extends Operation implements cejv569.medicationtracker.model.operationinterfaces.LoginOperation {
 
     //Attributes
     private UserTransaction userTransaction;
@@ -36,12 +33,12 @@ public class LoginDataController extends DataController implements LoginOperatio
     //Constructor
 
     /**
-     * LoginDataController - the constructor calls ApplicationController..transactionFactory
+     * LoginOperation - the constructor calls ApplicationController..transactionFactory
      * passing in an instance of itself, as it is the ApplicationController's responsibility to
      * create the transaction object that implements the UserTransaction interface - UserTransactions -
      * which communicates directly with the database.
      */
-    public LoginDataController() {
+    public LoginOperation() {
         ApplicationController.getInstance().transactionFactory(this);
     }
 

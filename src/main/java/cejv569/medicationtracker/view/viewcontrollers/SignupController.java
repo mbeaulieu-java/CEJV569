@@ -3,7 +3,6 @@ package cejv569.medicationtracker.view.viewcontrollers;
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.UserAlreadyExistsException;
-import cejv569.medicationtracker.model.operationinterfaces.SignupOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.DataValidator;
 import cejv569.medicationtracker.utility.GUIUtility;
@@ -27,7 +26,7 @@ import java.util.stream.Stream;
  *  The SignupController class initializes and validates issues linked with the signupform.
  *  It also mediates initiates requests for data and database storage services from the model
  *  layer.  It does this via the SignupOperation interface and it's implementing class
- *  SignupDataController.
+ *  SignupOperation.
  */
 
 public class SignupController extends ViewController {
@@ -58,7 +57,7 @@ public class SignupController extends ViewController {
         private Button saveButton;
 
     //Attributes
-    private SignupOperation signupOperation;
+    private cejv569.medicationtracker.model.operationinterfaces.SignupOperation signupOperation;
 
 
     //Getters & Setters
@@ -68,14 +67,14 @@ public class SignupController extends ViewController {
      *
      */
 
-    public SignupOperation getOperation() {
+    public cejv569.medicationtracker.model.operationinterfaces.SignupOperation getOperation() {
         return this.signupOperation;
     }
 
     @Override
     public void setOperation(ViewOperation operation) {
         super.operation = operation;
-        this.signupOperation = (SignupOperation)operation;
+        this.signupOperation = (cejv569.medicationtracker.model.operationinterfaces.SignupOperation)operation;
     }
 
     /**

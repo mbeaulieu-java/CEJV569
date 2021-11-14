@@ -119,7 +119,7 @@
                                           <Font name="Garamond Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <ListView fx:id="ingredientsListView" fixedCellSize="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="255.0">
+                                    <ListView fx:id="ingredientsListView" fixedCellSize="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="255.0">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

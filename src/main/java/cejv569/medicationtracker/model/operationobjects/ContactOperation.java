@@ -1,16 +1,13 @@
-package cejv569.medicationtracker.model.controllers;
+package cejv569.medicationtracker.model.operationobjects;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.Contact;
-import cejv569.medicationtracker.model.dataobjects.ContactData;
-import cejv569.medicationtracker.model.operationinterfaces.ContactOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.ContactTransaction;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
-import cejv569.medicationtracker.view.viewdata.ContactObservableData;
 
 /**
- *      ContactDataController is a child class of DataController.  It implements the
+ *      ContactOperation is a child class of Operation.  It implements the
  *      ContactOperation interface through which it receives
  *      requests from the ContactController (view layer). It then applies any business rules to the
  *      data (data validation) if required.  After which it transfers a request to the proper
@@ -19,7 +16,7 @@ import cejv569.medicationtracker.view.viewdata.ContactObservableData;
  *      to store emails, sent by people to the company (fictional), to the database.
  */
 
-public class ContactDataController extends DataController implements ContactOperation {
+public class ContactOperation extends Operation implements cejv569.medicationtracker.model.operationinterfaces.ContactOperation {
 
     //Attributes
     private ContactTransaction contactTransaction;
@@ -29,7 +26,7 @@ public class ContactDataController extends DataController implements ContactOper
      *  so that it can instantiate the transaction object which implements the ContactTransaction
      *  interface (ContactTransactions class).
      */
-    public ContactDataController() {
+    public ContactOperation() {
         ApplicationController.getInstance().transactionFactory(this);
     }
 

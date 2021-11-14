@@ -29,8 +29,8 @@ module cejv569.medicationtracker {
     opens cejv569.medicationtracker.events to javafx.fxml;
 
     //model parent package
-    opens cejv569.medicationtracker.model.controllers to javafx.fxml;
-    exports cejv569.medicationtracker.model.controllers;
+    opens cejv569.medicationtracker.model.operationobjects to javafx.fxml;
+    exports cejv569.medicationtracker.model.operationobjects;
 
     opens cejv569.medicationtracker.model.dataobjects to javafx.fxml;
     exports cejv569.medicationtracker.model.dataobjects;

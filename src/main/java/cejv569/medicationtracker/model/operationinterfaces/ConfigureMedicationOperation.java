@@ -12,11 +12,11 @@ public interface ConfigureMedicationOperation extends ViewOperation{
     List <Medication> getMedications(int userId) throws OperationFailureException;
     List <Format> getFormats() throws OperationFailureException;
     List <MeasurementUnit> getMeasurementUnits() throws OperationFailureException;
-    void postMedicationIngredients(List <MedicationIngredients>medicationIngredients)
+    List<MedicationIngredients> postMedicationIngredients(List <MedicationIngredients>medicationIngredients)
             throws OperationFailureException;
     void deleteMedicationIngredients(MedicationIngredients ingredient)
             throws OperationFailureException;
-    void postMedication(Medication medication) throws OperationFailureException,
+    int postMedication(Medication medication) throws OperationFailureException,
             MedicationAlreadyAddedException;
     void putMedication(Medication medication) throws OperationFailureException,
             MedicationAlreadyAddedException;

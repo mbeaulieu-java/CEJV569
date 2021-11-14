@@ -8,12 +8,10 @@ import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.dataobjects.*;
 import cejv569.medicationtracker.model.transactioninterfaces.MedicationTransaction;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MedicationTransactions extends DataTransactions implements MedicationTransaction {
 
@@ -270,9 +268,11 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     }
 
     @Override
-    public void createMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
+    public List<MedicationIngredients> createMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
         PreparedStatement theStatement = null;
         int rowCount = 0;
+        int medIngKey = 0;
+        ResultSet generatedKey = null;
 
         if (!medicationIngredients.isEmpty()) {
             //retrieve the insert query using the proper SQLTransactionKey
@@ -301,6 +301,13 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                             "Verify the SQL statement : " + SQLPropertiesTransactionKeys
                             .SQLTransactionKeys
                             .CREATE_MEDICATION_INGREDIENTS_INFO.tKey);
+                } else {
+                    generatedKey = theStatement.getGeneratedKeys();
+                    if(generatedKey.next()) {
+                        medIngKey = generatedKey.getInt(1);
+                    }
+
+                    ing.setId(medIngKey);
                 }
             }
 
@@ -309,6 +316,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
         }
+        return medicationIngredients;
     }
 
     @Override
@@ -350,18 +358,18 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     }
 
     @Override
-    public void createMedication(Medication medication) throws OperationFailureException {
+    public int createMedication(Medication medication) throws OperationFailureException {
         int rowCount = 0;
+        int addedMedicationKey = 0;
         PreparedStatement theStatement = null;
-
-        //retrieve the insert query using the proper SQLTransactionKey
-        theStatement = getDatasource()
-                .getSQLStatement(
-                        SQLPropertiesTransactionKeys
-                                .SQLTransactionKeys
-                                .CREATE_MEDICATION_INFO.tKey);
+        ResultSet generatedKeys;
 
         try {
+            //retrieve the insert query using the proper SQLTransactionKey
+           theStatement = getDatasource().getSQLStatement(SQLPropertiesTransactionKeys
+                    .SQLTransactionKeys
+                    .CREATE_MEDICATION_INFO.tKey);
+
             // set the parameters for the insert prepared statement
             theStatement.setInt(1, medication.getFormatId());
             theStatement.setInt(2, medication.getMeasurementId());
@@ -370,11 +378,17 @@ public class MedicationTransactions extends DataTransactions implements Medicati
 
             //excute the insert
             rowCount = theStatement.executeUpdate();
+
             if (rowCount == 0) {
                 throw new SQLSyntaxErrorException("The create for the medication failed." +
                         "Verify the SQL statement : " + SQLPropertiesTransactionKeys
                         .SQLTransactionKeys
                         .CREATE_MEDICATION_INFO.tKey);
+            } else {
+                generatedKeys = theStatement.getGeneratedKeys();
+                if(generatedKeys.next()) {
+                    addedMedicationKey = generatedKeys.getInt(1);
+                }
             }
             //clear the parameters for the next query to be run
             theStatement.clearParameters();
@@ -384,6 +398,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
         }
+        return addedMedicationKey;
     }
 
     @Override
@@ -439,7 +454,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setInt(1,medication.getUserId());
             theStatement.setInt(2,medication.getFormatId());
             theStatement.setInt(3,medication.getMeasurementId());
-            theStatement.setString(4, medication.getName());
+            theStatement.setString(4, medication.getName().toLowerCase());
             theStatement.setInt(5,medication.getId());
 
             resultSet = theStatement.executeQuery();

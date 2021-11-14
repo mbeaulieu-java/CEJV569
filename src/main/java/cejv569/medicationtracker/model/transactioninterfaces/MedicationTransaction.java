@@ -14,11 +14,11 @@ public interface MedicationTransaction extends DataTransaction{
     List <Medication> getMedications(int userId) throws OperationFailureException;
     List <Format> getFormats() throws OperationFailureException;
     List <MeasurementUnit> getMeasurementUnits() throws OperationFailureException;
-    void createMedicationIngredients(List <MedicationIngredients>medicationIngredients)
+    List<MedicationIngredients> createMedicationIngredients(List <MedicationIngredients>medicationIngredients)
             throws OperationFailureException;
     void deleteMedicationIngredients(MedicationIngredients medicationIngredients)
             throws OperationFailureException;
-    void createMedication(Medication medication) throws OperationFailureException;
+    int createMedication(Medication medication) throws OperationFailureException;
     void updateMedication (Medication medication) throws OperationFailureException;
     boolean medicationAlreadyExists(Medication medication)
             throws OperationFailureException;

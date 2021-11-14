@@ -28,7 +28,7 @@ public abstract class ViewController {
      * setOperation - Abstract method to be overridden by all child subclasses to set their
      * ViewOperation interface type property.
      *
-     * @param operation - ViewOperation - an instance of a DataController class which implements
+     * @param operation - ViewOperation - an instance of a Operation class which implements
      *                  a ViewOperation subclass.
      */
     public abstract void setOperation(ViewOperation operation);

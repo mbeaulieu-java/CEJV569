@@ -7,15 +7,15 @@ import cejv569.medicationtracker.model.dataobjects.UserData;
 /**
  * UserTransaction is an interface subclass of DataTransaction.  It is implemented by the UserTransactions
  * class to process requests from the model layer. More specifically, it is used to communicate
- * database requests from the following classes:  AccountDataController, LoginDataController
- * and SignupDataController.
+ * database requests from the following classes:  AccountOperation, LoginOperation
+ * and SignupOperation.
  * The UserTransactions class executes the
  * prepared statement query that stores the user account info to the database.
  */
 public interface UserTransaction extends DataTransaction{
 
    /**
-    * getUserName is called by the SignupDataController instance to return a record from the
+    * getUserName is called by the SignupOperation instance to return a record from the
     * users table using the user name as parameter.  If a record is found by the UserTransactions object, a
     * return value of true is sent back.  This will prevent the account data to be saved as
     * the user name field in the data needs to be unique, hence not already registered in the
@@ -53,7 +53,7 @@ public interface UserTransaction extends DataTransaction{
    User getUserAndPassword(String userName) throws OperationFailureException;
 
    /**
-    * getData is called by the LoginDataController to obtain the user account data from the database
+    * getData is called by the LoginOperation to obtain the user account data from the database
     * to be able to initialize the profile form, account section.  The information for the
     * account is returned via a User interface type object.
     * @param userId  - int type -  represents the user id / user record primary key from the users
@@ -69,9 +69,9 @@ public interface UserTransaction extends DataTransaction{
    User getData(int userId) throws OperationFailureException;
 
    /**
-    * createData is called by the SignupDataController to create a user record with
+    * createData is called by the SignupOperation to create a user record with
     * the information that the user entered in the sign up for.  This method is called if no prior
-    * user name record is found for the user name entered.  SignupDataController passes the information
+    * user name record is found for the user name entered.  SignupOperation passes the information
     * to be inserted into the users table via a data object that support the User interface.
     * signup form
     * @param data - User interface type - Used to transfer all the user information in the

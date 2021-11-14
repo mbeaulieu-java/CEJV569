@@ -1,4 +1,4 @@
-package cejv569.medicationtracker.model.controllers;
+package cejv569.medicationtracker.model.operationobjects;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.MedicationAlreadyAddedException;
@@ -10,11 +10,11 @@ import cejv569.medicationtracker.model.transactioninterfaces.MedicationTransacti
 
 import java.util.List;
 
-public class MedicationDataController extends DataController implements ConfigureMedicationOperation {
+public class MedicationOperation extends Operation implements ConfigureMedicationOperation {
 
     private MedicationTransaction medicationTransaction;
     //constructor
-    public MedicationDataController() {
+    public MedicationOperation() {
         ApplicationController.getInstance().transactionFactory(this);
     }
 
@@ -99,15 +99,20 @@ public class MedicationDataController extends DataController implements Configur
     }
 
     @Override
-    public void postMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
-
+    public List<MedicationIngredients> postMedicationIngredients(List<MedicationIngredients> medicationIngredients) throws OperationFailureException {
+        List<MedicationIngredients> list = null;
         try {
             if (!medicationIngredients.isEmpty()) {
-                getTransaction().createMedicationIngredients(medicationIngredients);
+                list = getTransaction().createMedicationIngredients(medicationIngredients);
+                if (list == null) {
+                    throw new OperationFailureException("A null medication ingredients list was returned " +
+                            " when adding new medication ingredients.");
+                }
             }
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
         }
+        return list;
     }
 
     @Override
@@ -122,16 +127,17 @@ public class MedicationDataController extends DataController implements Configur
     }
 
     @Override
-    public void postMedication(Medication medication) throws OperationFailureException, MedicationAlreadyAddedException {
-
+    public int postMedication(Medication medication) throws OperationFailureException, MedicationAlreadyAddedException {
+        int addedMedKey = 0;
         if (medication!= null) {
             if(getTransaction().medicationAlreadyExists(medication)) {
                 throw new MedicationAlreadyAddedException("A medication with this name, format" +
                         "measurement unit and for this user had already been added in the database.");
             } else {
-                getTransaction().createMedication(medication);
+               addedMedKey =  getTransaction().createMedication(medication);
             }
         }
+        return addedMedKey;
     }
 
     @Override

@@ -1,17 +1,15 @@
-package cejv569.medicationtracker.model.controllers;
+package cejv569.medicationtracker.model.operationobjects;
 
 import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
-import cejv569.medicationtracker.exceptions.UserAlreadyExistsException;
 import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.model.operationinterfaces.AccountOperation;
 import cejv569.medicationtracker.model.transactioninterfaces.DataTransaction;
 import cejv569.medicationtracker.model.transactioninterfaces.UserTransaction;
 
-public class AccountDataController extends DataController implements AccountOperation {
+public class AccountOperation extends Operation implements cejv569.medicationtracker.model.operationinterfaces.AccountOperation {
     public UserTransaction userTransaction;
 
-    public AccountDataController() {
+    public AccountOperation() {
         ApplicationController.getInstance().transactionFactory(this);
     }
 

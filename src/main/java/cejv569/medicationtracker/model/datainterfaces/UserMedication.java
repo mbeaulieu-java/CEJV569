@@ -9,8 +9,8 @@ import java.sql.Date;
  * the LogMedicationPurchaseController (view layer),
  * LogMedicationController (view layer),
  * LogMedicationEffectController(view layer),
- * MedLogDataController (model layer),
- * MedPurchaseDataController(model layer)
+ * MedLogOperation (model layer),
+ * MedPurchaseOperation(model layer)
  * and the UserMedicationTransactions controller(data layer).
  */
 
