@@ -1,0 +1,1 @@
+select * from medication_ingredients where id = ? and ingredient_id = ? and med_id = ?;

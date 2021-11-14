@@ -20,4 +20,6 @@ public interface ConfigureMedicationOperation extends ViewOperation{
             MedicationAlreadyAddedException;
     void putMedication(Medication medication) throws OperationFailureException,
             MedicationAlreadyAddedException;
+    List<MedicationIngredients> putMedicationIngredients(List<MedicationIngredients> medicationIngredients)
+            throws OperationFailureException;
 }

@@ -21,5 +21,7 @@ public interface MedicationTransaction extends DataTransaction{
     void updateMedication (Medication medication) throws OperationFailureException;
     boolean medicationAlreadyExists(Medication medication)
             throws OperationFailureException;
+    List<MedicationIngredients> updateMedicationIngredients(List<MedicationIngredients> medicationIngredients)
+            throws OperationFailureException;
     
 }

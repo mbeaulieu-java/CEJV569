@@ -340,12 +340,15 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             //excute the delete
             rowCount = theStatement.executeUpdate();
 
-            if (rowCount == 0) {
-                throw new SQLSyntaxErrorException("The delete for the medication ingredients failed." +
-                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
-                        .SQLTransactionKeys
-                        .DELETE_MEDICATION_INGREDIENTS_INFO.tKey);
-            }
+            //for now, do not throw an error if no record was found to delete.  It's
+            //possible that the record was removed from the list before it was added
+            //to the database.
+//            if (rowCount == 0) {
+//                throw new SQLSyntaxErrorException("The delete for the medication ingredients failed." +
+//                        "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+//                        .SQLTransactionKeys
+//                        .DELETE_MEDICATION_INGREDIENTS_INFO.tKey);
+//            }
 
             //clear the parameters for the next query to be run
             theStatement.clearParameters();
@@ -419,6 +422,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.setInt(3, medication.getUserId());
             theStatement.setString(4, medication.getName());
             theStatement.setInt(5, medication.getId());
+            theStatement.setInt(6,medication.getUserId());
 
             //excute the update
             theStatement.executeUpdate();
@@ -427,11 +431,92 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             theStatement.clearParameters();
 
         } catch (SQLException e) {
+            throw new OperationFailureException(e.getMessage() +
+                    " QueryID: " + SQLPropertiesTransactionKeys
+                    .SQLTransactionKeys
+                    .UPDATE_MEDICATION_INFO.tKey);
+        } catch (Exception e) {
+            throw new OperationFailureException(e.getMessage() + " QueryId: "
+                    + SQLPropertiesTransactionKeys
+                    .SQLTransactionKeys
+                    .UPDATE_MEDICATION_INFO.tKey );
+        }
+    }
+
+    //Update Medication Ingredients
+    @Override
+    public List<MedicationIngredients> updateMedicationIngredients(List<MedicationIngredients> medicationIngredients)
+            throws OperationFailureException {
+
+        PreparedStatement theStatement = null;
+        PreparedStatement validateMedicationIngredientExistence = null;
+
+        int rowCount = 0;
+        int medIngKey = 0;
+
+        ResultSet generatedKey, ingredientExistsResultSet = null;
+
+        //statement that executes the update
+        if (!medicationIngredients.isEmpty()) {
+            //retrieve the insert query using the proper SQLTransactionKey
+            theStatement = getDatasource()
+                    .getSQLStatement(
+                            SQLPropertiesTransactionKeys
+                                    .SQLTransactionKeys
+                                    .CREATE_MEDICATION_INGREDIENTS_INFO.tKey);
+
+            //statement that validates if the ingredient already exists
+            validateMedicationIngredientExistence = getDatasource().getSQLStatement(
+                    SQLPropertiesTransactionKeys
+                            .SQLTransactionKeys
+                            .FIND_MEDICATION_INGREDIENT.tKey);
+        }
+
+        try {
+            for (MedicationIngredients ing : medicationIngredients) {
+
+                validateMedicationIngredientExistence.clearParameters();
+                validateMedicationIngredientExistence.setInt(1,ing.getId());
+                validateMedicationIngredientExistence.setInt(2,ing.getIngredientId());
+                validateMedicationIngredientExistence.setInt(3,ing.getMedicationId());
+
+                ingredientExistsResultSet =
+                validateMedicationIngredientExistence.executeQuery();
+
+                if (ingredientExistsResultSet.next()) continue;
+
+                //clear the parameters for the next query to be run
+                theStatement.clearParameters();
+
+                // set the parameters for the insertion prepared statement
+                theStatement.setInt(1, ing.getMedicationId());
+                theStatement.setInt(2, ing.getIngredientId());
+
+                //excute the insert
+                rowCount = theStatement.executeUpdate();
+                if (rowCount == 0) {
+                    throw new SQLSyntaxErrorException("The insert for the medication ingredients failed." +
+                            "Verify the SQL statement : " + SQLPropertiesTransactionKeys
+                            .SQLTransactionKeys
+                            .CREATE_MEDICATION_INGREDIENTS_INFO.tKey);
+                } else {
+                    generatedKey = theStatement.getGeneratedKeys();
+                    if(generatedKey.next()) {
+                        medIngKey = generatedKey.getInt(1);
+                    }
+
+                    ing.setId(medIngKey);
+                }
+            }
+
+        } catch (SQLException e) {
             throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
         }
+        return medicationIngredients;
     }
+
 
     @Override
     public boolean medicationAlreadyExists(Medication medication) throws OperationFailureException {

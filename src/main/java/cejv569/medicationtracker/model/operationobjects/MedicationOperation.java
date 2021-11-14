@@ -152,4 +152,22 @@ public class MedicationOperation extends Operation implements ConfigureMedicatio
             }
         }
     }
+    @Override
+    public List<MedicationIngredients> putMedicationIngredients(List<MedicationIngredients> medicationIngredients)
+            throws OperationFailureException{
+
+        List<MedicationIngredients> list = null;
+        try {
+            if (!medicationIngredients.isEmpty()) {
+                list = getTransaction().updateMedicationIngredients(medicationIngredients);
+                if (list == null) {
+                    throw new OperationFailureException("A null medication ingredients list was returned " +
+                            " when adding new medication ingredients.");
+                }
+            }
+        } catch (Exception e) {
+            throw new OperationFailureException(e.getMessage());
+        }
+        return list;
+    }
 }
