@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ConfigureMedicationOperation extends ViewOperation{
     List<Ingredient> getIngredients() throws OperationFailureException;
-    List <MedicationIngredients> getMedicationIngredients(int userId) throws OperationFailureException;
+    List <MedicationIngredients> getMedicationIngredients(Medication medicationParameters) throws OperationFailureException;
     List <Medication> getMedications(int userId) throws OperationFailureException;
     List <Format> getFormats() throws OperationFailureException;
     List <MeasurementUnit> getMeasurementUnits() throws OperationFailureException;

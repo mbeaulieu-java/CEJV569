@@ -44,14 +44,14 @@ public class MedicationOperation extends Operation implements ConfigureMedicatio
     }
 
     @Override
-    public List<MedicationIngredients> getMedicationIngredients(int userId) throws OperationFailureException {
+    public List<MedicationIngredients> getMedicationIngredients(Medication medicationParameters) throws OperationFailureException {
 
         List <MedicationIngredients> medicationIngredients = null;
         try {
-           if (userId == 0) { throw new
+           if (medicationParameters.getUserId() == 0) { throw new
                    OperationFailureException("No user id was provided");}
 
-            medicationIngredients  = getTransaction().getMedicationIngredients(userId);
+            medicationIngredients  = getTransaction().getMedicationIngredients(medicationParameters);
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
         }

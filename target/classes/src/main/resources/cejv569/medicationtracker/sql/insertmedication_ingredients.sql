@@ -1,1 +1,1 @@
-insert into medication_ingredients(medication_id,ingredient_id) values (?,?);
+insert into medication_ingredients(med_id,ingredient_id) values (?,?);

@@ -11,7 +11,6 @@ import cejv569.medicationtracker.model.transactioninterfaces.MedicationTransacti
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MedicationTransactions extends DataTransactions implements MedicationTransaction {
 
@@ -66,7 +65,7 @@ public class MedicationTransactions extends DataTransactions implements Medicati
     }
 
     @Override
-    public List<MedicationIngredients> getMedicationIngredients(int userId) throws OperationFailureException {
+    public List<MedicationIngredients> getMedicationIngredients(Medication medicationParameters) throws OperationFailureException {
         ResultSet resultSet;
         PreparedStatement theStatement;
         String idColName, medicationIdColName, ingredientIdColName, nameColName;
@@ -92,7 +91,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
             ingredientIdColName = ResultSetColumnNamesByTransactionKey
                     .Medication_Ingredients_Info.INGREDIENT_ID.columnName;
 
-            theStatement.setInt(1, userId);
+            theStatement.setInt(1, medicationParameters.getUserId());
+            theStatement.setInt(2,medicationParameters.getId());
 
             //excute the Select query
             resultSet = theStatement.executeQuery();

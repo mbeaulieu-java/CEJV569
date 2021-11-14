@@ -1,1 +1,1 @@
-select id from medication where userid = ? and format_id = ? and measurement_id = ? and name = ? and id != ? ;
+select id from medication where userid = ? and format_id = ? and measurement_id = ? and lower(name) = ? and id != ? ;

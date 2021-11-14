@@ -14,13 +14,12 @@ import cejv569.medicationtracker.view.viewdata.CheckedListViewCheckObserver;
 import cejv569.medicationtracker.view.viewdata.ConfigureMedicationObservableData;
 import cejv569.medicationtracker.view.viewdata.FormatObservableData;
 import cejv569.medicationtracker.view.viewdata.MedicationIngredientsObservableData;
-import javafx.beans.binding.IntegerBinding;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxListCell;
@@ -90,19 +89,23 @@ public class ConfigureMedicationController extends ViewController {
     private static ObservableList<MeasurementUnit> measurementOList;
 
     //Bindable Properties
-    private SimpleBooleanProperty editingProperty;
-    private SimpleBooleanProperty addingProperty;
-    private SimpleBooleanProperty savingProperty;
+    private SimpleBooleanProperty editProperty;
+    private SimpleBooleanProperty addProperty;
+    private SimpleBooleanProperty saveProperty;
     private SimpleBooleanProperty disableProperty;
     private SimpleBooleanProperty enableProperty;
     private static SimpleBooleanProperty deletingProperty;
 
-//    //Bindable field variables
+    //Bindings
+    private BooleanBinding disableSave;
+    private BooleanBinding disableEdit;
+    private BooleanBinding disableAdd;
+
+//  User Activity State Flags
     private boolean editing;
     private boolean adding;
-    private boolean saving;
-    private boolean disableField;
-    private boolean enableField;
+    private boolean deleting;
+
 //
     //Attributes
     private int userId;
@@ -173,40 +176,40 @@ public class ConfigureMedicationController extends ViewController {
         this.measurementOList = measurementOList;
     }
 
-    public boolean isEditingProperty() {
-        return editingProperty.get();
+    public boolean getEditProperty() {
+        return editProperty.get();
     }
 
-    public SimpleBooleanProperty editingPropertyProperty() {
-        return editingProperty;
+    public SimpleBooleanProperty editPropertyProperty() {
+        return editProperty;
     }
 
-    public void setEditingProperty(boolean editingProperty) {
-        this.editingProperty.set(editingProperty);
+    public void setEditProperty(boolean editProperty) {
+        this.editProperty.set(editProperty);
     }
 
-    public boolean isAddingProperty() {
-        return addingProperty.get();
+    public boolean getAddProperty() {
+        return addProperty.get();
     }
 
     public SimpleBooleanProperty addingProperty() {
-        return addingProperty;
+        return addProperty;
     }
 
-    public void setAddingProperty(boolean addingProperty) {
-        this.addingProperty.set(addingProperty);
+    public void setAddProperty(boolean addProperty) {
+        this.addProperty.set(addProperty);
     }
 
-    public boolean isSavingProperty() {
-        return savingProperty.get();
+    public boolean getSaveProperty() {
+        return saveProperty.get();
     }
 
     public SimpleBooleanProperty savingProperty() {
-        return savingProperty;
+        return saveProperty;
     }
 
-    public void setSavingProperty(boolean savingProperty) {
-        this.savingProperty.set(savingProperty);
+    public void setSaveProperty(boolean saveProperty) {
+        this.saveProperty.set(saveProperty);
     }
 
     public boolean isDisableProperty() {
@@ -255,17 +258,17 @@ public class ConfigureMedicationController extends ViewController {
         medicationIngredientOList = null;
         formatOList = null;
         measurementOList = null;
-        editingProperty = new SimpleBooleanProperty(false);
-        addingProperty = new SimpleBooleanProperty(false);
-        savingProperty = new SimpleBooleanProperty(false);
-        disableProperty = new SimpleBooleanProperty(false);
-        enableProperty = new SimpleBooleanProperty(false);
+        editProperty = new SimpleBooleanProperty(false);
+        addProperty = new SimpleBooleanProperty(false);
+        saveProperty = new SimpleBooleanProperty(false);
+//        disableProperty = new SimpleBooleanProperty(false);
+//        enableProperty = new SimpleBooleanProperty(false);
         deletingProperty = new SimpleBooleanProperty(false);
         selectedIngredients = new ArrayList<>();
 
         //set the operation interface object for the AccountController
         ApplicationController.getInstance().operationFactory(this);
-        initializeControls();
+        initializeControlEventHandlers();
         initializeEditableControls();
     }
 
@@ -275,14 +278,14 @@ public class ConfigureMedicationController extends ViewController {
         editableControlList.add(medicationNameTextField);
         editableControlList.add(formatListView);
         editableControlList.add(measurementListView);
-        editableControlList.add(ingredientsListView);
-        editableControlList.add(medicationIngredientsListView);
 
         try {
-            GUIUtility.makeEditable(editableControlList);
+            GUIUtility.makeUnEditable(editableControlList);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+
+        ingredientsListView.disableProperty().bind(addProperty.not());
 
         medicationNameTextField.addEventHandler(KeyEvent.KEY_PRESSED,e -> {
             GUIUtility.undoDisplayFieldError(medicationNameTextField,messageLabel);
@@ -294,71 +297,154 @@ public class ConfigureMedicationController extends ViewController {
     public void initializeUserData(int userId) {
         this.userId = userId;
         initializeMedicationValues();
-        initializeMedicationIngredientsValues();
         initializeIngredientValues();
         initializeFormatValues();
         initializeMeasurementUnitValues();
         initializeListeners();
     }
 
-    private void initializeControls(){
+    private void initializeControlEventHandlers(){
 
+        //when the user clicks add, validate values and do save actions
         saveMedicationButton.addEventHandler(ActionEvent.ACTION,e->{
             validateValues();
-            if (isSavingProperty()) {
+            if (saveProperty.getValue()) {
                 save();}
         });
 
+        //when user clicks on edit or add call the appropriate functions
         editButton.addEventHandler(ActionEvent.ACTION,e->{setEditing();});
         addMedicationButton.addEventHandler(ActionEvent.ACTION,e->{setAdding();});
 
+
+        //if edit button or add button are disabled then enable the save button because
+        //we are either editing or adding information.
+        disableSave = new BooleanBinding() {
+            @Override
+            protected boolean computeValue() {
+               return !(editButton.isDisabled() && addMedicationButton.isDisabled());
+            }
+        };
+
+        // bind Save button to the above behaviour
+        saveMedicationButton.disableProperty().bind(disableSave);
+
+        /*
+        * Set button disable rules for the add button
+        * */
+        disableAdd = new BooleanBinding() {
+            @Override
+            protected boolean computeValue() {
+                //if the save button is not disabled then disable the add
+                 if (!saveMedicationButton.isDisabled()) return true;
+
+                //if addProperty is set to true, then don't disable the button
+                return !addProperty.getValue();
+            }
+        };
+        //bind add button to the button rules above.
+        addMedicationButton.disableProperty().bind(disableAdd);
+
+        /*
+         * Set the disable rules for the edit button.
+         * */
+        disableEdit = new BooleanBinding() {
+            @Override
+            protected boolean computeValue() {
+
+                //if nothing is selected from the medications list then disable
+                if (medicationListView
+                        .getSelectionModel()
+                        .getSelectedItems()
+                        .size() == 0
+                ) return true;
+
+                //if user already clicked edit or add then disable until save is completed
+                if (saveProperty.getValue()) return true;
+
+                //if edit is allowed then do not disable
+                return !editProperty.getValue();
+            }};
+
+        //bind add button to the above rules.
+        editButton.disableProperty().bind(disableEdit);
+
+        //set what actions can do from start
+        saveProperty.set(false);
+        editProperty.set(false);
+        addProperty.set(true);
+
+        //set the state flags for actions being performed
+        adding = false;
+        editing = false;
+        deleting = false;
+
         medicationListView.setOnMouseClicked(e->{
-            Medication item = medicationListView.getSelectionModel().getSelectedItem();
-            int medKey = item.getId();
-            int formatKey = item.getFormatId();
-            int measurementKey = item.getMeasurementId();
-
-            medicationNameTextField.textProperty().bind(
-                    ((ConfigureMedicationObservableData)medicationListView
-                            .getSelectionModel()
-                            .getSelectedItem())
-                            .nameProperty());
-
-            for (Format f : formatListView.getItems()) {
-                if (f.getId() == formatKey) {
-                    formatListView
-                            .getSelectionModel()
-                            .select(
-                                    formatListView
-                                    .getItems()
-                                    .indexOf(f));
-
-                    formatListView.scrollTo(
-                            formatListView
-                            .getItems()
-                            .indexOf(f));
-                    break;
-                }
-            }
-
-            for (MeasurementUnit m : measurementListView.getItems()) {
-                if (m.getId() == measurementKey) {
-                    measurementListView
-                            .getSelectionModel()
-                            .select(measurementListView
-                                    .getItems()
-                                    .indexOf(m));
-                    measurementListView.scrollTo(
-                            measurementListView
-                                    .getItems()
-                                    .indexOf(m));
-                    break;
-                }
-            }
-
-            //FILTER MED LIST
-
+            synchronizeMedicationDetails();
         });
+
+        medicationListView.setOnKeyPressed(e->{
+            synchronizeMedicationDetails();
+        });
+
+        medicationListView.setOnScroll(e->{
+            synchronizeMedicationDetails();
+        });
+    }
+
+    private void applyButtonRules() {
+        disableSave.get();
+        disableAdd.get();
+        disableEdit.get();
+    }
+
+    private void synchronizeMedicationDetails() {
+        Medication item = medicationListView.getSelectionModel().getSelectedItem();
+        int medKey = item.getId();
+        int formatKey = item.getFormatId();
+        int measurementKey = item.getMeasurementId();
+        ConfigureMedicationObservableData medParameters;
+
+        medicationNameTextField.textProperty().bind(
+                ((ConfigureMedicationObservableData)medicationListView
+                        .getSelectionModel()
+                        .getSelectedItem())
+                        .nameProperty());
+
+        for (Format f : formatListView.getItems()) {
+            if (f.getId() == formatKey) {
+                formatListView
+                        .getSelectionModel()
+                        .select(
+                                formatListView
+                                        .getItems()
+                                        .indexOf(f));
+
+                formatListView.scrollTo(
+                        formatListView
+                                .getItems()
+                                .indexOf(f));
+                break;
+            }
+        }
+
+        for (MeasurementUnit m : measurementListView.getItems()) {
+            if (m.getId() == measurementKey) {
+                measurementListView
+                        .getSelectionModel()
+                        .select(measurementListView
+                                .getItems()
+                                .indexOf(m));
+                measurementListView.scrollTo(
+                        measurementListView
+                                .getItems()
+                                .indexOf(m));
+                break;
+            }
+        }
+        medParameters = new ConfigureMedicationObservableData(
+                medKey,formatKey,measurementKey,getUserId(),"");
+        initializeMedicationIngredientsValues(medParameters);
     }
 
 
@@ -385,7 +471,7 @@ public class ConfigureMedicationController extends ViewController {
 
         try {
             successful = true;
-            savingProperty.set(successful);
+            saveProperty.set(successful);
         }catch (Exception e){
             LogError.logUnrecoverableError(new OperationFailureException("Error during field validation. " + e.getMessage()));
         }
@@ -414,10 +500,10 @@ public class ConfigureMedicationController extends ViewController {
         }
     }
 
-    private void initializeMedicationIngredientsValues() {
+    private void initializeMedicationIngredientsValues(Medication medicationParameters) {
 
         try {
-            medicationIngredientList = getOperation().getMedicationIngredients(getUserId());
+            medicationIngredientList = getOperation().getMedicationIngredients(medicationParameters);
             medicationIngredientOList = FXCollections.observableList(medicationIngredientList);
             medicationIngredientsListView.setItems(medicationIngredientOList);
             medicationIngredientsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -425,13 +511,6 @@ public class ConfigureMedicationController extends ViewController {
         }catch (Exception e) {
             LogError.logUnrecoverableError(new OperationFailureException(e.getMessage()));
         }
-    }
-
-    private void selectChecked(Event e) {
-        ListView listView = (ListView)e.getTarget();
-        System.out.println(listView.getFocusModel().getFocusedIndex());
-
-        listView.getSelectionModel().getSelectedItems().add(listView.getFocusModel().getFocusedItem());
     }
 
     private void initializeFormatValues() {
@@ -531,12 +610,13 @@ public class ConfigureMedicationController extends ViewController {
 
 
     private void setAdding() {
-        addingProperty.set(true);
+        addProperty.set(true);
         medicationIngredientsListView.setEditable(false);
     }
 
     private void setEditing() {
-        setEditingProperty(true);
+        editing = true;
+        setEditProperty(true);
         try {
             GUIUtility.makeEditable(editableControlList);
             medicationIngredientsListView.getItems().addListener(deleteIngredientListener);
@@ -550,7 +630,7 @@ public class ConfigureMedicationController extends ViewController {
         int index = 0;
         SimpleObjectProperty<Pair<Ingredient,Boolean>> temp2;
 
-        if (this.isAddingProperty()) {
+        if (addProperty.getValue()) {
             if (doAdd()) {
                 for (Control c :editableControlList) {
                     if (c instanceof TextField){
@@ -563,7 +643,7 @@ public class ConfigureMedicationController extends ViewController {
                     this.initializeIngredientValues();
             }
         }
-        if (this.isEditingProperty()) {
+        if (this.getEditProperty()) {
             if (doEdit()) {
                 medicationIngredientsListView.getItems().removeListener(deleteIngredientListener);
             }
@@ -627,7 +707,7 @@ public class ConfigureMedicationController extends ViewController {
                 }
             }
             successful = true;
-            addingProperty.set(false);
+            addProperty.set(false);
 
         } catch (MedicationAlreadyAddedException e) {
             successful = false;
