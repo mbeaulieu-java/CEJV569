@@ -1,26 +1,15 @@
 package cejv569.medicationtracker.view.customcellclasses;
 
 import cejv569.medicationtracker.model.datainterfaces.MedicationIngredients;
-import cejv569.medicationtracker.utility.GUIUtility;
 import cejv569.medicationtracker.view.viewcontrollers.ConfigureMedicationController;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-
-import java.lang.reflect.Method;
-import java.util.Map;
 
 public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
     private static final String IMAGE_PATH = "/cejv569/medicationtracker/assets/delete.png";
@@ -67,9 +56,11 @@ public class MedicationIngredientCell extends ListCell<MedicationIngredients>{
         }
 
         private void onClickItemDelete(ActionEvent e) {
-            this.getListView().getItems().remove(this.getItem());
-            this.getListView().refresh();
-            this.getListView().requestFocus();
+            if (ConfigureMedicationController.editing){
+                this.getListView().getItems().remove(this.getItem());
+                this.getListView().refresh();
+                this.getListView().requestFocus();
+            }
         }
 
 }

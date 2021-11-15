@@ -5,22 +5,14 @@ import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.operationinterfaces.AccountOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
-import cejv569.medicationtracker.utility.GUIUtility;
-import cejv569.medicationtracker.utility.UserMessages;
 import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-
-import java.util.stream.Stream;
 
 public class AccountController extends ViewController{
 

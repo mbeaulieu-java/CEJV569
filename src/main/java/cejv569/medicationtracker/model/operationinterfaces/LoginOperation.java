@@ -4,7 +4,6 @@ import cejv569.medicationtracker.exceptions.NoSuchUserNameException;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.WrongPasswordException;
 import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
  * LoginOperation is a subclass of ViewOperation.  It interfaces the data requests between the

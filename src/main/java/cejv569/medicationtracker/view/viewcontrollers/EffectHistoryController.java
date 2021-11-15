@@ -4,11 +4,7 @@ import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.model.operationinterfaces.EffectHistoryOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 public class EffectHistoryController extends ViewController {

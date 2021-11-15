@@ -1,7 +1,6 @@
 package cejv569.medicationtracker.view.viewdata;
 
 import cejv569.medicationtracker.model.datainterfaces.MedicationIngredients;
-import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 

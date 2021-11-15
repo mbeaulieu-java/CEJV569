@@ -8,7 +8,10 @@ import cejv569.medicationtracker.model.datainterfaces.*;
 import cejv569.medicationtracker.model.dataobjects.*;
 import cejv569.medicationtracker.model.transactioninterfaces.MedicationTransaction;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +58,9 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                         resultSet.getBoolean(medicinalColName)));
             }
 
-        } catch (OperationFailureException | SQLException e) {
+        } catch (OperationFailureException e) {
+            throw e;
+        } catch (SQLException e) {
             throw new OperationFailureException(e.getMessage());
         } catch (Exception e) {
             throw new OperationFailureException(e.getMessage());
@@ -305,9 +310,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                     generatedKey = theStatement.getGeneratedKeys();
                     if(generatedKey.next()) {
                         medIngKey = generatedKey.getInt(1);
+                        ing.setId(medIngKey);
                     }
-
-                    ing.setId(medIngKey);
                 }
             }
 
@@ -472,22 +476,25 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                             .FIND_MEDICATION_INGREDIENT.tKey);
         }
 
-        try {
+        try { //loop through received list of med ingredients to add
             for (MedicationIngredients ing : medicationIngredients) {
 
                 validateMedicationIngredientExistence.clearParameters();
-                validateMedicationIngredientExistence.setInt(1,ing.getId());
-                validateMedicationIngredientExistence.setInt(2,ing.getIngredientId());
-                validateMedicationIngredientExistence.setInt(3,ing.getMedicationId());
 
+                validateMedicationIngredientExistence.setInt(1,ing.getIngredientId());
+                validateMedicationIngredientExistence.setInt(2,ing.getMedicationId());
+
+                //run query to see if a record is already in the list for that ingredient
                 ingredientExistsResultSet =
                 validateMedicationIngredientExistence.executeQuery();
 
+                //if the record already exists then try the next record
                 if (ingredientExistsResultSet.next()) continue;
 
                 //clear the parameters for the next query to be run
                 theStatement.clearParameters();
 
+                //if the ingredient is not in the list then insert it
                 // set the parameters for the insertion prepared statement
                 theStatement.setInt(1, ing.getMedicationId());
                 theStatement.setInt(2, ing.getIngredientId());
@@ -503,9 +510,8 @@ public class MedicationTransactions extends DataTransactions implements Medicati
                     generatedKey = theStatement.getGeneratedKeys();
                     if(generatedKey.next()) {
                         medIngKey = generatedKey.getInt(1);
+                        ing.setId(medIngKey);
                     }
-
-                    ing.setId(medIngKey);
                 }
             }
 

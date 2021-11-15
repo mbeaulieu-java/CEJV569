@@ -2,7 +2,6 @@ package cejv569.medicationtracker.model.transactioninterfaces;
 
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.Contact;
-import cejv569.medicationtracker.model.dataobjects.ContactData;
 
 /**
  * ContactTransaction is a subclass of DataTransaction.  It is implemented by the ContactTransactions

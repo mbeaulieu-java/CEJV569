@@ -4,12 +4,7 @@ import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.model.operationinterfaces.LogMedicationOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 public class LogMedicationController extends ViewController{

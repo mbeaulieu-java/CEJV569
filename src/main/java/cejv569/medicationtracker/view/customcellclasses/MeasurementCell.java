@@ -1,6 +1,5 @@
 package cejv569.medicationtracker.view.customcellclasses;
 
-import cejv569.medicationtracker.model.datainterfaces.Format;
 import cejv569.medicationtracker.model.datainterfaces.MeasurementUnit;
 import javafx.scene.control.ListCell;
 

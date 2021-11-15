@@ -9,28 +9,32 @@ import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
 import cejv569.medicationtracker.utility.GUIUtility;
 import cejv569.medicationtracker.utility.LogError;
 import cejv569.medicationtracker.utility.UserMessages;
-import cejv569.medicationtracker.view.customcellclasses.*;
+import cejv569.medicationtracker.view.customcellclasses.FormatCell;
+import cejv569.medicationtracker.view.customcellclasses.MeasurementCell;
+import cejv569.medicationtracker.view.customcellclasses.MedicationCell;
+import cejv569.medicationtracker.view.customcellclasses.MedicationIngredientCell;
 import cejv569.medicationtracker.view.viewdata.CheckedListViewCheckObserver;
 import cejv569.medicationtracker.view.viewdata.ConfigureMedicationObservableData;
 import cejv569.medicationtracker.view.viewdata.FormatObservableData;
 import cejv569.medicationtracker.view.viewdata.MedicationIngredientsObservableData;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConfigureMedicationController extends ViewController {
@@ -92,19 +96,12 @@ public class ConfigureMedicationController extends ViewController {
     private SimpleBooleanProperty editProperty;
     private SimpleBooleanProperty addProperty;
     private SimpleBooleanProperty saveProperty;
-    private SimpleBooleanProperty disableProperty;
-    private SimpleBooleanProperty enableProperty;
-    private static SimpleBooleanProperty deletingProperty;
-
-    //Bindings
-    private BooleanBinding disableSave;
-    private BooleanBinding disableEdit;
-    private BooleanBinding disableAdd;
+    private static SimpleBooleanProperty deleteProperty;
 
 //  User Activity State Flags
-    private boolean editing;
-    private boolean adding;
-    private boolean deleting;
+    public static boolean editing;
+    public static boolean adding;
+    public static boolean deleting;
 
 //
     //Attributes
@@ -180,7 +177,7 @@ public class ConfigureMedicationController extends ViewController {
         return editProperty.get();
     }
 
-    public SimpleBooleanProperty editPropertyProperty() {
+    public SimpleBooleanProperty editProperty() {
         return editProperty;
     }
 
@@ -192,7 +189,7 @@ public class ConfigureMedicationController extends ViewController {
         return addProperty.get();
     }
 
-    public SimpleBooleanProperty addingProperty() {
+    public SimpleBooleanProperty addProperty() {
         return addProperty;
     }
 
@@ -204,7 +201,7 @@ public class ConfigureMedicationController extends ViewController {
         return saveProperty.get();
     }
 
-    public SimpleBooleanProperty savingProperty() {
+    public SimpleBooleanProperty saveProperty() {
         return saveProperty;
     }
 
@@ -212,41 +209,7 @@ public class ConfigureMedicationController extends ViewController {
         this.saveProperty.set(saveProperty);
     }
 
-    public boolean isDisableProperty() {
-        return disableProperty.get();
-    }
 
-    public SimpleBooleanProperty disableProperty() {
-        return disableProperty;
-    }
-
-    public void setDisableProperty(boolean disableProperty) {
-        this.disableProperty.set(disableProperty);
-    }
-
-    public boolean isEnableProperty() {
-        return enableProperty.get();
-    }
-
-    public SimpleBooleanProperty enableProperty() {
-        return enableProperty;
-    }
-
-    public void setEnableProperty(boolean enableProperty) {
-        this.enableProperty.set(enableProperty);
-    }
-
-    public boolean isDeletingProperty() {
-        return deletingProperty.get();
-    }
-
-    public SimpleBooleanProperty deletingProperty() {
-        return deletingProperty;
-    }
-
-    public void setDeletingProperty(boolean deletingProperty) {
-        this.deletingProperty.set(deletingProperty);
-    }
 
     //Methods/Functions
 
@@ -261,9 +224,8 @@ public class ConfigureMedicationController extends ViewController {
         editProperty = new SimpleBooleanProperty(false);
         addProperty = new SimpleBooleanProperty(false);
         saveProperty = new SimpleBooleanProperty(false);
-//        disableProperty = new SimpleBooleanProperty(false);
-//        enableProperty = new SimpleBooleanProperty(false);
-        deletingProperty = new SimpleBooleanProperty(false);
+
+        deleteProperty = new SimpleBooleanProperty(false);
         selectedIngredients = new ArrayList<>();
 
         //set the operation interface object for the AccountController
@@ -285,11 +247,9 @@ public class ConfigureMedicationController extends ViewController {
             System.err.println(e.getMessage());
         }
 
-        ingredientsListView.disableProperty().bind(addProperty.not());
-
-        medicationNameTextField.addEventHandler(KeyEvent.KEY_PRESSED,e -> {
-            GUIUtility.undoDisplayFieldError(medicationNameTextField,messageLabel);
-        });
+        ingredientsListView.setDisable(true);
+        //medicationIngredientsListView.setDisable(false);
+        medicationIngredientsListView.setEditable(false);
 
     }
 
@@ -301,77 +261,42 @@ public class ConfigureMedicationController extends ViewController {
         initializeFormatValues();
         initializeMeasurementUnitValues();
         initializeListeners();
+
+        medicationListView.getSelectionModel().selectFirst();
+        synchronizeMedicationDetails();
     }
 
     private void initializeControlEventHandlers(){
 
-        //when the user clicks add, validate values and do save actions
+        //if the user is allowed to save, then save
         saveMedicationButton.addEventHandler(ActionEvent.ACTION,e->{
-            validateValues();
-            if (saveProperty.getValue()) {
-                save();}
+                if (saveProperty.getValue()) {
+                    save();
+                }
         });
 
         //when user clicks on edit or add call the appropriate functions
         editButton.addEventHandler(ActionEvent.ACTION,e->{setEditing();});
         addMedicationButton.addEventHandler(ActionEvent.ACTION,e->{setAdding();});
 
+        medicationNameTextField
+                .addEventHandler(KeyEvent.ANY,e -> {onActionValidator();});
 
-        //if edit button or add button are disabled then enable the save button because
-        //we are either editing or adding information.
-        disableSave = new BooleanBinding() {
-            @Override
-            protected boolean computeValue() {
-               return !(editButton.isDisabled() && addMedicationButton.isDisabled());
-            }
-        };
+        formatListView.addEventHandler(KeyEvent.ANY,e->{onActionValidator();});
+        formatListView.addEventHandler(MouseEvent.MOUSE_CLICKED,e->{onActionValidator();});
 
-        // bind Save button to the above behaviour
-        saveMedicationButton.disableProperty().bind(disableSave);
+        measurementListView.addEventHandler(KeyEvent.ANY,e->{onActionValidator();});
+        measurementListView.addEventHandler(MouseEvent.MOUSE_CLICKED,e->{onActionValidator();});
 
-        /*
-        * Set button disable rules for the add button
-        * */
-        disableAdd = new BooleanBinding() {
-            @Override
-            protected boolean computeValue() {
-                //if the save button is not disabled then disable the add
-                 if (!saveMedicationButton.isDisabled()) return true;
 
-                //if addProperty is set to true, then don't disable the button
-                return !addProperty.getValue();
-            }
-        };
-        //bind add button to the button rules above.
-        addMedicationButton.disableProperty().bind(disableAdd);
-
-        /*
-         * Set the disable rules for the edit button.
-         * */
-        disableEdit = new BooleanBinding() {
-            @Override
-            protected boolean computeValue() {
-
-                //if nothing is selected from the medications list then disable
-                if (medicationListView
-                        .getSelectionModel()
-                        .getSelectedItems()
-                        .size() == 0
-                ) return true;
-
-                //if user already clicked edit or add then disable until save is completed
-                if (saveProperty.getValue()) return true;
-
-                //if edit is allowed then do not disable
-                return !editProperty.getValue();
-            }};
-
-        //bind add button to the above rules.
-        editButton.disableProperty().bind(disableEdit);
+        //bind each of the buttons to the related property
+        saveMedicationButton.disableProperty().bind(saveProperty.not());
+        addMedicationButton.disableProperty().bind(addProperty.not());
+        editButton.disableProperty().bind(editProperty.not());
 
         //set what actions can do from start
         saveProperty.set(false);
-        editProperty.set(false);
+        editProperty.set(true);
         addProperty.set(true);
 
         //set the state flags for actions being performed
@@ -381,26 +306,56 @@ public class ConfigureMedicationController extends ViewController {
 
         //make sure that the details on the right pane match the medication that the user
         //has selected from their list and that it follows when the user scrolls, presses key or
-        // clicks.
-        medicationListView.setOnMouseClicked(e->{
-            synchronizeMedicationDetails();
-            editProperty.set(true);
-            applyButtonRules();
+        // clicks.  HOWEVER, DON'T DO IF IN SAVE MODE
+        medicationListView.setOnMouseClicked(e-> {
+            if (saveProperty.getValue()) {
+                editProperty.set(false);
+                addProperty.set(false);
+            } else {
+                editProperty.set(true);
+                addProperty.set(true);
+                synchronizeMedicationDetails();
+            }
         });
 
         medicationListView.setOnKeyPressed(e->{
-            synchronizeMedicationDetails();
+            if (saveProperty.getValue()) {
+                editProperty.set(false);
+                addProperty.set(false);
+            } else {
+                editProperty.set(true);
+                addProperty.set(true);
+                synchronizeMedicationDetails();
+            }
         });
 
         medicationListView.setOnScroll(e->{
-            synchronizeMedicationDetails();
+            if (saveProperty.getValue()) {
+                editProperty.set(false);
+                addProperty.set(false);
+            } else {
+                editProperty.set(true);
+                addProperty.set(true);
+                synchronizeMedicationDetails();
+            }
         });
+
     }
-    //calls the bindings on the buttons to apply the specific disabling rules
-    private void applyButtonRules() {
-        disableSave.get();
-        disableAdd.get();
-        disableEdit.get();
+
+    private void onActionValidator() {
+        //if all three buttons (add, edit and save are disabled) then check to validate
+        //the values.  If all good, activate the save
+        if (    !addProperty.getValue() &&
+                !editProperty.getValue()
+        )
+        {
+            //set allowed to save if the all the values are valid
+            if (validateValues()) {
+                saveProperty.set(true);
+            } else {
+                saveProperty.set(false);
+            }
+        }
     }
 
     //filters and displays the correct data that corresponds to the selected medication
@@ -485,16 +440,16 @@ public class ConfigureMedicationController extends ViewController {
     }
 
     //validate that all the information is entered correctly into the fields.
+    /*  A medication name must be entered,a format and measurement unit selected too */
     private boolean validateValues() {
-        boolean successful = false;
 
-        try {
-            successful = true;
-            saveProperty.set(successful);
-        }catch (Exception e){
-            LogError.logUnrecoverableError(new OperationFailureException("Error during field validation. " + e.getMessage()));
-        }
-        return successful;
+        if (medicationNameTextField.getText().trim().isBlank()) return false;
+
+        if (formatListView.getSelectionModel().getSelectedItems().size() == 0) return false;
+
+        if (measurementListView.getSelectionModel().getSelectedItems().size() == 0) return false;
+
+        return true;
     }
 
     //retrieve all the medication records from the database, create observable data objects
@@ -647,11 +602,19 @@ public class ConfigureMedicationController extends ViewController {
 
     //prepare the various rules and states to indicate that the information is in Add mode
     private void setAdding() {
+
         //user not allowed to add, they are already adding
         addProperty.set(false);
+        editProperty.set(false);
+
+        //State is adding
         adding = true;
 
         //clear all controls so the user can enter new information
+
+        //first remove the binding on the medication name textfield
+        medicationNameTextField.textProperty().unbind();
+        //loop through editable controls and reset
         for (Control c :editableControlList) {
             if (c instanceof TextField){
                 ((TextField)c).setText("");
@@ -663,102 +626,126 @@ public class ConfigureMedicationController extends ViewController {
         //re-initialize the ingredients list values to remove all the prior checked items
         this.initializeIngredientValues();
 
-        //if adding medications, the user can't delete items from the medication list
-        medicationIngredientsListView.setDisable(true);
+        //make it selectable
+        ingredientsListView.setDisable(false);
 
-        //enable/disable buttons
-        applyButtonRules();
+        //make nothing selected in the list
+        medicationListView.getSelectionModel().clearSelection();
+        medicationIngredientsListView.getItems().clear();
+
+        //if adding medications, the user can't delete items from the medication list
+        //medicationIngredientsListView.setDisable(true);
 
         try {
             //make all required fields editable
             GUIUtility.makeEditable(editableControlList);
         } catch (Exception e){ LogError.logRecoverableError(e);}
 
+        //set allowed to save if the all the values are valid
+        if (validateValues()) {
+            saveProperty.set(true);
+        } else {
+            saveProperty.set(false);
+        }
     }
         //set various items for edit mode
     private void setEditing() {
 
         //set flags
+
         //can't edit if already editing
         editProperty.set(false);
+
+        //can't add if editing
+        addProperty.set(false);
+
         //editing state
         editing = true;
 
+
         //allowed to delete medication ingredients
-        deletingProperty.set(true);
-        //disactivate/activate buttons
-        applyButtonRules();
+        deleteProperty.set(true);
+
 
         try {
             //Enable edits to the medicationingredients list view so user can delete or add
             //ingredients.
-            medicationIngredientsListView.setDisable(false);
 
             //make the controls editable.
             GUIUtility.makeEditable(editableControlList);
+            //set text box to med name
+            medicationNameTextField.textProperty().unbind();
+
+            //make it selectable
+            ingredientsListView.setDisable(false);
 
             //add the delete change listener so we can track nodes removed from the list
             medicationIngredientsListView.getItems().addListener(deleteIngredientListener);
+
+            //set allowed to save if the all the values are valid
+            if (validateValues()) {
+                saveProperty.set(true);
+            } else {
+                saveProperty.set(false);
+            }
+
         } catch (Exception e) {
             LogError.logRecoverableError(e);
         }
     }
 
+    //do save, redirect to the right procedure depending on whether it's an add or edit
     private void save() {
         Ingredient key;
         int index = 0;
         SimpleObjectProperty<Pair<Ingredient,Boolean>> temp2;
         boolean successful = false;
 
-        //set allowed to save
-        saveProperty.set(true);
+        //if state is adding then do add
+        if (adding) {successful = doAdd();}
 
-        if (adding) {
-            successful = doAdd();
-
-            //if add was successful
-            if (successful) {
-                //After add, the user can add again
-                addProperty.set(true);
-
-                //User no longer adding
-                adding = false;
-
-                //user not allowed to save
-                saveProperty.set(false);
-
-            }
-        }
-
+        //if state is editing then do edit
         if (editing) {
-            //do the edit
             successful = doEdit();
-            //if all good
+
             if (successful) {
                 //after the edit, remove the ability for the user to delete an ingredient until they
                 //click edit again.
-                medicationIngredientsListView.getItems().removeListener(deleteIngredientListener);
-                medicationIngredientsListView.setDisable(true);
+                medicationIngredientsListView
+                        .getItems().
+                        removeListener(deleteIngredientListener);
+            }
+        }
+        if (successful) {
+            try {
+                //disactivate the save button until next action
+                saveProperty.set(false);
+                // user can't delete until next edit
+                deleteProperty.set(false);
+
+                //After add, the user can add & edit again
+                addProperty.set(true);
+                editProperty.set(true);
+
+                 //save any editing or adding state to false
+                adding = false;
+                editing = false;
+
+                //make all required fields un-editable until next add or edit
+                GUIUtility.makeUnEditable(editableControlList);
+                //set text box to med name
+                medicationNameTextField.textProperty().bind(
+                        ((ConfigureMedicationObservableData)medicationListView
+                                .getSelectionModel()
+                                .getSelectedItem())
+                                .nameProperty());
 
                 //re-initialize the ingredients list values to remove all the prior checked items
                 this.initializeIngredientValues();
+                setIngredientListParameters();
+                ingredientsListView.setDisable(true);
 
-                //User no longer editing
-                editing = false;
-
-                // user can't delete until next edit
-                deletingProperty.set(false);
-                //user not allowed to save
-                saveProperty.set(false);
-            }
-            if (successful) {
-                try {
-                    //make all required fields un-editable until next add or edit
-                    GUIUtility.makeUnEditable(editableControlList);
-                } catch (Exception e) {LogError.logRecoverableError(e);}
-                //reset button rules
-                applyButtonRules();
-            }
+            } catch (Exception e) {LogError.logRecoverableError(e);}
         }
     }
 
@@ -780,7 +767,7 @@ public class ConfigureMedicationController extends ViewController {
 
             //get the selected index to be able to position the modified node back into
             //the list correctly sorted.
-            medicationListView.getSelectionModel().getSelectedIndex();
+            selectedIndex = medicationListView.getSelectionModel().getSelectedIndex();
             //get the Primary Keys for the Medication being edited
             medKey = medicationListView.getSelectionModel().getSelectedItem().getId();
             formatKey = formatListView.getSelectionModel().getSelectedItem().getId();
@@ -799,7 +786,7 @@ public class ConfigureMedicationController extends ViewController {
 
             //remove the old medication record, then go through the list comparing the
             //name of the modified record to each in the list to know where to put it
-            //so it's sorted.
+            //so it's sorted.  Select the item and scroll to it so the user sees the modifications.
             medicationListView.getItems().remove(selectedIndex);
 
             for (int x = 0; x < medicationListView.getItems().size();x++){
@@ -816,14 +803,40 @@ public class ConfigureMedicationController extends ViewController {
                 }
             }
 
+            //if there are ingredients that were selected to add, then add them
+
+            //build data objets list to do save
+            if (selectedIngredients.size() != 0) {
+                List<MedicationIngredients> ingredients = new ArrayList<>();
+                for (Ingredient i : selectedIngredients) {
+
+                    MedicationIngredients ing = new MedicationIngredientsObservableData(
+                            0,
+                            medKey,
+                            i.getId(),
+                            i.getName());
+
+                    ingredients.add(ing);
+                }
+                //update the records in the database
+                newMedIngredients = getOperation().putMedicationIngredients(ingredients);
+
+                //if new ingredients were added to the DB then add new ingredients to the
+                //medication ingredient list,then clear selected list for future actions.
+                if (newMedIngredients != null && !newMedIngredients.isEmpty()) {
+                    medicationIngredientsListView.getItems().addAll(newMedIngredients);
+                    selectedIngredients.clear();
+                    newMedIngredients.clear();
+                }
+            }
+
+
             //save successful and no longer allowed to save again until another transaction
             //is initiated.
             successful = true;
             saveProperty.set(false);
-
-            //clear the ingredient processing lists
-            selectedIngredients.clear();
-            newMedIngredients.clear();
+            //re-synchronize the medication details to reflect the changes.
+            synchronizeMedicationDetails();
 
             //if a medication with same name, format and measurment unit already saved,
             //generate an error

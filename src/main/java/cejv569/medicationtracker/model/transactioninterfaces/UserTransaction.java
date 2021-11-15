@@ -2,7 +2,6 @@ package cejv569.medicationtracker.model.transactioninterfaces;
 
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.model.dataobjects.UserData;
 
 /**
  * UserTransaction is an interface subclass of DataTransaction.  It is implemented by the UserTransactions

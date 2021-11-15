@@ -93,12 +93,12 @@ public class LogError {
             //the task to occur in a delay of 2000 milliseconds.
             TimerTask task = new TimerTask() {
                 public void run() {
-                    Platform.exit();
+                    System.exit(0);
                 }
             };
             Timer timer = new Timer("Timer");
 
-            long delay = 2000L;
+            long delay = 500L;
             timer.schedule(task, delay);
         }
     }

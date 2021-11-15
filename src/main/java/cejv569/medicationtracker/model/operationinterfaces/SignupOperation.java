@@ -3,7 +3,6 @@ package cejv569.medicationtracker.model.operationinterfaces;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.exceptions.UserAlreadyExistsException;
 import cejv569.medicationtracker.model.datainterfaces.User;
-import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 
 /**
  * SignupOperation is a subclass of ViewOperation.  It interfaces the data requests between the

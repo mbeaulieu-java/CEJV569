@@ -2,7 +2,6 @@ package cejv569.medicationtracker.model.operationinterfaces;
 
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.datainterfaces.Contact;
-import cejv569.medicationtracker.view.viewdata.ContactObservableData;
 
 /**
  * ContactOperation is a subclass of ViewOperation.  It interfaces the data requests between the
