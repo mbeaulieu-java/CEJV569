@@ -76,11 +76,21 @@ public class ContactController extends ViewController{
         //init all the required fields so the user gets the feedback about which fields are
         //required.
         initFieldValidation();
-
+        submitButton.setDisable(true);
         //add button handler
         submitButton.addEventHandler(ActionEvent.ACTION,(e)->{isValidInfo();});
+        nameTextField.setOnKeyPressed(e->{submitButtonHandler();});
+        emailTextField.setOnKeyPressed(e->{submitButtonHandler();});
+
     }
 
+    private void submitButtonHandler() {
+        if (GUIUtility.signalEmptyField(getRequiredFields())){
+            submitButton.setDisable(true);
+        } else {
+            submitButton.setDisable(false);
+        }
+    }
 
     /**
      * isValidInfo() uses GUIUtility signalEmptyField to pass in the controllers list of required fields.
@@ -91,17 +101,6 @@ public class ContactController extends ViewController{
      * to be initialized as fields requiring to be filled again.
      */
     private boolean isValidInfo() {
-
-        //call the function that signals to the user that the field is empty and
-        //is a required field.
-        if (GUIUtility.signalEmptyField(
-                this.getRequiredFields(),
-                GUIUtility.DEFAULT_ERROR_FIELD_BORDER_COLOR,
-                GUIUtility.DEFAULT_FIELD_BORDER_COLOR,
-                messageLabel,
-                GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
-                GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
-                UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message)) {return false;}
 
         //validate that the email is in a valid email format
         if (!DataValidator.isValidEmail(emailTextField.getText())) {
@@ -115,7 +114,7 @@ public class ContactController extends ViewController{
         //clear the fields to receive new values and re-initialize required fields for validation
         //purposes.
         GUIUtility.clearAllInputTextFields((Pane)emailTextField.getParent());
-        initFieldValidation();
+        submitButton.setDisable(true);
         displaySubmitMessage();
         return true;
     }
@@ -159,20 +158,6 @@ public class ContactController extends ViewController{
         //add the forms required fields
         getRequiredFields().add(nameTextField);
         getRequiredFields().add(emailTextField);
-
-        //call the function that signals to the user that the field is empty and
-        //is a required field.  Do this at program start and after the operation that needed
-        // validation is completed so the user gets the feedback right away.
-        GUIUtility.signalEmptyField(
-                this.getRequiredFields(),
-                GUIUtility.DEFAULT_ERROR_FIELD_BORDER_COLOR,
-                GUIUtility.DEFAULT_FIELD_BORDER_COLOR,
-                messageLabel,
-                GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
-                GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
-                UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
-
-
     }
 
     /**

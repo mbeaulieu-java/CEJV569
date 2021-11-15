@@ -5,16 +5,19 @@ import cejv569.medicationtracker.ApplicationController;
 import cejv569.medicationtracker.exceptions.OperationFailureException;
 import cejv569.medicationtracker.model.operationinterfaces.AccountOperation;
 import cejv569.medicationtracker.model.operationinterfaces.ViewOperation;
+import cejv569.medicationtracker.utility.DataValidator;
+import cejv569.medicationtracker.utility.GUIUtility;
+import cejv569.medicationtracker.utility.UserMessages;
 import cejv569.medicationtracker.view.viewdata.AccountObservableData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
-public class AccountController extends ViewController{
+import java.util.ArrayList;
+import java.util.List;
+
+public class AccountController extends ViewController {
 
     //Controls
 
@@ -51,8 +54,12 @@ public class AccountController extends ViewController{
     @FXML
     private Button saveAccountButton;
 
+    @FXML
+    private Label messageLabel;
+
     private AccountObservableData accountObservableData;
     private AccountOperation accountoperation;
+    private List<TextInputControl> requiredFields;
 
     //Getter and Setters
     private AccountObservableData getAccountData() {
@@ -70,7 +77,7 @@ public class AccountController extends ViewController{
     @Override
     public void setOperation(ViewOperation operation) {
         super.operation = operation;
-        this.accountoperation = (AccountOperation)operation;
+        this.accountoperation = (AccountOperation) operation;
     }
 
     public void initializeAccountData(AccountObservableData accountObservableData) {
@@ -81,15 +88,51 @@ public class AccountController extends ViewController{
         telephoneTextField.textProperty().bindBidirectional(this.accountObservableData.telephoneProperty());
         userTextField.textProperty().bindBidirectional(this.accountObservableData.userNameProperty());
         passwordTextField.textProperty().bindBidirectional(this.accountObservableData.passwordProperty());
+        passwordConfirmationTextField.setText(passwordTextField.getText());
     }
 
     private void doSave() {
         if (validateAccountData()) {
             updateAccountData();
+            passwordConfirmationTextField.setDisable(true);
+            messageLabel.setVisible(true);
+            messageLabel.setText(UserMessages.Messages.SAVED_MESSAGE.message);
         }
     }
 
     private boolean validateAccountData() {
+        messageLabel.setVisible(false);
+        if (GUIUtility.signalEmptyField(requiredFields)) {
+            GUIUtility.displayFieldError(userTextField,messageLabel, UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
+            return false;
+        }
+        //validate to make sure the user name is a valid email format
+        if (!DataValidator.isValidUser(userTextField.getText().trim())) {
+            GUIUtility.displayFieldError(userTextField,messageLabel, UserMessages.ErrorMessages.INVALID_EMAIL_MESSAGE.message);
+            return false;
+        }
+
+        //validate to make sure the user name is a valid email format
+        if (!DataValidator.isValidUser(emailTextField.getText().trim())) {
+            GUIUtility.displayFieldError(userTextField,messageLabel, UserMessages.ErrorMessages.INVALID_EMAIL_MESSAGE.message);
+            return false;
+        }
+
+        //validate if the password is at least 8 characters long
+        if (!DataValidator.isValidPassword(passwordTextField.getText().trim())){
+            GUIUtility.displayFieldError(passwordTextField,messageLabel,
+                    UserMessages.ErrorMessages.INVALID_PASSWORD_MESSAGE.message);
+            return false;
+        }
+
+        //make sure the password confirmation matches the password.
+        if (!passwordConfirmationTextField.getText().trim().equals(passwordTextField.getText().trim())) {
+            GUIUtility.displayFieldError(passwordConfirmationTextField,messageLabel,
+                    UserMessages.ErrorMessages.PASSWORD_NOMATCH_ERROR_MESSAGE.message);
+            return false;
+        }
+
+        messageLabel.setVisible(false);
         return true;
     }
 
@@ -100,19 +143,31 @@ public class AccountController extends ViewController{
             //display error message
 
         }
-
     }
 
     @FXML
     void initialize() {
 
-        //set the operation interface object for the AccountController
-        ApplicationController.getInstance().operationFactory(this);
-        saveAccountButton.addEventHandler(ActionEvent.ACTION,e->{
-            doSave();
+        //initialized required fields
+        requiredFields = new ArrayList<>();
+        requiredFields.add(firstNameTextField);
+        requiredFields.add(lastNameTextField);
+        requiredFields.add(emailTextField);
+        requiredFields.add(telephoneTextField);
+        requiredFields.add(userTextField);
+        requiredFields.add(passwordTextField);
+
+
+        passwordTextField.setOnKeyPressed(e->{
+            passwordConfirmationTextField.setDisable(false);
         });
 
 
+        //set the operation interface object for the AccountController
+        ApplicationController.getInstance().operationFactory(this);
+        saveAccountButton.addEventHandler(ActionEvent.ACTION, e -> {
+            doSave();
+        });
     }
 
 }

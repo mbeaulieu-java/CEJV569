@@ -119,20 +119,27 @@ public class LoginController extends ViewController{
         //set the required fields list and call the functions that change the TextInputField
         //properties to denote that the field is empty.
         initFieldValidation();
+        loginButton.setDisable(true);
+
+        //add event handlers on text fields to activate or disactivate
+        //buttons depending on if they are empty
+        userTextField.setOnKeyPressed(e-> {loginButtonHandler();});
+        passwordTextField.setOnKeyPressed(e-> {loginButtonHandler();});
 
         // Add event handlers for buttons
         loginButton.addEventHandler(ActionEvent.ACTION,(e)->{
-            userTextField.setText("m@g.com");
-            passwordTextField.setText("12345678");
             isValidLogin();
-//            try {
-//                showProfilePane();
-//            } catch(IOException err) {
-//                System.err.println(err);
-//            }
         });
         contactButton.addEventHandler(ActionEvent.ACTION,(e)->{getContactPane();});
         signupButton.addEventHandler(ActionEvent.ACTION,(e)->{getSignUpPane();});
+    }
+
+    private void loginButtonHandler() {
+        if (GUIUtility.signalEmptyField(getRequiredFields())){
+            loginButton.setDisable(true);
+        } else {
+            loginButton.setDisable(false);
+        }
     }
 
     /**
@@ -152,19 +159,6 @@ public class LoginController extends ViewController{
 
         int userId = 0;
         User userData = null;
-
-        //call the function that signals to the user that the field is empty and
-        //is a required field.  Need to check before login validation of user and
-        //password.
-        if (GUIUtility.signalEmptyField(
-                this.getRequiredFields(),
-                GUIUtility.DEFAULT_ERROR_FIELD_BORDER_COLOR,
-                GUIUtility.DEFAULT_FIELD_BORDER_COLOR,
-                messageLabel,
-                GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
-                GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
-                UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message))
-        {return false;}
 
         if (DataValidator.isValidUser(userTextField.getText())) {
             if(DataValidator.isValidPassword(passwordTextField.getText())) {
@@ -228,7 +222,7 @@ public class LoginController extends ViewController{
                     UserMessages.ErrorMessages.INVALID_EMAIL_MESSAGE.message);
             return false;
         }
-
+        loginButton.setDisable(true);
         //if all is good and the profile pane was opened return true;
         return true;
     }
@@ -280,20 +274,8 @@ public class LoginController extends ViewController{
         //user any empty fields.
         getRequiredFields().add(userTextField);
         getRequiredFields().add(passwordTextField);
-
-        //call the function that signals to the user that the field is empty and
-        //is a required field.  Do this at program start or after the process requiring validation
-        //has been compelted and then re-initialize the fields so the user gets the feedback right away.
-        GUIUtility.signalEmptyField(
-                this.getRequiredFields(),
-                GUIUtility.DEFAULT_ERROR_FIELD_BORDER_COLOR,
-                GUIUtility.DEFAULT_FIELD_BORDER_COLOR,
-                messageLabel,
-                GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
-                GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
-                UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
-
     }
+
     public void showProfilePane () throws IOException {
 
         Accordion accordion = null;

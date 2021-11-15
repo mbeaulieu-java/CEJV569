@@ -15,7 +15,7 @@ public class UserMessages {
                 "The password should be at least 8 characters long."),
         INVALID_EMAIL_MESSAGE("Invalid email address. The value must not" +
                 " be empty and must contain the following symbols: \' @ . \'"),
-        BLANK_ERROR_MESSAGE("Required fields have a red border."),
+        BLANK_ERROR_MESSAGE("Some required fields have not been filled in."),
         PASSWORD_NOMATCH_ERROR_MESSAGE("The password does not match the password confirmation value."),
         UNEXPECTED_ERROR_HEADING("Unexpected Error"),
         UNEXPECTED_ERROR_MESSAGE("An unexpected error has occured forcing the application to close."),

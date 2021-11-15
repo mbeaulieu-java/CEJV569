@@ -114,82 +114,26 @@ public class GUIUtility {
      * signalEmptyField can be used by any forms in the app that require text to be input by the
      * user, where certain fields cannot be left blank, since the information is required by the application.
      * In these cases, the form can create a list of TextInputControls that are "required fields". ie.
-     * that cannot be left blank.  It can then pass this list to signalEmptyField so that
-     * it can handle validating which fields have been left blank and how to signal this to the user.
-     * The function loops through the provided list and any empty controls have their border
-     * changed to red, the focus of the app set to it (if it is the first control empty in the list) and
-     * it's text is highlighted.  An error message whose fill-text is set to red is also displayed
-     * informing the user that the field(s) cannot be left blank.  Empty controls are added to
-     * a list for group processing.  If the control is not empty, it's border is set back to it's default color.
-     * If there are no empty controls, that is the areEmotyControls list is empty, then the label
-     * used to display messages to the user is returned to is default color and set to be invisible.
+     * that cannot be left blank. The function will loop through the controls and advise if some are blank by
+     * returning true.
      *
      * @param controls - List<TextInputControl> - a list of TextInputControls created by any view controller
      *                                    that has a form containing textfields that are required to be filled
      *                                  by the user.
-     * @param emptyBorderColor  String - One of the constant values to be found at the top
-     *                                  of this class, specifying the error color of the textinput controls'
-     *                                  borders.
-     * @param defaultBorderColor - String -  One of the constant values to be found at the top
-     *      *                                  of this class, specifying the original color of the textinput controls'
-     *      *                                  borders.
-     * @param messageControl - Labeled - any control that extends the Labeled class that is used to display
-     *                      an error to the user, such as a label.
-     * @param messageDefaultColor - String -  One of the constant values to be found at the top
-     *                                     of this class, specifying the original/default
-     *                                      color of the textinputcontrols' text.
-     *
-     * @param messageEmptyColor - String - One of the constant values to be found at the top
-     *                                      of this class, specifying the original/default
-     *                                       color of the textinputcontrols' text.
-     *
-     * @param message - String -        error message string to advise that fields can't be left
-     *                                  blank, to be found in the UserMessages utility class ErrorMessages enum.
      * @return  boolean -               true if any empty controls were found, false if none
      */
-    public static boolean signalEmptyField(List<TextInputControl> controls,
-                                           String emptyBorderColor,
-                                           String defaultBorderColor,
-                                           Labeled messageControl,
-                                           String messageDefaultColor,
-                                           String messageEmptyColor,
-                                           String message) {
+    public static boolean signalEmptyField(List<TextInputControl> controls){
 
+        boolean isBlank = false;
 
-        List<TextInputControl> areEmptyControls = new ArrayList<TextInputControl>();
         for (TextInputControl c : controls) {
-                if (c.getText().isBlank()) {
-                   c.setStyle("-fx-border-color: " + emptyBorderColor + ";");
-                   c.addEventHandler(EventType.ROOT,e->{
-                        if(!c.getText().isBlank()) {
-                            undoDisplayFieldError(c,messageControl);
-                        } else {
-                            displayFieldError(c,messageControl,UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
-                        }
-                   });
-                   areEmptyControls.add(c);
-                } else {
-                  //  c.setStyle("-fx-border-color: " + defaultBorderColor + ";");
-                }
-            }
-
-        for (TextInputControl c : areEmptyControls) {
-                c.selectAll();
-                c.requestFocus();
+            if (c.getText().isBlank()) {
+                isBlank = true;
                 break;
+            }
         }
 
-        if (!areEmptyControls.isEmpty()) {
-            messageControl.setText(message);
-            messageControl.setStyle("-fx-text-fill: " + messageEmptyColor + ";");
-            messageControl.setVisible(true);
-        } else {
-            messageControl.setText("");
-            messageControl.setStyle("-fx-text-fill: " + messageDefaultColor +  ";");
-            messageControl.setVisible(false);
-        }
-
-        return !areEmptyControls.isEmpty();
+        return isBlank;
     }
 
     /**
@@ -206,7 +150,7 @@ public class GUIUtility {
     public static void displayFieldError(TextInputControl field, Labeled msgLabel, String message) {
         field.requestFocus();
         field.selectAll();
-        field.setStyle("-fx-border-color: " + DEFAULT_ERROR_FIELD_BORDER_COLOR +  ";");
+
         msgLabel.setText(message);
         msgLabel.setStyle("-fx-text-fill: " + DEFAULT_ERROR_FIELD_TEXTFILL_COLOR +  ";");
         msgLabel.setVisible(true);

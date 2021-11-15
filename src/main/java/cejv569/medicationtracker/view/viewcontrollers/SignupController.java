@@ -100,17 +100,16 @@ public class SignupController extends ViewController {
                 this.getRequiredFields().add((TextField) c);
             }
         });
-        //call the function that signals to the user that the field is empty and
-        //is a required field.  Do this at program start so the user gets the
-        //feedback right away.
-        GUIUtility.signalEmptyField(
-                this.getRequiredFields(),
-                GUIUtility.DEFAULT_ERROR_FIELD_BORDER_COLOR,
-                GUIUtility.DEFAULT_FIELD_BORDER_COLOR,
-                messageLabel,
-                GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
-                GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
-                UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message);
+
+        saveButton.setDisable(true);
+
+        //Add keypress handler to reactivate the button if none of the fields are
+        //blank
+        firstNameTextField.setOnKeyPressed(e->{saveButtonHandler();});
+        lastNameTextField.setOnKeyPressed(e->{saveButtonHandler();});
+        userTextField.setOnKeyPressed(e->{saveButtonHandler();});
+        passwordTextField.setOnKeyPressed(e->{saveButtonHandler();});
+        confirmPasswordTextField.setOnKeyPressed(e->{saveButtonHandler();});
 
         //add event handler for save button.  Every time the button save is
         //clicked, it checks if there are empty fields to signal and if their values
@@ -120,6 +119,14 @@ public class SignupController extends ViewController {
             if (allFieldsValid()) {save();}});
     }
 
+    private void saveButtonHandler() {
+        if (GUIUtility.signalEmptyField(getRequiredFields())){
+            saveButton.setDisable(true);
+        } else {
+            saveButton.setDisable(false);
+        }
+        messageLabel.setVisible(false);
+    }
     /**
      * fieldsValid validates each field to make sure that it isn't blank, that the user name is entered
      * as an email with the proper format and also that the password is at least 8 characters long and
@@ -130,45 +137,31 @@ public class SignupController extends ViewController {
      *                      at least one field is not.
      */
     private boolean allFieldsValid() {
-        //check if any fields are empty, if so, signal to user
-        if (!GUIUtility.signalEmptyField(
-                this.getRequiredFields(),
-                GUIUtility.DEFAULT_ERROR_FIELD_BORDER_COLOR,
-                GUIUtility.DEFAULT_FIELD_BORDER_COLOR,
-                messageLabel,
-                GUIUtility.DEFAULT_FIELD_TEXTFILL_COLOR,
-                GUIUtility.DEFAULT_ERROR_FIELD_TEXTFILL_COLOR,
-                UserMessages.ErrorMessages.BLANK_ERROR_MESSAGE.message)) {
 
-            //if not ->
 
-            //validate to make sure the user name is a valid email format
-            if (!DataValidator.isValidUser(userTextField.getText().trim())) {
-                GUIUtility.displayFieldError(userTextField,messageLabel, UserMessages.ErrorMessages.INVALID_EMAIL_MESSAGE.message);
-                return false;
-            }
+        //validate to make sure the user name is a valid email format
+        if (!DataValidator.isValidUser(userTextField.getText().trim())) {
+            GUIUtility.displayFieldError(userTextField,messageLabel, UserMessages.ErrorMessages.INVALID_EMAIL_MESSAGE.message);
+            return false;
+        }
 
-            //validate if the password is at least 8 characters long
-            if (!DataValidator.isValidPassword(passwordTextField.getText().trim())){
-                GUIUtility.displayFieldError(passwordTextField,messageLabel,
-                        UserMessages.ErrorMessages.INVALID_PASSWORD_MESSAGE.message);
-                return false;
-            }
+        //validate if the password is at least 8 characters long
+        if (!DataValidator.isValidPassword(passwordTextField.getText().trim())){
+            GUIUtility.displayFieldError(passwordTextField,messageLabel,
+                    UserMessages.ErrorMessages.INVALID_PASSWORD_MESSAGE.message);
+            return false;
+        }
 
-            //make sure the password confirmation matches the password.
-            if (!confirmPasswordTextField.getText().trim().equals(passwordTextField.getText().trim())) {
-                GUIUtility.displayFieldError(confirmPasswordTextField,messageLabel,
-                        UserMessages.ErrorMessages.PASSWORD_NOMATCH_ERROR_MESSAGE.message);
-                return false;
-            }
-
-        } else {return false;}
+        //make sure the password confirmation matches the password.
+        if (!confirmPasswordTextField.getText().trim().equals(passwordTextField.getText().trim())) {
+            GUIUtility.displayFieldError(confirmPasswordTextField,messageLabel,
+                    UserMessages.ErrorMessages.PASSWORD_NOMATCH_ERROR_MESSAGE.message);
+            return false;
+        }
 
         messageLabel.setVisible(false);
         return true;
     }
-
-
 
         /**
          *  save() will eventually save the user signup information to a database.  However for Assignment 4
@@ -199,6 +192,7 @@ public class SignupController extends ViewController {
 
                 //clear all fields of text
                 GUIUtility.clearAllInputTextFields((Pane)firstNameTextField.getParent());
+                saveButton.setDisable(true);
 
             }catch (UserAlreadyExistsException e) {
                 LogError.logRecoverableError(e);
